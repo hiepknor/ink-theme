@@ -2,7 +2,11 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import test from 'node:test';
 
-const gallery = await readFile(new URL('../examples/gallery/index.html', import.meta.url), 'utf8');
+const [gallery, galleryCss, galleryScript] = await Promise.all([
+  readFile(new URL('../examples/gallery/index.html', import.meta.url), 'utf8'),
+  readFile(new URL('../examples/gallery/gallery.css', import.meta.url), 'utf8'),
+  readFile(new URL('../examples/gallery/gallery.js', import.meta.url), 'utf8'),
+]);
 
 test('gallery reviews every public screentone recipe', () => {
   for (const utility of [
@@ -12,6 +16,10 @@ test('gallery reviews every public screentone recipe', () => {
     'ink-tone-hatch',
     'ink-tone-cancelled',
     'ink-tone-outline',
+    'ink-lift',
+    'ink-lift-strong',
+    'ink-inset',
+    'ink-pressable',
   ]) {
     assert.ok(gallery.includes(utility), `Gallery is missing ${utility}`);
   }
@@ -21,4 +29,18 @@ test('gallery keeps status meaning in visible text', () => {
   for (const label of ['Healthy', 'Starting', 'Degraded']) {
     assert.ok(gallery.includes(label), `Gallery is missing status label ${label}`);
   }
+});
+
+test('gallery previews controls and interactive states', () => {
+  for (const marker of ['<input', '<select', '<textarea', 'disabled', 'focus-visible']) {
+    assert.ok(gallery.includes(marker), `Gallery is missing control state ${marker}`);
+  }
+});
+
+test('gallery toggles scoped strict mode without importing the global lock', () => {
+  assert.ok(galleryCss.includes("@import '../../src/scoped-strict.css';"));
+  assert.ok(!galleryCss.includes("@import '../../src/strict.css';"));
+  assert.ok(gallery.includes('id="strict-toggle"'));
+  assert.ok(gallery.includes('gallery-radius-sample'));
+  assert.ok(galleryScript.includes("classList.toggle('ink-strict', enabled)"));
 });

@@ -18,8 +18,36 @@
     text-rendering: optimizeLegibility;
   }
 
+  ::selection {
+    background: var(--color-selection);
+    color: var(--color-selection-ink);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-focus);
+    outline-offset: 2px;
+  }
+
+  input,
+  select,
+  textarea {
+    accent-color: var(--color-accent);
+    caret-color: var(--color-accent);
+  }
+
+  ::placeholder {
+    color: var(--color-fg-3);
+    opacity: 1;
+  }
+
   table,
   .tabular {
     font-variant-numeric: tabular-nums;
+  }
+
+  @media (forced-colors: active) {
+    :focus-visible {
+      outline-color: Highlight;
+    }
   }
 }

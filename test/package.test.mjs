@@ -11,6 +11,7 @@ test('exports every documented stylesheet', () => {
     './base.css',
     './patterns.css',
     './strict.css',
+    './scoped-strict.css',
   ]);
 });
 

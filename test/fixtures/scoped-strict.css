@@ -1,0 +1,4 @@
+@import './default.css';
+@import '../../src/scoped-strict.css';
+
+@source './scoped-strict.html';

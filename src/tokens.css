@@ -13,12 +13,19 @@
 
   --color-accent: #111111;
   --color-accent-ink: #ffffff;
+  --color-focus: #111111;
+  --color-selection: #111111;
+  --color-selection-ink: #ffffff;
   --color-ok: #111111;
   --color-warn: #111111;
   --color-danger: #111111;
 
   --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   --font-mono: 'Geist Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+
+  --shadow-ink: 2px 2px 0 #111111;
+  --shadow-ink-strong: 3px 3px 0 #111111;
+  --shadow-ink-inset: inset 2px 2px 0 #e2e2e2;
 
   --radius-none: 0px;
   --radius-sm: 0px;

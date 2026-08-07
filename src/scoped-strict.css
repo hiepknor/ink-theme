@@ -1,0 +1,11 @@
+/* Scoped geometry lock. Add .ink-strict to a controlled application subtree. */
+@layer base {
+  .ink-strict,
+  .ink-strict *,
+  .ink-strict::before,
+  .ink-strict::after,
+  .ink-strict *::before,
+  .ink-strict *::after {
+    border-radius: 0 !important;
+  }
+}

@@ -20,8 +20,13 @@ components or application semantics.
 - `base.css` owns safe document defaults.
 - `patterns.css` owns reusable visual textures and hard lift.
 - `strict.css` owns the optional global square-geometry lock.
+- `scoped-strict.css` owns the optional `.ink-strict` subtree geometry lock.
 - Applications own components, status vocabulary, accessibility semantics,
-  brand assets, navigation, and domain language.
+  brand assets, font loading, navigation, and domain language.
+
+The `ok`, `warn`, and `danger` color variables are compatibility aliases. They
+remain monochrome and do not transfer ownership of status semantics to the
+theme.
 
 ## Change control
 

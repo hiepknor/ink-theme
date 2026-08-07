@@ -9,14 +9,17 @@
     "./tokens.css": "./src/tokens.css",
     "./base.css": "./src/base.css",
     "./patterns.css": "./src/patterns.css",
-    "./strict.css": "./src/strict.css"
+    "./strict.css": "./src/strict.css",
+    "./scoped-strict.css": "./src/scoped-strict.css"
   },
-  "files": ["src", "README.md", "DESIGN.md", "GALLERY.md", "LICENSE"],
+  "files": ["src", "README.md", "DESIGN.md", "GALLERY.md", "CHANGELOG.md", "LICENSE"],
   "scripts": {
     "check": "node scripts/check-theme.mjs",
     "dev": "vite --config examples/gallery/vite.config.js",
     "build": "vite build --config examples/gallery/vite.config.js",
-    "test": "node --test"
+    "test": "node --test",
+    "pack:check": "node scripts/check-package.mjs",
+    "verify": "pnpm run check && pnpm test && pnpm build && pnpm pack:check"
   },
   "peerDependencies": {
     "tailwindcss": "^4.0.0"
@@ -29,6 +32,7 @@
   "engines": {
     "node": ">=20"
   },
+  "packageManager": "pnpm@11.20.0",
   "publishConfig": {
     "access": "public"
   },

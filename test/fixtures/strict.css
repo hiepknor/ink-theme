@@ -1,0 +1,4 @@
+@import './default.css';
+@import '../../src/strict.css';
+
+@source './strict.html';
