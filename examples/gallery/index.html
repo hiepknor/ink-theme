@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Ink Theme visual review gallery" />
+    <title>Ink Theme Gallery</title>
+    <link rel="stylesheet" href="./gallery.css" />
+  </head>
+  <body class="min-h-dvh bg-bg text-fg">
+    <main class="mx-auto grid max-w-[1080px] gap-6 px-4 py-8 sm:px-8">
+      <header class="grid gap-3 border-b border-line-strong pb-6 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-end">
+        <div class="grid gap-2">
+          <p class="gallery-label">Visual foundation</p>
+          <h1 class="text-2xl font-semibold tracking-tight">Ink Theme</h1>
+          <p class="max-w-[64ch] text-sm text-fg-2">
+            Square geometry, monochrome surfaces, dense typography, semantic screentone, and hard lift.
+          </p>
+        </div>
+        <code class="font-mono text-xs text-fg-3">@hiepknor/ink-theme · 0.1.0</code>
+      </header>
+
+      <section class="grid gap-3" aria-labelledby="surfaces-title">
+        <h2 id="surfaces-title" class="gallery-label">Surfaces</h2>
+        <div class="grid grid-cols-2 gap-px border border-line bg-line sm:grid-cols-3 lg:grid-cols-6">
+          <div class="bg-bg p-3"><div class="h-12 border border-line bg-bg"></div><p class="mt-2 text-xs">Background</p><code class="font-mono text-[11px] text-fg-3">bg</code></div>
+          <div class="bg-surface p-3"><div class="h-12 border border-line bg-surface"></div><p class="mt-2 text-xs">Surface</p><code class="font-mono text-[11px] text-fg-3">surface</code></div>
+          <div class="bg-surface p-3"><div class="h-12 border border-line bg-elevated"></div><p class="mt-2 text-xs">Elevated</p><code class="font-mono text-[11px] text-fg-3">elevated</code></div>
+          <div class="bg-surface p-3"><div class="h-12 border border-line bg-recessed"></div><p class="mt-2 text-xs">Recessed</p><code class="font-mono text-[11px] text-fg-3">recessed</code></div>
+          <div class="bg-surface p-3"><div class="h-12 bg-line"></div><p class="mt-2 text-xs">Line</p><code class="font-mono text-[11px] text-fg-3">line</code></div>
+          <div class="bg-surface p-3"><div class="h-12 bg-line-strong"></div><p class="mt-2 text-xs">Strong line</p><code class="font-mono text-[11px] text-fg-3">line-strong</code></div>
+        </div>
+      </section>
+
+      <section class="grid gap-3" aria-labelledby="type-title">
+        <h2 id="type-title" class="gallery-label">Typography</h2>
+        <div class="gallery-section grid gap-3 p-4">
+          <p class="text-2xl font-semibold tracking-tight">Page title — 24 / 600</p>
+          <p class="text-sm font-semibold">Section heading — 14 / 600</p>
+          <p class="text-sm text-fg-2">Body copy carries explanation without competing with primary ink.</p>
+          <p class="font-mono text-xs text-fg-3">req_01INK_THEME · 2026-08-07T10:24:00Z</p>
+          <p class="gallery-label">Uppercase label — 11 / 500</p>
+        </div>
+      </section>
+
+      <section class="grid gap-3" aria-labelledby="marks-title">
+        <h2 id="marks-title" class="gallery-label">Screentone marks</h2>
+        <div class="gallery-section grid grid-cols-2 gap-px bg-line sm:grid-cols-3 lg:grid-cols-6">
+          <div class="flex items-center gap-3 bg-surface p-3"><span class="ink-tone-solid size-3 border border-line-strong" aria-hidden="true"></span><span class="text-xs">Solid</span></div>
+          <div class="flex items-center gap-3 bg-surface p-3"><span class="ink-tone-split size-3 border border-line-strong" aria-hidden="true"></span><span class="text-xs">Split</span></div>
+          <div class="flex items-center gap-3 bg-surface p-3"><span class="ink-tone-dots size-3 border border-line-strong" aria-hidden="true"></span><span class="text-xs">Dots</span></div>
+          <div class="flex items-center gap-3 bg-surface p-3"><span class="ink-tone-hatch size-3 border border-line-strong" aria-hidden="true"></span><span class="text-xs">Hatch</span></div>
+          <div class="flex items-center gap-3 bg-surface p-3"><span class="ink-tone-cancelled size-3 border border-line-strong" aria-hidden="true"></span><span class="text-xs">Cancelled</span></div>
+          <div class="flex items-center gap-3 bg-surface p-3"><span class="ink-tone-outline size-3" aria-hidden="true"></span><span class="text-xs">Outline</span></div>
+        </div>
+      </section>
+
+      <section class="grid gap-3" aria-labelledby="composition-title">
+        <h2 id="composition-title" class="gallery-label">Composition</h2>
+        <div class="grid gap-4 lg:grid-cols-[minmax(0,1fr)_320px]">
+          <div class="gallery-section min-w-0 overflow-x-auto">
+            <header class="flex min-h-14 items-center justify-between gap-4 border-b border-line px-4">
+              <div><h3 class="text-sm font-semibold">Service registry</h3><p class="text-xs text-fg-3">Three current records</p></div>
+              <button class="ink-lift min-h-9 border border-line-strong bg-fg px-3 text-[13px] font-semibold text-bg transition-transform hover:-translate-x-px hover:-translate-y-px focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">Create service</button>
+            </header>
+            <table class="w-full min-w-[560px] border-collapse text-[13px]">
+              <thead><tr class="border-b border-line bg-recessed text-left"><th class="gallery-label h-10 px-3">Service</th><th class="gallery-label h-10 px-3">State</th><th class="gallery-label h-10 px-3 text-right">Requests</th><th class="gallery-label h-10 px-3">Observed</th></tr></thead>
+              <tbody>
+                <tr class="border-b border-line hover:bg-elevated"><td class="h-11 px-3 font-mono">edge-router</td><td class="h-11 px-3"><span class="inline-flex items-center gap-2"><span class="ink-tone-solid size-2.5 border border-line-strong"></span>Healthy</span></td><td class="h-11 px-3 text-right font-mono tabular">12,840</td><td class="h-11 px-3 text-fg-2">1m ago</td></tr>
+                <tr class="border-b border-line hover:bg-elevated"><td class="h-11 px-3 font-mono">event-worker</td><td class="h-11 px-3"><span class="inline-flex items-center gap-2"><span class="ink-tone-dots size-2.5 border border-line-strong"></span>Starting</span></td><td class="h-11 px-3 text-right font-mono tabular">842</td><td class="h-11 px-3 text-fg-2">3m ago</td></tr>
+                <tr class="hover:bg-elevated"><td class="h-11 px-3 font-mono">archive-store</td><td class="h-11 px-3"><span class="inline-flex items-center gap-2"><span class="ink-tone-hatch size-2.5 border border-line-strong"></span>Degraded</span></td><td class="h-11 px-3 text-right font-mono tabular">97</td><td class="h-11 px-3 text-fg-2">8m ago</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <aside class="gallery-section">
+            <header class="border-b border-line p-4"><p class="gallery-label">Inspector</p><h3 class="mt-1 font-mono text-sm font-semibold">edge-router</h3></header>
+            <dl class="grid grid-cols-[120px_minmax(0,1fr)] text-xs">
+              <dt class="border-b border-line bg-recessed p-3 text-fg-3">Environment</dt><dd class="border-b border-line p-3">Production</dd>
+              <dt class="border-b border-line bg-recessed p-3 text-fg-3">Version</dt><dd class="border-b border-line p-3 font-mono">1.8.0</dd>
+              <dt class="bg-recessed p-3 text-fg-3">Region</dt><dd class="p-3 font-mono">ap-southeast</dd>
+            </dl>
+          </aside>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
