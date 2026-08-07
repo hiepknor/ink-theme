@@ -5,6 +5,16 @@ All notable changes to Ink Theme are documented here. The project follows
 
 ## Unreleased
 
+### Fixed
+
+- Pin pnpm 10 so the development and CI toolchain remains compatible with the
+  package's minimum supported Node 20 runtime.
+
+### Infrastructure
+
+- Add aggregate CI, dependency-review, protected-branch, and provenance release
+  gates.
+
 ## 0.2.0 - 2026-08-07
 
 ### Added

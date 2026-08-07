@@ -168,4 +168,5 @@ native packages.
 - Premature package splitting without a real consumer boundary.
 
 See [architecture](docs/architecture.md), [token rules](docs/tokens.md), and the
-[component contract](docs/component-contract.md) for durable decisions.
+[component contract](docs/component-contract.md) for durable decisions. The
+[CI/CD contract](docs/ci-cd.md) defines merge and release gates.
