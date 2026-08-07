@@ -4,6 +4,11 @@ on:
   push:
     branches: [main]
   pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 permissions:
   contents: read
@@ -12,10 +17,11 @@ jobs:
   verify:
     name: Node ${{ matrix.node }}
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     strategy:
       fail-fast: false
       matrix:
-        node: [20, 24]
+        node: [20, 22, 24]
 
     steps:
       - uses: actions/checkout@v4
@@ -29,3 +35,33 @@ jobs:
 
       - run: pnpm install --frozen-lockfile
       - run: pnpm verify
+
+  dependency-review:
+    name: Dependency Review
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/dependency-review-action@v4
+        with:
+          fail-on-severity: high
+
+  gate:
+    name: CI Gate
+    if: always()
+    needs: [verify, dependency-review]
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+
+    steps:
+      - name: Require every CI check
+        env:
+          VERIFY_RESULT: ${{ needs.verify.result }}
+          DEPENDENCY_REVIEW_RESULT: ${{ needs.dependency-review.result }}
+        run: |
+          test "$VERIFY_RESULT" = "success"
+          test "$DEPENDENCY_REVIEW_RESULT" = "success" || test "$DEPENDENCY_REVIEW_RESULT" = "skipped"
