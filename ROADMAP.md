@@ -18,6 +18,7 @@ only when all of its exit criteria pass.
 - [x] Publish the `0.2.0` checkpoint before reorganizing the repository.
 - [x] Establish the pnpm workspace foundation without changing consumer imports.
 - [x] Generate cross-platform web and native tokens from one editable source.
+- [x] Build the first accessible React UI vertical slice.
 
 ## Milestone 1 — Theme 0.2.0
 
@@ -88,15 +89,15 @@ Exit criteria:
 Create `@hiepknor/ink-ui-react` for browser, PWA, Electron, and Tauri
 applications. It must work without requiring Tailwind in the consuming app.
 
-- [ ] Add `InkProvider` with `compact`, `default`, and `touch` density.
-- [ ] Add `Surface`.
-- [ ] Add `Button`.
-- [ ] Add `TextField`.
-- [ ] Add `Checkbox`.
-- [ ] Provide typed exports, ref forwarding, and native DOM attributes.
-- [ ] Add keyboard, accessibility, and interaction tests.
-- [ ] Add workbench examples for every state and density.
-- [ ] Verify tree-shaking and package contents.
+- [x] Add `InkProvider` with `compact`, `default`, and `touch` density.
+- [x] Add `Surface`.
+- [x] Add `Button`.
+- [x] Add `TextField`.
+- [x] Add `Checkbox`.
+- [x] Provide typed exports, ref forwarding, and native DOM attributes.
+- [x] Add keyboard, accessibility, and interaction tests.
+- [x] Add workbench examples for every state and density.
+- [x] Verify tree-shaking and package contents.
 
 Exit criteria:
 

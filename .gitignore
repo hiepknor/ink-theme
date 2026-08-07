@@ -1,4 +1,6 @@
 node_modules/
 dist/
+!packages/ui-react/dist/
+!packages/ui-react/dist/**
 *.tgz
 .DS_Store

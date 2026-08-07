@@ -6,6 +6,7 @@ webviews, mobile web, and future native mobile renderers.
 ## Workspaces
 
 - [`packages/theme`](packages/theme) — published Tailwind CSS v4 visual foundation.
+- [`packages/ui-react`](packages/ui-react) — accessible React components for web and desktop webviews.
 - [`apps/workbench`](apps/workbench) — private interactive visual review app.
 - [`packages/tokens`](packages/tokens) — cross-platform token source and generated adapters.
 

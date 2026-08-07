@@ -7,6 +7,7 @@
     <title>Ink Theme Gallery</title>
     <link rel="stylesheet" href="./gallery.css" />
     <script type="module" src="./gallery.js"></script>
+    <script type="module" src="./react-preview.tsx"></script>
   </head>
   <body class="min-h-dvh bg-bg text-fg">
     <main id="theme-preview" class="ink-strict mx-auto grid max-w-[1080px] gap-6 px-4 py-8 sm:px-8">
@@ -119,6 +120,11 @@
             <a class="w-fit text-xs font-semibold underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent" href="#composition-title">Text link with focus state</a>
           </div>
         </div>
+      </section>
+
+      <section class="grid gap-3" aria-labelledby="react-ui-title">
+        <h2 id="react-ui-title" class="gallery-label">React UI vertical slice</h2>
+        <div id="react-preview"></div>
       </section>
 
       <section class="grid gap-3" aria-labelledby="scope-title">

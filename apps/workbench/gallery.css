@@ -4,6 +4,7 @@
 
 @source './index.html';
 @source './gallery.js';
+@source './react-preview.tsx';
 
 @layer components {
   .gallery-section {
