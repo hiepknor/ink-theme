@@ -5,6 +5,11 @@ All notable changes to Ink Theme are documented here. The project follows
 
 ## Unreleased
 
+### Added
+
+- Generate the existing Tailwind token contract from the shared
+  `@hiepknor/ink-tokens` source used by web and React Native outputs.
+
 ### Fixed
 
 - Pin pnpm 10 so the development and CI toolchain remains compatible with the

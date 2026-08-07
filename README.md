@@ -7,7 +7,7 @@ webviews, mobile web, and future native mobile renderers.
 
 - [`packages/theme`](packages/theme) — published Tailwind CSS v4 visual foundation.
 - [`apps/workbench`](apps/workbench) — private interactive visual review app.
-- [`packages/tokens`](packages/tokens) — reserved for the next cross-platform token milestone.
+- [`packages/tokens`](packages/tokens) — cross-platform token source and generated adapters.
 
 The published theme remains `@hiepknor/ink-theme`; existing consumer imports
 are unchanged after the workspace migration.
@@ -18,6 +18,14 @@ are unchanged after the workspace migration.
 pnpm install --frozen-lockfile
 pnpm verify
 pnpm dev
+```
+
+Edit visual values only in `packages/tokens/src/tokens.json`, then regenerate
+and verify the committed platform outputs:
+
+```sh
+pnpm --filter @hiepknor/ink-tokens build
+pnpm verify
 ```
 
 See [`ROADMAP.md`](ROADMAP.md) for milestones and [`docs/architecture.md`](docs/architecture.md)

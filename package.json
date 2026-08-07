@@ -7,7 +7,7 @@
     "check": "pnpm -r --if-present run check",
     "test": "pnpm -r --if-present run test",
     "build": "pnpm -r --if-present run build",
-    "pack:check": "pnpm --filter @hiepknor/ink-theme pack:check",
+    "pack:check": "pnpm -r --if-present run pack:check",
     "verify": "pnpm run check && pnpm test && pnpm build && pnpm pack:check"
   },
   "engines": {
