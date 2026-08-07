@@ -16,6 +16,7 @@ only when all of its exit criteria pass.
 - [x] Reproducible pnpm install and CI configuration.
 - [x] Complete the interaction and accessibility contract for `0.2.0`.
 - [x] Publish the `0.2.0` checkpoint before reorganizing the repository.
+- [x] Establish the pnpm workspace foundation without changing consumer imports.
 
 ## Milestone 1 — Theme 0.2.0
 
@@ -49,12 +50,12 @@ apps/
   workbench/
 ```
 
-- [ ] Make the repository root a private workspace.
-- [ ] Move the current package to `packages/theme`.
-- [ ] Move the gallery to `apps/workbench`.
-- [ ] Preserve all `@hiepknor/ink-theme` exports.
-- [ ] Add recursive root scripts for build, test, typecheck, and package checks.
-- [ ] Keep pnpm as the only task runner until orchestration is demonstrably needed.
+- [x] Make the repository root a private workspace.
+- [x] Move the current package to `packages/theme`.
+- [x] Move the gallery to `apps/workbench`.
+- [x] Preserve all `@hiepknor/ink-theme` exports.
+- [x] Add recursive root scripts for checks, tests, builds, and package checks.
+- [x] Keep pnpm as the only task runner until orchestration is demonstrably needed.
 
 Exit criteria:
 

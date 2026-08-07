@@ -4,7 +4,7 @@ The standalone gallery covers tokens, typography, screentone recipes, hard
 lift, form controls, interaction states, strict-mode scope, dense tables, and
 inspector composition without importing product code.
 
-After installing development dependencies, run:
+From the repository root, run:
 
 ```sh
 pnpm dev
@@ -16,7 +16,7 @@ Create a production gallery build with:
 pnpm build
 ```
 
-The output is written to `dist/gallery` and is not part of the published
+The output is written to `dist/workbench` and is not part of the published
 package.
 
 The preview imports `scoped-strict.css`. Its toolbar toggles `.ink-strict` on

@@ -6,7 +6,13 @@ settings:
 
 importers:
 
-  .:
+  .: {}
+
+  apps/workbench:
+    dependencies:
+      '@hiepknor/ink-theme':
+        specifier: workspace:*
+        version: link:../../packages/theme
     devDependencies:
       '@tailwindcss/vite':
         specifier: ^4.0.0
@@ -17,6 +23,20 @@ importers:
       vite:
         specifier: ^8.2.0
         version: 8.2.0(jiti@2.7.0)
+
+  packages/theme:
+    devDependencies:
+      '@tailwindcss/vite':
+        specifier: ^4.0.0
+        version: 4.3.3(vite@8.2.0(jiti@2.7.0))
+      tailwindcss:
+        specifier: ^4.0.0
+        version: 4.3.3
+      vite:
+        specifier: ^8.2.0
+        version: 8.2.0(jiti@2.7.0)
+
+  packages/tokens: {}
 
 packages:
 

@@ -1,0 +1,9 @@
+{
+  "name": "@hiepknor/ink-tokens",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "check": "node --check scripts/placeholder.mjs"
+  }
+}

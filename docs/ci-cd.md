@@ -36,8 +36,8 @@ GitHub Actions. Dependency updates go through the same Node compatibility,
 build, package, and dependency-review gates as application changes.
 
 The package manager version must remain compatible with the minimum Node engine
-declared in `package.json`. A package-manager major upgrade must therefore be
-tested in the minimum Node matrix job before merge.
+declared by the root workspace. A package-manager major upgrade must therefore
+be tested in the minimum Node matrix job before merge.
 
 ## Release gate
 
@@ -45,8 +45,8 @@ Pushing an annotated semantic tag such as `v0.3.0` starts the `Release`
 workflow. It:
 
 1. Verifies the package on Node 20 and 24.
-2. Requires the tag to match `package.json`.
-3. Requires a matching changelog section.
+2. Requires the tag to match `packages/theme/package.json`.
+3. Requires a matching section in `packages/theme/CHANGELOG.md`.
 4. Requires the tagged commit to be contained in `main`.
 5. Checks whether the immutable npm version already exists.
 6. Publishes a missing version with npm provenance.

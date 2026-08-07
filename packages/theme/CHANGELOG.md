@@ -12,6 +12,9 @@ All notable changes to Ink Theme are documented here. The project follows
 
 ### Infrastructure
 
+- Convert the repository to a pnpm workspace, moving the published theme to
+  `packages/theme` and the preview workbench to `apps/workbench` while
+  preserving every public package import.
 - Add aggregate CI, dependency-review, protected-branch, and provenance release
   gates.
 - Configure npm trusted publishing and repository metadata for token-free OIDC

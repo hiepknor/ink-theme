@@ -1,4 +1,4 @@
 @import './default.css';
-@import '../../src/strict.css';
+@import '@hiepknor/ink-theme/strict.css';
 
 @source './strict.html';
