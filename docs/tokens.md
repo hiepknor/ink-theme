@@ -41,13 +41,18 @@ compact pointer controls, while a large tablet needs touch targets.
 
 ## Generated outputs
 
-The token package will generate:
+The token package generates:
 
 - Tailwind `@theme` CSS.
 - Plain CSS custom properties.
 - Resolved JSON.
 - TypeScript constants.
 - React Native TypeScript constants.
+
+The editable source is `packages/tokens/src/tokens.json`. Generated artifacts
+live in `packages/tokens/generated`; the generator also writes the compatible
+Tailwind output to `packages/theme/src/tokens.css` so existing theme consumers
+do not need to change imports.
 
 Swift, Kotlin, and Dart output are added only with maintained consumers.
 
@@ -60,6 +65,10 @@ Swift, Kotlin, and Dart output are added only with maintained consumers.
 - New colors must preserve the documented monochrome contract.
 - A generated-file diff must be reviewed like source code.
 - CI must reject unresolved aliases and stale generated output.
+
+Run `pnpm --filter @hiepknor/ink-tokens build` after editing the source. Run
+`pnpm verify` before committing. `check` never rewrites files; it compares all
+generated artifacts byte-for-byte and fails when they are stale.
 
 ## Naming rules
 

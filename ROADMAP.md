@@ -17,6 +17,7 @@ only when all of its exit criteria pass.
 - [x] Complete the interaction and accessibility contract for `0.2.0`.
 - [x] Publish the `0.2.0` checkpoint before reorganizing the repository.
 - [x] Establish the pnpm workspace foundation without changing consumer imports.
+- [x] Generate cross-platform web and native tokens from one editable source.
 
 ## Milestone 1 — Theme 0.2.0
 
@@ -67,14 +68,14 @@ Exit criteria:
 
 Create `@hiepknor/ink-tokens` as the single editable source of visual values.
 
-- [ ] Define primitive color, dimension, typography, motion, and shadow tokens.
-- [ ] Define semantic surface, ink, border, action, focus, and density tokens.
-- [ ] Generate CSS custom properties and Tailwind `@theme` output.
-- [ ] Generate resolved JSON and TypeScript constants.
-- [ ] Generate React Native TypeScript constants.
-- [ ] Reject unresolved aliases and unapproved colors during CI.
-- [ ] Make generated-file drift fail CI.
-- [ ] Re-export generated web tokens through the existing theme entrypoint.
+- [x] Define primitive color, dimension, typography, motion, and shadow tokens.
+- [x] Define semantic surface, ink, border, action, focus, and density tokens.
+- [x] Generate CSS custom properties and Tailwind `@theme` output.
+- [x] Generate resolved JSON and TypeScript constants.
+- [x] Generate React Native TypeScript constants.
+- [x] Reject unresolved aliases and unapproved colors during CI.
+- [x] Make generated-file drift fail CI.
+- [x] Re-export generated web tokens through the existing theme entrypoint.
 
 Exit criteria:
 

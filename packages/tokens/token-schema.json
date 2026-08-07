@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/hiepknor/ink-theme/blob/main/packages/tokens/token-schema.json",
+  "title": "Ink token source",
+  "type": "object",
+  "required": ["tokens", "tailwind", "native", "allowedColors"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "tokens": { "type": "object", "minProperties": 1 },
+    "tailwind": { "type": "object", "minProperties": 1, "additionalProperties": { "type": "string" } },
+    "native": { "type": "object", "minProperties": 1 },
+    "allowedColors": { "type": "array", "items": { "type": "string", "pattern": "^#[0-9a-f]{6}$" }, "uniqueItems": true }
+  },
+  "additionalProperties": false
+}

@@ -1,9 +1,37 @@
 {
   "name": "@hiepknor/ink-tokens",
-  "version": "0.0.0",
+  "version": "0.1.0",
+  "description": "Cross-platform design tokens for the Ink design system.",
   "private": true,
   "type": "module",
+  "sideEffects": ["**/*.css"],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hiepknor/ink-theme.git",
+    "directory": "packages/tokens"
+  },
+  "exports": {
+    ".": {
+      "types": "./generated/tokens.ts",
+      "default": "./generated/tokens.js"
+    },
+    "./tokens.css": "./generated/tokens.css",
+    "./theme.css": "./generated/theme.css",
+    "./tokens.json": "./generated/tokens.json",
+    "./react-native": {
+      "types": "./generated/react-native.ts",
+      "default": "./generated/react-native.js"
+    }
+  },
+  "files": ["generated", "README.md", "LICENSE"],
   "scripts": {
-    "check": "node --check scripts/placeholder.mjs"
-  }
+    "build": "node scripts/generate.mjs",
+    "check": "node scripts/generate.mjs --check",
+    "test": "node --test",
+    "pack:check": "node scripts/check-package.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "license": "MIT"
 }
