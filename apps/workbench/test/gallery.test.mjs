@@ -2,10 +2,11 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import test from 'node:test';
 
-const [gallery, galleryCss, galleryScript] = await Promise.all([
+const [gallery, galleryCss, galleryScript, reactPreview] = await Promise.all([
   readFile(new URL('../index.html', import.meta.url), 'utf8'),
   readFile(new URL('../gallery.css', import.meta.url), 'utf8'),
   readFile(new URL('../gallery.js', import.meta.url), 'utf8'),
+  readFile(new URL('../react-preview.tsx', import.meta.url), 'utf8'),
 ]);
 
 const packageJson = JSON.parse(
@@ -14,6 +15,19 @@ const packageJson = JSON.parse(
 
 test('gallery displays the package version', () => {
   assert.ok(gallery.includes(`@hiepknor/ink-theme · ${packageJson.version}`));
+});
+
+test('workbench exercises the React vertical slice and every density', () => {
+  assert.ok(gallery.includes('id="react-preview"'));
+  for (const marker of ['InkProvider', 'Surface', 'Button', 'TextField', 'Checkbox']) {
+    assert.ok(reactPreview.includes(marker), `React preview is missing ${marker}`);
+  }
+  for (const density of ['compact', 'default', 'touch']) {
+    assert.ok(reactPreview.includes(`'${density}'`), `React preview is missing ${density} density`);
+  }
+  for (const state of ['loading', 'disabled', 'readOnly', 'error']) {
+    assert.ok(reactPreview.includes(state), `React preview is missing ${state} state`);
+  }
 });
 
 test('gallery reviews every public screentone recipe', () => {

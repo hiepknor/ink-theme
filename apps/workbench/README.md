@@ -1,8 +1,8 @@
 # Ink Workbench
 
 The private Vite workbench reviews tokens, typography, patterns, controls,
-interaction states, strict-mode scope, dense data, and composition without
-shipping application code in the public theme package.
+interaction states, strict-mode scope, dense data, composition, and the React
+vertical slice without shipping application code in public packages.
 
 From the repository root:
 
