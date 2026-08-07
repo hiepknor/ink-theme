@@ -26,7 +26,7 @@ Stabilize the framework-agnostic web foundation before adding packages.
 - [x] Add an interactive preview for controls and geometry scope.
 - [x] Finalize focus, selection, form accent, hard-shadow, and press behavior.
 - [x] Verify reduced-motion and forced-colors behavior.
-- [ ] Document every public token and utility.
+- [x] Document every public token and utility.
 - [ ] Review the npm tarball and publish `@hiepknor/ink-theme@0.2.0`.
 
 Exit criteria:

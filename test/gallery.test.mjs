@@ -8,6 +8,14 @@ const [gallery, galleryCss, galleryScript] = await Promise.all([
   readFile(new URL('../examples/gallery/gallery.js', import.meta.url), 'utf8'),
 ]);
 
+const packageJson = JSON.parse(
+  await readFile(new URL('../package.json', import.meta.url), 'utf8'),
+);
+
+test('gallery displays the package version', () => {
+  assert.ok(gallery.includes(`@hiepknor/ink-theme · ${packageJson.version}`));
+});
+
 test('gallery reviews every public screentone recipe', () => {
   for (const utility of [
     'ink-tone-solid',

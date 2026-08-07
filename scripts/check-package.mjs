@@ -11,7 +11,9 @@ const paths = manifest.files.map((file) => file.path);
 
 for (const path of [
   'CHANGELOG.md',
+  'API.md',
   'LICENSE',
+  'MIGRATION.md',
   'README.md',
   'package.json',
   'src/index.css',

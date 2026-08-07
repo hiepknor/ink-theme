@@ -5,12 +5,16 @@ All notable changes to Ink Theme are documented here. The project follows
 
 ## Unreleased
 
+## 0.2.0 - 2026-08-07
+
 ### Added
 
 - A scoped square-geometry entrypoint at `scoped-strict.css`.
 - Compiled CSS contract tests and package-content verification.
 - Reproducible pnpm installs and continuous integration.
 - An interactive gallery for control states and scoped strict-mode review.
+- Focus, selection, form accent, hard-shadow, inset, and pressable primitives.
+- Reduced-motion and forced-colors fallbacks for public interaction patterns.
 
 ### Documentation
 

@@ -94,6 +94,10 @@ The theme exposes presentation-only Tailwind utilities:
 `ink-pressable` provides hard-shadow hover and pressed feedback and collapses
 its transition when the user requests reduced motion.
 
+See [`API.md`](API.md) for the complete token, entrypoint, base behavior, and
+utility contract. Existing `0.1.0` consumers should review
+[`MIGRATION.md`](MIGRATION.md) before upgrading.
+
 Applications decide what these marks mean and must pair status patterns with a
 visible text label. The theme deliberately does not define states such as
 `pending`, `failed`, or `delivered`.

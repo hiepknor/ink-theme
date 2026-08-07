@@ -1,6 +1,6 @@
 {
   "name": "@hiepknor/ink-theme",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "A square, monochrome, high-density theme for Tailwind CSS v4.",
   "type": "module",
   "sideEffects": ["**/*.css"],
@@ -12,7 +12,7 @@
     "./strict.css": "./src/strict.css",
     "./scoped-strict.css": "./src/scoped-strict.css"
   },
-  "files": ["src", "README.md", "DESIGN.md", "GALLERY.md", "CHANGELOG.md", "LICENSE"],
+  "files": ["src", "README.md", "API.md", "MIGRATION.md", "DESIGN.md", "GALLERY.md", "CHANGELOG.md", "LICENSE"],
   "scripts": {
     "check": "node scripts/check-theme.mjs",
     "dev": "vite --config examples/gallery/vite.config.js",
