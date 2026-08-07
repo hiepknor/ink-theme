@@ -3,13 +3,13 @@ import { readFile } from 'node:fs/promises';
 import test from 'node:test';
 
 const [gallery, galleryCss, galleryScript] = await Promise.all([
-  readFile(new URL('../examples/gallery/index.html', import.meta.url), 'utf8'),
-  readFile(new URL('../examples/gallery/gallery.css', import.meta.url), 'utf8'),
-  readFile(new URL('../examples/gallery/gallery.js', import.meta.url), 'utf8'),
+  readFile(new URL('../index.html', import.meta.url), 'utf8'),
+  readFile(new URL('../gallery.css', import.meta.url), 'utf8'),
+  readFile(new URL('../gallery.js', import.meta.url), 'utf8'),
 ]);
 
 const packageJson = JSON.parse(
-  await readFile(new URL('../package.json', import.meta.url), 'utf8'),
+  await readFile(new URL('../../../packages/theme/package.json', import.meta.url), 'utf8'),
 );
 
 test('gallery displays the package version', () => {
@@ -46,8 +46,8 @@ test('gallery previews controls and interactive states', () => {
 });
 
 test('gallery toggles scoped strict mode without importing the global lock', () => {
-  assert.ok(galleryCss.includes("@import '../../src/scoped-strict.css';"));
-  assert.ok(!galleryCss.includes("@import '../../src/strict.css';"));
+  assert.ok(galleryCss.includes("@import '@hiepknor/ink-theme/scoped-strict.css';"));
+  assert.ok(!galleryCss.includes("@import '@hiepknor/ink-theme/strict.css';"));
   assert.ok(gallery.includes('id="strict-toggle"'));
   assert.ok(gallery.includes('gallery-radius-sample'));
   assert.ok(galleryScript.includes("classList.toggle('ink-strict', enabled)"));

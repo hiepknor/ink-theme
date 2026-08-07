@@ -5,7 +5,7 @@ export default defineConfig({
   root: new URL('.', import.meta.url).pathname,
   plugins: [tailwindcss()],
   build: {
-    outDir: '../../dist/gallery',
+    outDir: '../../dist/workbench',
     emptyOutDir: true,
   },
 });

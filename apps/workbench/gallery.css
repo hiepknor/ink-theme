@@ -1,6 +1,6 @@
 @import 'tailwindcss';
-@import '../../src/index.css';
-@import '../../src/scoped-strict.css';
+@import '@hiepknor/ink-theme';
+@import '@hiepknor/ink-theme/scoped-strict.css';
 
 @source './index.html';
 @source './gallery.js';
