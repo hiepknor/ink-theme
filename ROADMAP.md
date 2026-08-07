@@ -15,7 +15,7 @@ only when all of its exit criteria pass.
 - [x] Contract, compiled CSS, gallery, and package-content tests.
 - [x] Reproducible pnpm install and CI configuration.
 - [x] Complete the interaction and accessibility contract for `0.2.0`.
-- [ ] Publish the `0.2.0` checkpoint before reorganizing the repository.
+- [x] Publish the `0.2.0` checkpoint before reorganizing the repository.
 
 ## Milestone 1 — Theme 0.2.0
 
@@ -27,7 +27,7 @@ Stabilize the framework-agnostic web foundation before adding packages.
 - [x] Finalize focus, selection, form accent, hard-shadow, and press behavior.
 - [x] Verify reduced-motion and forced-colors behavior.
 - [x] Document every public token and utility.
-- [ ] Review the npm tarball and publish `@hiepknor/ink-theme@0.2.0`.
+- [x] Review the npm tarball and publish `@hiepknor/ink-theme@0.2.0`.
 
 Exit criteria:
 
