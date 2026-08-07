@@ -4,9 +4,6 @@ A square, monochrome, high-density theme for Tailwind CSS v4. It packages the
 visual foundation extracted from OmniWA Console without React components,
 product branding, or domain behavior.
 
-The package starts as private and unlicensed while its public release policy is
-being decided.
-
 ## Install
 
 ```sh
@@ -74,13 +71,19 @@ Applications decide what these marks mean and must pair status patterns with a
 visible text label. The theme deliberately does not define states such as
 `pending`, `failed`, or `delivered`.
 
-## Local verification
+## Gallery
 
-No dependency installation is required for the contract check:
+After installing development dependencies, run `pnpm dev`. See
+[`GALLERY.md`](GALLERY.md) for the gallery scope and production build command.
+
+## Verification
 
 ```sh
-npm run check
+pnpm check
+pnpm test
+pnpm build
 ```
 
-Before publishing, remove `private: true`, choose a license, install the peer
-dependency in a consumer fixture, and verify the compiled Tailwind output.
+## License
+
+MIT

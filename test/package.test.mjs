@@ -14,7 +14,8 @@ test('exports every documented stylesheet', () => {
   ]);
 });
 
-test('does not publish accidentally before release policy is chosen', () => {
-  assert.equal(packageJson.private, true);
-  assert.equal(packageJson.license, 'UNLICENSED');
+test('is configured as an explicit public npm package', () => {
+  assert.equal(packageJson.private, undefined);
+  assert.equal(packageJson.license, 'MIT');
+  assert.equal(packageJson.publishConfig.access, 'public');
 });
