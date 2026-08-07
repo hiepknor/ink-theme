@@ -56,7 +56,7 @@ The registry check makes workflow retries safe after a successful npm publish.
 
 ## npm trusted publishing
 
-The npm package must configure GitHub Actions as a trusted publisher:
+The npm package is configured with GitHub Actions as its trusted publisher:
 
 ```text
 Repository: hiepknor/ink-theme
@@ -66,6 +66,8 @@ Environment: empty
 
 The workflow uses the short-lived GitHub OIDC identity through
 `id-token: write`; a long-lived `NPM_TOKEN` repository secret is not required.
+The package metadata carries the matching public repository URL required for
+OIDC provenance. Release jobs intentionally do not restore dependency caches.
 
 ## Release procedure
 

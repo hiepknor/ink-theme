@@ -14,6 +14,8 @@ All notable changes to Ink Theme are documented here. The project follows
 
 - Add aggregate CI, dependency-review, protected-branch, and provenance release
   gates.
+- Configure npm trusted publishing and repository metadata for token-free OIDC
+  releases.
 
 ## 0.2.0 - 2026-08-07
 

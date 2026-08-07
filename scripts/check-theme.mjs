@@ -12,6 +12,7 @@ const scopedStrict = await read('src/scoped-strict.css');
 
 assert.equal(packageJson.name, '@hiepknor/ink-theme');
 assert.equal(packageJson.version, '0.2.0');
+assert.equal(packageJson.repository.url, 'https://github.com/hiepknor/ink-theme.git');
 assert.equal(packageJson.peerDependencies.tailwindcss, '^4.0.0');
 
 for (const marker of [
