@@ -70,6 +70,38 @@
     padding: 8px;
   }
 
+  .ink-catalog-search {
+    display: flex;
+    min-height: 38px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin: 8px 8px 0;
+    border: 1px solid var(--color-line-strong);
+    background: var(--color-surface);
+    padding: 0 10px;
+    color: var(--color-fg-2);
+    font: 600 11px/1 var(--font-sans);
+    text-align: left;
+  }
+
+  .ink-catalog-search:hover {
+    background: var(--color-elevated);
+    color: var(--color-fg);
+  }
+
+  .ink-catalog-search:focus-visible {
+    box-shadow: inset 0 -2px var(--color-accent);
+  }
+
+  .ink-catalog-search kbd {
+    border: 1px solid var(--color-line);
+    background: var(--color-recessed);
+    padding: 3px 5px;
+    color: var(--color-fg-3);
+    font: 500 9px/1 var(--font-mono);
+  }
+
   .ink-catalog-nav a {
     display: flex;
     flex: 0 0 auto;
@@ -195,6 +227,199 @@
     font-weight: 650;
   }
 
+  .ink-doc-section {
+    min-width: 0;
+    border: 1px solid var(--color-line-strong);
+    background: var(--color-surface);
+  }
+
+  .ink-doc-section-heading {
+    display: flex;
+    min-height: 68px;
+    align-items: end;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  .ink-doc-section-heading h3 {
+    margin-top: 5px;
+    font-size: 16px;
+    font-weight: 650;
+  }
+
+  .ink-doc-example {
+    overflow-x: auto;
+    padding: 20px 16px;
+    background: var(--color-recessed);
+  }
+
+  .ink-doc-state-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1px;
+    background: var(--color-line);
+  }
+
+  .ink-doc-state-grid > div {
+    display: flex;
+    min-height: 48px;
+    align-items: center;
+    gap: 10px;
+    background: var(--color-surface);
+    padding: 10px 14px;
+    font-size: 12px;
+    text-transform: capitalize;
+  }
+
+  .ink-doc-state-grid .ink-tone-outline {
+    width: 11px;
+    height: 11px;
+    flex: 0 0 auto;
+  }
+
+  .ink-doc-prop-table {
+    width: 100%;
+    min-width: 680px;
+    border-collapse: collapse;
+    font-size: 12px;
+    text-align: left;
+  }
+
+  .ink-doc-prop-table th,
+  .ink-doc-prop-table td {
+    padding: 11px 14px;
+    border-bottom: 1px solid var(--color-line);
+    vertical-align: top;
+  }
+
+  .ink-doc-prop-table th {
+    background: var(--color-recessed);
+    color: var(--color-fg-3);
+    font-size: 10px;
+    letter-spacing: .07em;
+    text-transform: uppercase;
+  }
+
+  .ink-doc-prop-table tr:last-child td {
+    border-bottom: 0;
+  }
+
+  .ink-doc-prop-table code {
+    font: 500 11px/1.4 var(--font-mono);
+  }
+
+  .ink-doc-section > .ink-ui-alert {
+    margin: 16px;
+  }
+
+  .ink-doc-related {
+    display: grid;
+    gap: 1px;
+    background: var(--color-line);
+  }
+
+  .ink-doc-related a {
+    display: flex;
+    min-height: 44px;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--color-surface);
+    padding: 0 14px;
+    color: var(--color-fg);
+    font-size: 12px;
+    font-weight: 650;
+    text-decoration: none;
+  }
+
+  .ink-doc-related a:hover {
+    background: var(--color-elevated);
+  }
+
+  .ink-command-results {
+    display: grid;
+    max-height: min(52vh, 440px);
+    gap: 1px;
+    overflow-y: auto;
+    border: 1px solid var(--color-line-strong);
+    background: var(--color-line);
+  }
+
+  .ink-command-families {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1px;
+    border: 1px solid var(--color-line-strong);
+    background: var(--color-line);
+  }
+
+  .ink-command-families a {
+    display: grid;
+    min-height: 64px;
+    align-content: center;
+    gap: 5px;
+    background: var(--color-surface);
+    padding: 10px 12px;
+    color: var(--color-fg);
+    text-decoration: none;
+  }
+
+  .ink-command-families a:hover,
+  .ink-command-families a:focus-visible {
+    outline: none;
+    background: var(--color-fg);
+    color: var(--color-bg);
+  }
+
+  .ink-command-families span {
+    color: var(--color-fg-3);
+    font-size: 10px;
+  }
+
+  .ink-command-families a:hover span,
+  .ink-command-families a:focus-visible span {
+    color: var(--color-bg);
+  }
+
+  .ink-command-results > a {
+    display: flex;
+    min-height: 58px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    background: var(--color-surface);
+    padding: 10px 12px;
+    color: var(--color-fg);
+    text-decoration: none;
+  }
+
+  .ink-command-results > a:hover,
+  .ink-command-results > a:focus-visible {
+    outline: none;
+    background: var(--color-fg);
+    color: var(--color-bg);
+  }
+
+  .ink-command-results > a > span:first-child {
+    display: grid;
+    gap: 4px;
+  }
+
+  .ink-command-results small {
+    max-width: 48ch;
+    overflow: hidden;
+    color: var(--color-fg-3);
+    font-size: 10px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .ink-command-results > a:hover small,
+  .ink-command-results > a:focus-visible small {
+    color: var(--color-bg);
+  }
+
   @media (min-width: 640px) {
     .ink-catalog-intro {
       grid-template-columns: minmax(0, 1fr) auto;
@@ -208,6 +433,11 @@
 
     .ink-catalog-card-grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .ink-doc-state-grid,
+    .ink-doc-related {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
     }
   }
 

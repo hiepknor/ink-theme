@@ -27,6 +27,43 @@ test('catalog navigation adapts to mobile without hiding sections', async ({ pag
   await expect(page.locator('[data-density-preview="touch"]')).toBeVisible();
 });
 
+test('component documentation supports deep links and related navigation', async ({ page }) => {
+  await page.goto('/#/component/button');
+  await expect(page.getByRole('heading', { name: 'Button', exact: true })).toBeVisible();
+  const docs = page.getByTestId('component-documentation');
+  await expect(docs.getByRole('heading', { name: 'Required states' })).toBeVisible();
+  await expect(docs.getByRole('heading', { name: 'Key props' })).toBeVisible();
+  await expect(docs.getByRole('region', { name: 'Required states' }).getByText('loading', { exact: true })).toBeVisible();
+  await docs.getByRole('link', { name: /TextField/ }).click();
+  await expect(page).toHaveURL(/#\/component\/text-field$/);
+  await expect(page.getByRole('heading', { name: 'TextField', exact: true })).toBeVisible();
+});
+
+test('command palette finds component contracts with the keyboard', async ({ page }) => {
+  await page.goto('/#/overview');
+  await page.keyboard.press('Control+K');
+  const dialog = page.getByRole('dialog', { name: 'Find a component' });
+  await expect(dialog).toBeVisible();
+  await expect(dialog.getByText('Browse by family')).toBeVisible();
+  await expect(dialog.getByRole('link', { name: 'Forms 10 components' })).toBeVisible();
+  await expect(dialog.getByRole('link', { name: 'Feedback 6 components' })).toBeVisible();
+  await dialog.getByRole('textbox', { name: 'Search components' }).fill('upload queue');
+  await expect(dialog.getByRole('listitem')).toHaveCount(1);
+  await dialog.getByRole('listitem').click();
+  await expect(page).toHaveURL(/#\/component\/file-list$/);
+  await expect(page.getByRole('heading', { name: 'FileList', exact: true })).toBeVisible();
+});
+
+test('mobile catalog families do not overflow the viewport', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  for (const route of ['forms', 'feedback', 'data', 'media', 'desktop', 'component/data-table']) {
+    await page.goto(`/#/${route}`);
+    await expect(page.locator('#catalog-content')).toBeVisible();
+    const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
+    expect(overflow, `${route} creates horizontal page overflow`).toBeLessThanOrEqual(0);
+  }
+});
+
 for (const density of ['compact', 'default', 'touch']) {
   test(`${density} component density`, async ({ page }) => {
     const preview = page.locator(`[data-density-preview="${density}"]`);
