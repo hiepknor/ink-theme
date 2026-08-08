@@ -10,6 +10,11 @@ Routes such as `/#/data` are dependency-free, reload-safe, and can be shared
 directly. `/#/all` retains the full native compatibility and visual-regression
 matrix used by CI.
 
+Each stable contract also has a direct route such as `/#/component/button` with
+an interactive example, required states, key props, accessibility guidance,
+and related components. Use the **Find component** control or `Ctrl/Command+K`
+to search the registry by name, family, or purpose.
+
 From the repository root:
 
 ```sh

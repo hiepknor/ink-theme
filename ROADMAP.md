@@ -152,6 +152,21 @@ Exit criteria:
 - Product data, routing, copy, and remote-search behavior stay outside Ink.
 - Workbench and package-content gates cover every new component family.
 
+## Milestone 6.1 — Component documentation and mobile quality gate
+
+- [x] Organize the workbench into shareable family routes.
+- [x] Add a typed registry for every stable component contract.
+- [x] Document purpose, required states, key props, and accessibility guidance.
+- [x] Add component search and a keyboard command palette.
+- [x] Verify Forms, Feedback, Data, Media, Desktop, and API pages at a 390px viewport.
+- [x] Preserve the full native compatibility and Linux visual-regression route.
+
+Exit criteria:
+
+- A component contract can be found by name, family, or purpose.
+- Every documented component has a direct URL and related-component navigation.
+- Catalog pages do not introduce horizontal page overflow at the mobile gate.
+
 ## Milestone 7 — Native mobile vertical slice
 
 Begin only after the React component contracts have stabilized through real

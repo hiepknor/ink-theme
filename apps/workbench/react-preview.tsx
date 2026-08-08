@@ -1,5 +1,6 @@
 import { StrictMode, useEffect, useMemo, useState } from 'react';
 import { createRoot } from 'react-dom/client';
+import { componentRegistry, findComponent, type ComponentDoc } from './component-registry';
 import {
   Accordion,
   AccordionContent,
@@ -250,10 +251,12 @@ const catalogPages = [
 ] as const;
 
 type CatalogPage = typeof catalogPages[number]['id'];
+type CatalogRoute = CatalogPage | 'all' | `component/${string}`;
 
-function readCatalogPage(): CatalogPage | 'all' {
+function readCatalogPage(): CatalogRoute {
   const route = window.location.hash.replace(/^#\/?/, '');
   if (route === 'all') return 'all';
+  if (route.startsWith('component/') && findComponent(route.slice('component/'.length))) return route as `component/${string}`;
   return catalogPages.some((page) => page.id === route) ? route as CatalogPage : 'overview';
 }
 
@@ -321,13 +324,59 @@ function FoundationsWorkbench() {
   </Stack>;
 }
 
+function ComponentExample({ doc }: { doc: ComponentDoc }) {
+  if (doc.slug === 'button') return <Inline wrap><Button variant="primary">Primary</Button><Button>Secondary</Button><Button variant="quiet">Quiet</Button><Button loading>Loading</Button><Button disabled>Disabled</Button></Inline>;
+  if (doc.slug === 'text-field') return <div className="grid gap-4 md:grid-cols-2"><TextField label="Service name" defaultValue="edge-router" description="Persistent guidance" /><TextField label="Invalid service" defaultValue="x" error="Use at least three characters" /><TextField label="Read-only region" defaultValue="ap-southeast" readOnly /><TextField label="Unavailable" disabled /></div>;
+  if (doc.slug === 'select') return <div className="max-w-md"><Select label="Deployment region" defaultValue="sg" options={[{ label: 'Singapore', value: 'sg' }, { label: 'Tokyo', value: 'jp' }, { label: 'Frankfurt', value: 'de' }]} /></div>;
+  if (doc.slug === 'alert') return <div className="grid gap-3 md:grid-cols-2"><Alert title="Deployment ready" tone="ok">All gates passed.</Alert><Alert title="Action required" tone="danger">Two variables are missing.</Alert></div>;
+  if (doc.slug === 'status-mark') return <Inline wrap><StatusMark label="Healthy" tone="ok" /><StatusMark label="Pending" tone="warning" /><StatusMark label="Degraded" tone="danger" /></Inline>;
+  if (doc.slug === 'image-surface') return <div className="max-w-lg"><ImageSurface src="/sample-media.svg" alt="Abstract service architecture" aspectRatio="video" caption="Architecture preview" /></div>;
+  if (doc.slug === 'dialog') return <Dialog><DialogTrigger asChild><Button variant="primary">Open dialog</Button></DialogTrigger><DialogContent title="Create service" description="Review metadata before continuing."><Stack><TextField label="Service name" defaultValue="edge-router" /><Button variant="primary">Create</Button></Stack></DialogContent></Dialog>;
+  if (doc.slug === 'drawer') return <Drawer><DrawerTrigger asChild><Button>Open drawer</Button></DrawerTrigger><DrawerContent title="Service inspector" description="Review settings without leaving this page."><TextField label="Service" defaultValue="edge-router" /></DrawerContent></Drawer>;
+  if (doc.slug === 'data-table') return <DataTable caption="Service inventory example" columns={[{ id: 'name', header: 'Service', cell: (row) => row.name }, { id: 'status', header: 'Status', cell: (row) => <StatusMark label={row.status} tone="ok" /> }]} rows={serviceRows.slice(0, 2)} getRowId={(row) => row.id} />;
+  return <Surface variant="recessed" className="grid gap-3"><StatusMark tone="ok" label="Public contract available" /><p className="text-sm text-fg-2">The complete composition is demonstrated on the {doc.category} family page. This reference documents its public contract and required states.</p><Button density="compact" onClick={() => { window.location.hash = `/${categoryRoute(doc.category)}`; }}>Open family examples</Button></Surface>;
+}
+
+function categoryRoute(category: ComponentDoc['category']): CatalogPage {
+  if (category === 'Layout') return 'foundations';
+  if (category === 'Navigation' || category === 'Overlays') return 'desktop';
+  return category.toLowerCase() as CatalogPage;
+}
+
+function ComponentDocumentation({ doc }: { doc: ComponentDoc }) {
+  const related = componentRegistry.filter((component) => component.category === doc.category && component.slug !== doc.slug).slice(0, 5);
+  return <Stack gap="xl" data-testid="component-documentation">
+    <Breadcrumb><BreadcrumbLink href="#/overview">Catalog</BreadcrumbLink><BreadcrumbLink href={`#/${categoryRoute(doc.category)}`}>{doc.category}</BreadcrumbLink><span aria-current="page">{doc.name}</span></Breadcrumb>
+    <section className="ink-doc-section" aria-labelledby="example-title"><div className="ink-doc-section-heading"><div><p className="gallery-label">Interactive example</p><h3 id="example-title">{doc.name} example</h3></div><Badge>Stable</Badge></div><div className="ink-doc-example"><ComponentExample doc={doc} /></div></section>
+    <section className="ink-doc-section" aria-labelledby="states-title"><div className="ink-doc-section-heading"><div><p className="gallery-label">Visual contract</p><h3 id="states-title">Required states</h3></div><span className="text-xs text-fg-3">{doc.states.length} states</span></div><div className="ink-doc-state-grid">{doc.states.map((state) => <div key={state}><span className="ink-tone-outline" aria-hidden="true" /><span>{state}</span></div>)}</div></section>
+    <section className="ink-doc-section" aria-labelledby="api-title"><div className="ink-doc-section-heading"><div><p className="gallery-label">Public API</p><h3 id="api-title">Key props</h3></div><code className="font-mono text-xs">@hiepknor/ink-ui-react</code></div><div className="overflow-x-auto"><table className="ink-doc-prop-table"><thead><tr><th>Prop</th><th>Type</th><th>Default</th><th>Purpose</th></tr></thead><tbody>{doc.props.map((prop) => <tr key={prop.name}><td><code>{prop.name}</code></td><td><code>{prop.type}</code></td><td><code>{prop.defaultValue}</code></td><td>{prop.description}</td></tr>)}</tbody></table></div></section>
+    <section className="ink-doc-section" aria-labelledby="a11y-title"><div className="ink-doc-section-heading"><div><p className="gallery-label">Accessibility</p><h3 id="a11y-title">Usage requirement</h3></div></div><Alert title="Contract">{doc.accessibility}</Alert></section>
+    {related.length > 0 && <section className="ink-doc-section" aria-labelledby="related-title"><div className="ink-doc-section-heading"><div><p className="gallery-label">Continue exploring</p><h3 id="related-title">Related components</h3></div></div><div className="ink-doc-related">{related.map((component) => <a href={`#/component/${component.slug}`} key={component.slug}>{component.name}<span aria-hidden="true">→</span></a>)}</div></section>}
+  </Stack>;
+}
+
+function ComponentSearch({ open, onOpenChange }: { open: boolean; onOpenChange: (open: boolean) => void }) {
+  const [query, setQuery] = useState('');
+  const normalizedQuery = query.trim().toLowerCase();
+  const results = normalizedQuery ? componentRegistry.filter((component) => `${component.name} ${component.category} ${component.description}`.toLowerCase().includes(normalizedQuery)).slice(0, 10) : [];
+  const families = Array.from(new Set(componentRegistry.map((component) => component.category))).map((category) => ({ category, count: componentRegistry.filter((component) => component.category === category).length }));
+  useEffect(() => { if (!open) setQuery(''); }, [open]);
+  return <Dialog open={open} onOpenChange={onOpenChange}><DialogContent title="Find a component" description="Search public Ink UI contracts by name, family, or purpose.">
+    <Stack gap="md"><TextField autoFocus label="Search components" value={query} onChange={(event) => setQuery(event.currentTarget.value)} placeholder="Button, upload, navigation…" />
+      {!normalizedQuery ? <div><p className="gallery-label mb-2">Browse by family</p><div className="ink-command-families">{families.map(({ category, count }) => <a href={`#/${categoryRoute(category)}`} onClick={() => onOpenChange(false)} key={category}><strong>{category}</strong><span>{count} components</span></a>)}</div></div>
+        : <div><div className="mb-2 flex items-center justify-between gap-3"><p className="gallery-label">Component results</p><span className="text-xs text-fg-3">{results.length} found</span></div><div className="ink-command-results" role="list" aria-label="Component results">{results.map((component) => <a role="listitem" href={`#/component/${component.slug}`} onClick={() => onOpenChange(false)} key={component.slug}><span><strong>{component.name}</strong><small>{component.description}</small></span><Badge>{component.category}</Badge></a>)}{results.length === 0 && <EmptyState title="No component found" description="Try a component name, family, or purpose." />}</div></div>}
+    </Stack>
+  </DialogContent></Dialog>;
+}
+
 function ReactPreview() {
-  const [activePage, setActivePage] = useState<CatalogPage | 'all'>(readCatalogPage);
+  const [activePage, setActivePage] = useState<CatalogRoute>(readCatalogPage);
+  const [searchOpen, setSearchOpen] = useState(false);
 
   useEffect(() => {
     const syncRoute = () => {
       const route = window.location.hash.replace(/^#\/?/, '');
-      if (route !== 'all' && !catalogPages.some((page) => page.id === route)) return;
+      if (route !== 'all' && !catalogPages.some((page) => page.id === route) && !(route.startsWith('component/') && findComponent(route.slice('component/'.length)))) return;
       setActivePage(readCatalogPage());
       window.requestAnimationFrame(() => document.querySelector<HTMLElement>('[data-catalog-heading]')?.focus({ preventScroll: true }));
     };
@@ -336,9 +385,21 @@ function ReactPreview() {
   }, []);
 
   useEffect(() => {
+    const openSearch = (event: KeyboardEvent) => {
+      if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k') {
+        event.preventDefault();
+        setSearchOpen(true);
+      }
+    };
+    window.addEventListener('keydown', openSearch);
+    return () => window.removeEventListener('keydown', openSearch);
+  }, []);
+
+  useEffect(() => {
     document.body.dataset.catalogPage = activePage;
   }, [activePage]);
 
+  const activeDoc = activePage.startsWith('component/') ? findComponent(activePage.slice('component/'.length)) : undefined;
   const currentPage = catalogPages.find((page) => page.id === activePage) ?? catalogPages[0];
   const content = activePage === 'overview' ? <CatalogOverview />
     : activePage === 'foundations' ? <FoundationsWorkbench />
@@ -347,6 +408,7 @@ function ReactPreview() {
     : activePage === 'data' ? <DataTableWorkbench />
     : activePage === 'media' ? <MediaWorkbench />
     : activePage === 'desktop' ? <DesktopFoundation />
+    : activeDoc ? <ComponentDocumentation doc={activeDoc} />
     : null;
 
   if (activePage === 'all') {
@@ -361,15 +423,17 @@ function ReactPreview() {
       <div className="ink-catalog-shell" data-testid="catalog-shell">
         <aside className="ink-catalog-sidebar">
           <a className="ink-catalog-brand" href="#/overview"><span className="ink-tone-solid" aria-hidden="true" /> <span>Ink UI</span><small>Workbench</small></a>
+          <button className="ink-catalog-search" type="button" onClick={() => setSearchOpen(true)}><span>Find component</span><kbd>{navigator.platform.includes('Mac') ? '⌘' : 'Ctrl'} K</kbd></button>
           <nav className="ink-catalog-nav" aria-label="Component catalog">
             {catalogPages.map((page) => <a href={`#/${page.id}`} aria-current={activePage === page.id ? 'page' : undefined} key={page.id}>{page.label}</a>)}
           </nav>
           <p className="ink-catalog-version">@hiepknor/ink-ui-react</p>
         </aside>
         <main className="ink-catalog-main" id="catalog-content">
-          <CatalogHeader page={currentPage} />
+          {activeDoc ? <header className="ink-catalog-intro"><div><p className="gallery-label">{activeDoc.category} component</p><h2 className="ink-catalog-title" tabIndex={-1} data-catalog-heading>{activeDoc.name}</h2><p className="ink-catalog-summary">{activeDoc.description}</p></div><div className="ink-catalog-tags"><Badge>Stable</Badge><Badge>{activeDoc.states.length} states</Badge></div></header> : <CatalogHeader page={currentPage} />}
           <Surface aria-label="React component examples" className="ink-catalog-content">{content}</Surface>
         </main>
+        <ComponentSearch open={searchOpen} onOpenChange={setSearchOpen} />
       </div>
     </TooltipProvider>
   );

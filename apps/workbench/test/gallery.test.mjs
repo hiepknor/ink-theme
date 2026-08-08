@@ -2,11 +2,12 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import test from 'node:test';
 
-const [gallery, galleryCss, galleryScript, reactPreview] = await Promise.all([
+const [gallery, galleryCss, galleryScript, reactPreview, componentRegistry] = await Promise.all([
   readFile(new URL('../index.html', import.meta.url), 'utf8'),
   readFile(new URL('../gallery.css', import.meta.url), 'utf8'),
   readFile(new URL('../gallery.js', import.meta.url), 'utf8'),
   readFile(new URL('../react-preview.tsx', import.meta.url), 'utf8'),
+  readFile(new URL('../component-registry.ts', import.meta.url), 'utf8'),
 ]);
 
 const packageJson = JSON.parse(
@@ -49,6 +50,17 @@ test('workbench exercises the extended component library', () => {
     assert.ok(reactPreview.includes(marker), `Extended preview is missing ${marker}`);
   }
   assert.ok(reactPreview.includes('Extended component library'));
+});
+
+test('component catalog documents public families and contracts', () => {
+  for (const family of ['Forms', 'Feedback', 'Data', 'Media', 'Layout', 'Navigation', 'Overlays', 'Desktop']) {
+    assert.ok(componentRegistry.includes(`'${family}'`), `Component registry is missing ${family}`);
+  }
+  for (const contract of ['description:', 'states:', 'accessibility:', 'props:']) {
+    assert.ok(componentRegistry.includes(contract), `Component registry is missing ${contract}`);
+  }
+  assert.ok(reactPreview.includes('Find a component'));
+  assert.ok(reactPreview.includes('ComponentDocumentation'));
 });
 
 test('gallery reviews every public screentone recipe', () => {
