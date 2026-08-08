@@ -12,5 +12,14 @@ export const Pagination = forwardRef(function Pagination({ className, label = 'P
     return _jsx("nav", { ref: ref, "aria-label": label, className: classes('ink-ui-pagination', className), ...props });
 });
 export const PaginationLink = forwardRef(function PaginationLink({ className, current, ...props }, ref) {
-    return _jsx("a", { ref: ref, className: classes('ink-ui-pagination-link', className), "aria-current": current ? 'page' : undefined, "data-current": current || undefined, ...props });
+    return _jsx("a", { ref: ref, className: classes('ink-ui-pagination-item ink-ui-pagination-link', className), "aria-current": current ? 'page' : undefined, "data-current": current || undefined, ...props });
+});
+export const PaginationButton = forwardRef(function PaginationButton({ className, current, type = 'button', ...props }, ref) {
+    return _jsx("button", { ref: ref, type: type, className: classes('ink-ui-pagination-item ink-ui-pagination-button', className), "aria-current": current ? 'page' : undefined, "data-current": current || undefined, ...props });
+});
+export const PaginationEllipsis = forwardRef(function PaginationEllipsis({ className, children = '…', ...props }, ref) {
+    return _jsx("span", { ref: ref, className: classes('ink-ui-pagination-ellipsis', className), "aria-hidden": "true", ...props, children: children });
+});
+export const PaginationStatus = forwardRef(function PaginationStatus({ className, ...props }, ref) {
+    return _jsx("span", { ref: ref, className: classes('ink-ui-pagination-status', className), ...props });
 });

@@ -2,6 +2,7 @@ import { forwardRef, type ChangeEvent, type HTMLAttributes, type ReactNode, type
 import { classes } from './shared.js';
 import { Select, type SelectOption } from './forms.js';
 import { Alert, ErrorState, type FeedbackLive } from './feedback.js';
+import { Pagination, PaginationButton, PaginationEllipsis, PaginationStatus } from './navigation.js';
 
 export type TableProps = TableHTMLAttributes<HTMLTableElement>;
 export const Table = forwardRef<HTMLTableElement, TableProps>(function Table({ className, ...props }, ref) {
@@ -54,6 +55,19 @@ function SelectionControl({ checked, indeterminate, label, onChange }: { checked
   return <label className="ink-ui-table-check"><input type="checkbox" checked={checked} ref={(node) => { if (node) node.indeterminate = Boolean(indeterminate); }} aria-label={label} onChange={onChange} /><span aria-hidden="true" /></label>;
 }
 
+function paginationItems(page: number, pageCount: number): Array<number | 'ellipsis-start' | 'ellipsis-end'> {
+  if (pageCount <= 5) return Array.from({ length: pageCount }, (_, index) => index + 1);
+  const pages = new Set([1, pageCount, page - 1, page, page + 1]);
+  const visible = Array.from(pages).filter((item) => item >= 1 && item <= pageCount).sort((a, b) => a - b);
+  const result: Array<number | 'ellipsis-start' | 'ellipsis-end'> = [];
+  visible.forEach((item, index) => {
+    const previous = visible[index - 1];
+    if (previous !== undefined && item - previous > 1) result.push(previous === 1 ? 'ellipsis-start' : 'ellipsis-end');
+    result.push(item);
+  });
+  return result;
+}
+
 export function DataTable<Row>({ caption, className, columns, empty = 'No results', error, errorActions, errorLive = 'polite', errorMode = 'replace', errorTitle = 'Unable to load data', getRowId, loading = false, loadingLabel = 'Loading data', onSelectionChange, onSortChange, pagination, rows, selectedRowIds = [], sort, toolbar, ...props }: DataTableProps<Row>) {
   const selectable = Boolean(onSelectionChange);
   const rowIds = rows.map(getRowId);
@@ -72,13 +86,15 @@ export function DataTable<Row>({ caption, className, columns, empty = 'No result
   }
   const replaceError = error !== undefined && (errorMode === 'replace' || rows.length === 0);
   const stateContent = replaceError ? <ErrorState title={errorTitle} description={error} actions={errorActions} live={errorLive} /> : (loading ? loadingLabel : (rows.length === 0 ? empty : undefined));
+  const pageCount = Math.max(1, pagination?.pageCount ?? 1);
+  const currentPage = Math.min(pageCount, Math.max(1, pagination?.page ?? 1));
   return <div className={classes('ink-ui-data-table', className)} aria-busy={loading || undefined} {...props}>{toolbar}{error !== undefined && !replaceError && <Alert tone="danger" live={errorLive} title={errorTitle}>{error}<div className="ink-ui-alert-actions">{errorActions}</div></Alert>}<Table><TableCaption>{caption}</TableCaption><TableHeader><TableRow>{selectable && <TableHead className="ink-ui-table-select" scope="col"><SelectionControl checked={allSelected} indeterminate={!allSelected && selectedVisible.length > 0} label="Select all rows" onChange={(event) => toggleAll(event.currentTarget.checked)} /></TableHead>}{columns.map((column) => {
     const active = sort?.columnId === column.id;
     return <TableHead key={column.id} scope="col" aria-sort={active ? sort.direction : column.sortable ? 'none' : undefined} data-align={column.align}>{column.sortable ? <button type="button" className="ink-ui-table-sort" onClick={() => onSortChange?.({ columnId: column.id, direction: active && sort.direction === 'ascending' ? 'descending' : 'ascending' })}>{column.header}<span aria-hidden="true">{active ? (sort.direction === 'ascending' ? '↑' : '↓') : '↕'}</span></button> : column.header}</TableHead>;
   })}</TableRow></TableHeader><TableBody>{stateContent !== undefined ? <TableRow><TableCell className="ink-ui-table-state" colSpan={columns.length + (selectable ? 1 : 0)}>{loading && <span className="ink-ui-spinner" aria-hidden="true" />}{stateContent}</TableCell></TableRow> : rows.map((row) => {
     const id = getRowId(row);
     return <TableRow key={id} data-selected={selected.has(id) || undefined}>{selectable && <TableCell className="ink-ui-table-select"><SelectionControl checked={selected.has(id)} label={`Select row ${id}`} onChange={(event) => toggleRow(id, event.currentTarget.checked)} /></TableCell>}{columns.map((column) => <TableCell key={column.id} data-align={column.align}>{column.cell(row)}</TableCell>)}</TableRow>;
-  })}</TableBody></Table>{pagination && <div className="ink-ui-data-pagination"><span className="ink-ui-description">{pagination.totalLabel}</span><span>Page {pagination.page} of {Math.max(1, pagination.pageCount)}</span><div className="ink-ui-data-pagination-actions"><button type="button" className="ink-ui-media-action" disabled={pagination.page <= 1} onClick={() => pagination.onPageChange(pagination.page - 1)}>Previous</button><button type="button" className="ink-ui-media-action" disabled={pagination.page >= pagination.pageCount} onClick={() => pagination.onPageChange(pagination.page + 1)}>Next</button></div></div>}</div>;
+  })}</TableBody></Table>{pagination && <div className="ink-ui-data-pagination"><span className="ink-ui-description">{pagination.totalLabel}</span><PaginationStatus aria-live="polite">Page {currentPage} of {pageCount}</PaginationStatus><Pagination label="Table pagination"><PaginationButton aria-label="Previous page" disabled={currentPage <= 1} onClick={() => pagination.onPageChange(currentPage - 1)}>←</PaginationButton>{paginationItems(currentPage, pageCount).map((item) => typeof item === 'number' ? <PaginationButton key={item} current={item === currentPage} aria-label={item === currentPage ? `Page ${item}` : `Go to page ${item}`} onClick={() => pagination.onPageChange(item)}>{item}</PaginationButton> : <PaginationEllipsis key={item} />)}<PaginationButton aria-label="Next page" disabled={currentPage >= pageCount} onClick={() => pagination.onPageChange(currentPage + 1)}>→</PaginationButton></Pagination></div>}</div>;
 }
 
 export interface DataTableToolbarProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onChange'> {

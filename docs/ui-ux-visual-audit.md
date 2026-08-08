@@ -47,6 +47,9 @@ forced-colors support, and visual regression coverage.
 - React render failures had no recovery boundary. `ErrorBoundary` now contains
   crashes at the nearest useful subtree, supports reset keys and custom
   fallbacks, and forwards diagnostics to application-owned logging.
+- Route pagination and controlled data-table pagination used different controls,
+  spacing, and selected states. Links and buttons now share one visual contract;
+  long controlled ranges compact through the same ellipsis primitive.
 
 ## Deliberately deferred
 

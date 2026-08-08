@@ -8,7 +8,7 @@ const styles = await read('src/styles.css');
 for (const component of [
   'Avatar', 'Banner', 'Badge', 'Button', 'ButtonGroup', 'Checkbox', 'DataTable', 'DataTableFilter', 'DataTableToolbar', 'Dialog', 'EmptyState', 'ErrorBoundary', 'ErrorMessage', 'ErrorState', 'FilterChip',
   'FileList', 'FileUpload', 'FormErrorSummary', 'IconButton', 'ImageGallery', 'ImageSurface', 'InkProvider', 'Inline', 'Menu', 'Panel', 'Popover',
-  'RadioGroup', 'Select', 'Separator', 'Sidebar', 'Spinner', 'Stack',
+  'PaginationButton', 'PaginationEllipsis', 'PaginationStatus', 'RadioGroup', 'Select', 'Separator', 'Sidebar', 'Spinner', 'Stack',
   'StatusBar', 'StatusMark', 'Surface', 'Switch', 'Tabs', 'TextArea',
   'TextField', 'Toolbar', 'Tooltip', 'VisuallyHidden',
 ]) {

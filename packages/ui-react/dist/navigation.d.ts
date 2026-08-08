@@ -1,4 +1,4 @@
-import { type AnchorHTMLAttributes, type HTMLAttributes, type ReactNode } from 'react';
+import { type AnchorHTMLAttributes, type ButtonHTMLAttributes, type HTMLAttributes, type ReactNode } from 'react';
 export interface BreadcrumbProps extends HTMLAttributes<HTMLElement> {
     label?: string;
     separator?: ReactNode;
@@ -14,3 +14,11 @@ export interface PaginationLinkProps extends AnchorHTMLAttributes<HTMLAnchorElem
     current?: boolean;
 }
 export declare const PaginationLink: import("react").ForwardRefExoticComponent<PaginationLinkProps & import("react").RefAttributes<HTMLAnchorElement>>;
+export interface PaginationButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+    current?: boolean;
+}
+export declare const PaginationButton: import("react").ForwardRefExoticComponent<PaginationButtonProps & import("react").RefAttributes<HTMLButtonElement>>;
+export type PaginationEllipsisProps = HTMLAttributes<HTMLSpanElement>;
+export declare const PaginationEllipsis: import("react").ForwardRefExoticComponent<PaginationEllipsisProps & import("react").RefAttributes<HTMLSpanElement>>;
+export type PaginationStatusProps = HTMLAttributes<HTMLSpanElement>;
+export declare const PaginationStatus: import("react").ForwardRefExoticComponent<PaginationStatusProps & import("react").RefAttributes<HTMLSpanElement>>;

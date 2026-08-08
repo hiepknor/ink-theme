@@ -126,7 +126,7 @@ function ErrorExperienceWorkbench() {
 
 function DataTableWorkbench() {
   const [query, setQuery] = useState('');
-  const [owner, setOwner] = useState('platform');
+  const [owner, setOwner] = useState('all');
   const [status, setStatus] = useState('all');
   const [selected, setSelected] = useState<string[]>([]);
   const [sort, setSort] = useState<DataTableSort>({ columnId: 'name', direction: 'ascending' });
