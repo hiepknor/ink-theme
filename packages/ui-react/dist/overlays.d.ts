@@ -12,6 +12,17 @@ export interface DialogContentProps extends ComponentPropsWithoutRef<typeof Dial
     title: string;
 }
 export declare const DialogContent: import("react").ForwardRefExoticComponent<DialogContentProps & import("react").RefAttributes<HTMLDivElement>>;
+export declare const Drawer: import("react").FC<DialogPrimitive.DialogProps>;
+export declare const DrawerTrigger: import("react").ForwardRefExoticComponent<DialogPrimitive.DialogTriggerProps & import("react").RefAttributes<HTMLButtonElement>>;
+export declare const DrawerClose: import("react").ForwardRefExoticComponent<DialogPrimitive.DialogCloseProps & import("react").RefAttributes<HTMLButtonElement>>;
+export type DrawerSide = 'top' | 'right' | 'bottom' | 'left';
+export interface DrawerContentProps extends ComponentPropsWithoutRef<typeof DialogPrimitive.Content> {
+    closeLabel?: string;
+    description?: string;
+    side?: DrawerSide;
+    title: string;
+}
+export declare const DrawerContent: import("react").ForwardRefExoticComponent<DrawerContentProps & import("react").RefAttributes<HTMLDivElement>>;
 export declare const Popover: import("react").FC<PopoverPrimitive.PopoverProps>;
 export declare const PopoverTrigger: import("react").ForwardRefExoticComponent<PopoverPrimitive.PopoverTriggerProps & import("react").RefAttributes<HTMLButtonElement>>;
 export interface PopoverContentProps extends ComponentPropsWithoutRef<typeof PopoverPrimitive.Content> {

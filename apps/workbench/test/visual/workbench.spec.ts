@@ -26,7 +26,7 @@ test('extended component library', async ({ page }) => {
 });
 
 test('custom select dropdown', async ({ page }) => {
-  await page.getByRole('combobox', { name: 'Region' }).click();
+  await page.getByTestId('desktop-foundation').getByRole('combobox', { name: 'Region', exact: true }).click();
   await expect(page.getByRole('option', { name: 'Singapore' })).toBeVisible();
   await expect(page).toHaveScreenshot('select-dropdown.png');
 });
@@ -41,4 +41,10 @@ test('dialog overlay', async ({ page }) => {
   await page.getByRole('button', { name: 'Open dialog' }).click();
   await expect(page.getByRole('dialog', { name: 'Create service' })).toBeVisible();
   await expect(page).toHaveScreenshot('dialog-overlay.png');
+});
+
+test('drawer overlay', async ({ page }) => {
+  await page.getByRole('button', { name: 'Open drawer' }).click();
+  await expect(page.getByRole('dialog', { name: 'Service inspector' })).toBeVisible();
+  await expect(page).toHaveScreenshot('drawer-overlay.png');
 });

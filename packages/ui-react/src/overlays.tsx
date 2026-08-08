@@ -13,6 +13,15 @@ export const DialogContent = forwardRef<ElementRef<typeof DialogPrimitive.Conten
   return <DialogPrimitive.Portal><DialogPrimitive.Overlay className="ink-ui-overlay" /><DialogPrimitive.Content ref={ref} className={classes('ink-ui-dialog', className)} {...props}><DialogPrimitive.Title className="ink-ui-overlay-title">{title}</DialogPrimitive.Title>{description && <DialogPrimitive.Description className="ink-ui-description">{description}</DialogPrimitive.Description>}<div className="ink-ui-overlay-body">{children}</div><DialogPrimitive.Close className="ink-ui-overlay-close" aria-label={closeLabel}>×</DialogPrimitive.Close></DialogPrimitive.Content></DialogPrimitive.Portal>;
 });
 
+export const Drawer = DialogPrimitive.Root;
+export const DrawerTrigger = DialogPrimitive.Trigger;
+export const DrawerClose = DialogPrimitive.Close;
+export type DrawerSide = 'top' | 'right' | 'bottom' | 'left';
+export interface DrawerContentProps extends ComponentPropsWithoutRef<typeof DialogPrimitive.Content> { closeLabel?: string; description?: string; side?: DrawerSide; title: string; }
+export const DrawerContent = forwardRef<ElementRef<typeof DialogPrimitive.Content>, DrawerContentProps>(function DrawerContent({ children, className, closeLabel = 'Close drawer', description, side = 'right', title, ...props }, ref) {
+  return <DialogPrimitive.Portal><DialogPrimitive.Overlay className="ink-ui-overlay" /><DialogPrimitive.Content ref={ref} className={classes('ink-ui-drawer', className)} data-side={side} {...props}><DialogPrimitive.Title className="ink-ui-overlay-title">{title}</DialogPrimitive.Title>{description && <DialogPrimitive.Description className="ink-ui-description">{description}</DialogPrimitive.Description>}<div className="ink-ui-overlay-body">{children}</div><DialogPrimitive.Close className="ink-ui-overlay-close" aria-label={closeLabel}>×</DialogPrimitive.Close></DialogPrimitive.Content></DialogPrimitive.Portal>;
+});
+
 export const Popover = PopoverPrimitive.Root;
 export const PopoverTrigger = PopoverPrimitive.Trigger;
 export interface PopoverContentProps extends ComponentPropsWithoutRef<typeof PopoverPrimitive.Content> { closeLabel?: string; }

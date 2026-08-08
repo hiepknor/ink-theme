@@ -9,7 +9,7 @@ export { Combobox, type ComboboxOption, type ComboboxProps, RadioGroup, type Rad
 export { InkProvider, type InkProviderProps, useInkDensity } from './ink-provider.js';
 export { Inline, type InlineProps, type LayoutAlign, type LayoutGap, Separator, type SeparatorProps, Stack, type StackProps, VisuallyHidden } from './layout.js';
 export { Breadcrumb, BreadcrumbLink, type BreadcrumbLinkProps, type BreadcrumbProps, Pagination, PaginationLink, type PaginationLinkProps, type PaginationProps } from './navigation.js';
-export { Dialog, DialogClose, DialogContent, type DialogContentProps, DialogTrigger, Menu, MenuContent, MenuItem, MenuSeparator, MenuTrigger, Popover, PopoverContent, type PopoverContentProps, PopoverTrigger, Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from './overlays.js';
+export { Dialog, DialogClose, DialogContent, type DialogContentProps, DialogTrigger, Drawer, DrawerClose, DrawerContent, type DrawerContentProps, type DrawerSide, DrawerTrigger, Menu, MenuContent, MenuItem, MenuSeparator, MenuTrigger, Popover, PopoverContent, type PopoverContentProps, PopoverTrigger, Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from './overlays.js';
 export { Surface, type SurfaceProps, type SurfaceVariant } from './surface.js';
 export { TextField, type TextFieldProps } from './text-field.js';
 export type { InkDensity } from './shared.js';
