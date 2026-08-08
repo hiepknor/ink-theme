@@ -53,8 +53,7 @@ jobs:
   visual-regression:
     name: Visual Regression
     runs-on: ubuntu-latest
-    container: mcr.microsoft.com/playwright:v1.62.1-noble
-    timeout-minutes: 10
+    timeout-minutes: 15
 
     steps:
       - uses: actions/checkout@v7
@@ -64,6 +63,8 @@ jobs:
           node-version: 20
           cache: pnpm
       - run: pnpm install --frozen-lockfile
+      - name: Install Playwright browser and system dependencies
+        run: pnpm --filter @hiepknor/ink-workbench exec playwright install --with-deps chromium
       - run: pnpm test:visual
 
   tauri-integration:
