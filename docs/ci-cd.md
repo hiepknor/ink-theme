@@ -9,6 +9,8 @@ verification. It contains:
 - Full contract, test, gallery build, and package-content verification.
 - Runtime compatibility on Node 20, 22, and 24.
 - High-severity dependency review on pull requests.
+- Chromium visual regression against reviewed Linux baselines.
+- Tauri frontend build and locked Rust compilation on Linux.
 - One aggregate required status named `CI Gate`.
 
 Branch protection should require only `CI Gate`. Matrix jobs may evolve without

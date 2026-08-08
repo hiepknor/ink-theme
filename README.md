@@ -8,6 +8,7 @@ webviews, mobile web, and future native mobile renderers.
 - [`packages/theme`](packages/theme) — published Tailwind CSS v4 visual foundation.
 - [`packages/ui-react`](packages/ui-react) — accessible React components for web and desktop webviews.
 - [`apps/workbench`](apps/workbench) — private interactive visual review app.
+- [`apps/tauri-example`](apps/tauri-example) — representative Tauri 2 desktop integration.
 - [`packages/tokens`](packages/tokens) — cross-platform token source and generated adapters.
 
 The published theme remains `@hiepknor/ink-theme`; existing consumer imports
@@ -19,6 +20,7 @@ are unchanged after the workspace migration.
 pnpm install --frozen-lockfile
 pnpm verify
 pnpm dev
+pnpm test:visual
 ```
 
 Edit visual values only in `packages/tokens/src/tokens.json`, then regenerate

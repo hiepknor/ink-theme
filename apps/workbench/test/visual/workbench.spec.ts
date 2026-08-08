@@ -1,0 +1,26 @@
+import { expect, test } from '@playwright/test';
+
+test.beforeEach(async ({ page }) => {
+  await page.goto('/');
+  await expect(page.locator('#react-preview')).toBeVisible();
+});
+
+for (const density of ['compact', 'default', 'touch']) {
+  test(`${density} component density`, async ({ page }) => {
+    const preview = page.locator(`[data-density-preview="${density}"]`);
+    await expect(preview).toBeVisible();
+    await expect(preview).toHaveScreenshot(`density-${density}.png`);
+  });
+}
+
+test('desktop application shell', async ({ page }) => {
+  const shell = page.getByTestId('desktop-foundation');
+  await expect(shell).toBeVisible();
+  await expect(shell).toHaveScreenshot('desktop-shell.png');
+});
+
+test('dialog overlay', async ({ page }) => {
+  await page.getByRole('button', { name: 'Open dialog' }).click();
+  await expect(page.getByRole('dialog', { name: 'Create service' })).toBeVisible();
+  await expect(page).toHaveScreenshot('dialog-overlay.png');
+});

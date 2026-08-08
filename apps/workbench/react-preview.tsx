@@ -48,7 +48,7 @@ const densities: InkDensity[] = ['compact', 'default', 'touch'];
 
 function DesktopFoundation() {
   return (
-    <Stack gap="lg">
+    <Stack gap="lg" data-testid="desktop-foundation">
       <Inline justify="between">
         <div><p className="text-sm font-semibold">Desktop application shell</p><p className="text-xs text-fg-3">Built only from public Ink APIs</p></div>
         <Inline gap="sm"><StatusMark tone="ok" label="Connected" /><Badge>v0.1</Badge></Inline>
@@ -92,7 +92,7 @@ function ReactPreview() {
 
       {densities.map((density) => (
         <InkProvider density={density} key={density}>
-          <Surface variant={density === 'default' ? 'elevated' : 'recessed'} className="grid gap-4">
+          <Surface variant={density === 'default' ? 'elevated' : 'recessed'} className="grid gap-4" data-density-preview={density}>
             <header className="flex items-center justify-between gap-3">
               <strong className="font-mono text-xs">{density}</strong>
               <span className="text-xs text-fg-3">{density === 'compact' ? '32px' : density === 'touch' ? '48px' : '40px'}</span>
