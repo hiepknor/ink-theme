@@ -25,7 +25,7 @@ pnpm test:visual
 
 Update baselines only for an intentional visual-contract change. Because pixel
 output is platform-specific, run this command in the same Linux environment
-used by CI:
+used by CI (`mcr.microsoft.com/playwright:v1.62.1-noble`):
 
 ```sh
 pnpm test:visual --update-snapshots
