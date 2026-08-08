@@ -1,4 +1,5 @@
-import { forwardRef, useId, type InputHTMLAttributes, type ReactNode, type SelectHTMLAttributes, type TextareaHTMLAttributes } from 'react';
+import * as SelectPrimitive from '@radix-ui/react-select';
+import { forwardRef, useId, type ButtonHTMLAttributes, type InputHTMLAttributes, type ReactNode, type TextareaHTMLAttributes } from 'react';
 import { classes, describedBy, type InkDensity } from './shared.js';
 import { useInkDensity } from './ink-provider.js';
 
@@ -37,13 +38,19 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>(function Switch(
   return <label className="ink-ui-switch-label" data-density={density}><input {...props} ref={ref} type="checkbox" role="switch" className={classes('ink-ui-switch-input', className)} /><span className="ink-ui-switch-track" aria-hidden="true"><span /></span><span>{label}</span></label>;
 });
 
-export interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> { density?: InkDensity; description?: ReactNode; error?: ReactNode; label: ReactNode; }
-export const Select = forwardRef<HTMLSelectElement, SelectProps>(function Select(
-  { 'aria-describedby': ariaDescribedBy, 'aria-invalid': ariaInvalid, children, className, density: densityOverride, description, error, id: idProp, label, ...props }, ref,
+export interface SelectOption { disabled?: boolean; label: ReactNode; value: string; }
+export interface SelectProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'defaultValue' | 'onChange' | 'value'> {
+  defaultOpen?: boolean; defaultValue?: string; density?: InkDensity; description?: ReactNode;
+  error?: ReactNode; label: ReactNode; name?: string; onOpenChange?: (open: boolean) => void;
+  onValueChange?: (value: string) => void; open?: boolean; options: SelectOption[];
+  placeholder?: ReactNode; required?: boolean; value?: string;
+}
+export const Select = forwardRef<HTMLButtonElement, SelectProps>(function Select(
+  { 'aria-describedby': ariaDescribedBy, 'aria-invalid': ariaInvalid, className, defaultOpen, defaultValue, density: densityOverride, description, disabled, error, id: idProp, label, name, onOpenChange, onValueChange, open, options, placeholder = 'Select an option', required, value, ...triggerProps }, ref,
 ) {
   const id = idProp ?? `ink-select-${useId()}`;
   const density = useInkDensity(densityOverride);
-  return <div className="ink-ui-field" data-density={density}><label className="ink-ui-label" htmlFor={id}>{label}</label><select {...props} ref={ref} id={id} className={classes('ink-ui-input ink-ui-select', className)} aria-invalid={ariaInvalid ?? (error ? true : undefined)} aria-describedby={describedBy(ariaDescribedBy, description ? `${id}-description` : undefined, error ? `${id}-error` : undefined)}>{children}</select><FieldCopy id={id} description={description} error={error} /></div>;
+  return <div className="ink-ui-field" data-density={density}><label className="ink-ui-label" htmlFor={id}>{label}</label><SelectPrimitive.Root {...(defaultOpen === undefined ? {} : { defaultOpen })} {...(defaultValue === undefined ? {} : { defaultValue })} {...(disabled === undefined ? {} : { disabled })} {...(name === undefined ? {} : { name })} {...(onOpenChange === undefined ? {} : { onOpenChange })} {...(onValueChange === undefined ? {} : { onValueChange })} {...(open === undefined ? {} : { open })} {...(required === undefined ? {} : { required })} {...(value === undefined ? {} : { value })}><SelectPrimitive.Trigger {...triggerProps} ref={ref} id={id} className={classes('ink-ui-input ink-ui-select-trigger', className)} aria-invalid={ariaInvalid ?? (error ? true : undefined)} aria-describedby={describedBy(ariaDescribedBy, description ? `${id}-description` : undefined, error ? `${id}-error` : undefined)}><SelectPrimitive.Value placeholder={placeholder} /><SelectPrimitive.Icon className="ink-ui-select-icon" aria-hidden="true">⌄</SelectPrimitive.Icon></SelectPrimitive.Trigger><SelectPrimitive.Portal><SelectPrimitive.Content className="ink-ui-select-content" position="popper" sideOffset={4}><SelectPrimitive.ScrollUpButton className="ink-ui-select-scroll" aria-label="Scroll up">↑</SelectPrimitive.ScrollUpButton><SelectPrimitive.Viewport className="ink-ui-select-viewport">{options.map((option) => <SelectPrimitive.Item className="ink-ui-select-item" {...(option.disabled === undefined ? {} : { disabled: option.disabled })} key={option.value} value={option.value}><SelectPrimitive.ItemText>{option.label}</SelectPrimitive.ItemText><SelectPrimitive.ItemIndicator className="ink-ui-select-indicator" aria-hidden="true">✓</SelectPrimitive.ItemIndicator></SelectPrimitive.Item>)}</SelectPrimitive.Viewport><SelectPrimitive.ScrollDownButton className="ink-ui-select-scroll" aria-label="Scroll down">↓</SelectPrimitive.ScrollDownButton></SelectPrimitive.Content></SelectPrimitive.Portal></SelectPrimitive.Root><FieldCopy id={id} description={description} error={error} /></div>;
 });
 
 export interface ComboboxOption { label: string; value: string; }

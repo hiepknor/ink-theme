@@ -34,15 +34,18 @@ test('actions expose names and grouped density', () => {
 test('native form controls support keyboard and controlled values', async () => {
   const user = userEvent.setup();
   const onValueChange = vi.fn();
-  render(<><TextArea label="Notes" description="Deployment notes" /><RadioGroup label="Tier" name="tier" options={[{ label: 'Primary', value: 'primary' }, { label: 'Replica', value: 'replica' }]} onValueChange={onValueChange} /><Switch label="Tracing" /><Select label="Region" defaultValue="sg"><option value="sg">Singapore</option><option value="jp">Tokyo</option></Select></>);
+  const onRegionChange = vi.fn();
+  render(<><TextArea label="Notes" description="Deployment notes" /><RadioGroup label="Tier" name="tier" options={[{ label: 'Primary', value: 'primary' }, { label: 'Replica', value: 'replica' }]} onValueChange={onValueChange} /><Switch label="Tracing" /><Select label="Region" defaultValue="sg" onValueChange={onRegionChange} options={[{ label: 'Singapore', value: 'sg' }, { label: 'Tokyo', value: 'jp' }]} /></>);
   await user.type(screen.getByRole('textbox', { name: 'Notes' }), 'Ready');
   expect(screen.getByRole('textbox', { name: 'Notes' })).toHaveValue('Ready');
   await user.click(screen.getByRole('radio', { name: 'Replica' }));
   expect(onValueChange).toHaveBeenCalledWith('replica');
   await user.click(screen.getByRole('switch', { name: 'Tracing' }));
   expect(screen.getByRole('switch')).toBeChecked();
-  await user.selectOptions(screen.getByRole('combobox', { name: 'Region' }), 'jp');
-  expect(screen.getByRole('combobox')).toHaveValue('jp');
+  await user.click(screen.getByRole('combobox', { name: 'Region' }));
+  await user.keyboard('{ArrowDown}{Enter}');
+  expect(screen.getByRole('combobox', { name: 'Region' })).toHaveTextContent('Tokyo');
+  expect(onRegionChange).toHaveBeenCalledWith('jp');
 });
 
 test('feedback components keep meaning in accessible text', () => {
