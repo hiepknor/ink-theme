@@ -167,6 +167,7 @@ function DataTableWorkbench() {
 function MediaWorkbench() {
   const [preview, setPreview] = useState('/sample-media.svg');
   const [fileName, setFileName] = useState('sample-media.svg');
+  const [fallbackPreview, setFallbackPreview] = useState('/missing-image.png');
   const [files, setFiles] = useState<UploadFileItem[]>([
     { id: 'artwork', name: 'service-artwork.svg', size: 184320, status: 'success' },
     { id: 'screens', name: 'screenshots.zip', size: 2411724, status: 'uploading', progress: 64 },
@@ -182,7 +183,7 @@ function MediaWorkbench() {
     <FileList items={files} onRemove={(item) => setFiles((current) => current.filter((candidate) => candidate.id !== item.id))} onRetry={(item) => setFiles((current) => current.map((candidate) => candidate.id === item.id ? { ...candidate, status: 'uploading', progress: 0, error: undefined } : candidate))} />
     <Inline align="center"><Avatar name="Hiep Knor" src="/sample-avatar.svg" size="lg" /><Avatar name="Ink Theme" /><Avatar name="Unavailable User" src="/missing-avatar.png" /></Inline>
     <ImageGallery items={[{ src: '/sample-media.svg', alt: 'Contained architecture artwork', caption: 'Architecture' }, { src: '/sample-media.svg', alt: 'Service topology artwork', caption: 'Topology' }, { src: '/sample-media.svg', alt: 'Deployment artwork', caption: 'Deployment' }]} />
-    <ImageSurface src="/missing-image.png" alt="Unavailable service artwork" aspectRatio="video" fallback="No preview available" caption="Error fallback" />
+    <div className="max-w-xl"><ImageSurface src={fallbackPreview} alt="Unavailable service artwork" aspectRatio="video" fallback="Preview unavailable" fallbackDescription="The source could not be loaded. Retry or verify the file location." onRetry={() => setFallbackPreview('/sample-media.svg?recovered')} caption="Error fallback" /></div>
   </Stack>;
 }
 

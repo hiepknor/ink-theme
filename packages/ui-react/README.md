@@ -23,7 +23,9 @@ export function Form() {
 
 The default entrypoint includes the component stylesheet. The
 `@hiepknor/ink-ui-react/styles.css` export is available for tooling that needs
-an explicit CSS entrypoint.
+an explicit CSS entrypoint. JavaScript exports can be tree-shaken, while CSS is
+currently delivered as one aggregate visual contract rather than per-component
+stylesheets.
 
 Custom selects receive data through `options` and expose `value`,
 `defaultValue`, and `onValueChange` instead of browser `<option>` children:
@@ -95,6 +97,11 @@ recovery actions above the table.
 reports them through `onError`. It does not catch event-handler, timer, network,
 or server errors; applications route those failures through the appropriate
 field, form, section, banner, or toast pattern.
+
+`ImageSurface` preserves its requested aspect ratio during loading and failure
+to avoid layout shift. Use `fallbackDescription` for recovery context and
+`onRetry` when the application can refresh, replace, or reauthorize the failed
+source; Ink renders the action but does not own media transport.
 
 `Combobox` intentionally covers native single-value suggestions. Async search,
 remote filtering, multi-select, and virtualization belong to a future advanced

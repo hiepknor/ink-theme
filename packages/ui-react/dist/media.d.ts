@@ -16,8 +16,11 @@ export interface ImageSurfaceProps extends Omit<ImgHTMLAttributes<HTMLImageEleme
     aspectRatio?: ImageAspectRatio;
     caption?: ReactNode;
     fallback?: ReactNode;
+    fallbackDescription?: ReactNode;
     fit?: ImageFit;
     loadingFallback?: ReactNode;
+    onRetry?: () => void;
+    retryLabel?: ReactNode;
 }
 export declare const ImageSurface: import("react").ForwardRefExoticComponent<ImageSurfaceProps & import("react").RefAttributes<HTMLImageElement>>;
 export type UploadFileStatus = 'queued' | 'uploading' | 'success' | 'error';

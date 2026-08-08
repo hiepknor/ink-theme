@@ -46,12 +46,17 @@ test('file upload exposes native input and reports selected files', async () => 
 });
 
 test('image surface preserves alt text and renders an error fallback', () => {
-  render(<ImageSurface src="broken.png" alt="Service topology" aspectRatio="video" fallback="Preview unavailable" caption="Topology" />);
+  const retry = vi.fn();
+  render(<ImageSurface src="broken.png" alt="Service topology" aspectRatio="video" fallback="Preview unavailable" fallbackDescription="Check the source" onRetry={retry} caption="Topology" />);
   const image = screen.getByRole('img', { name: 'Service topology' });
   expect(screen.getByRole('status')).toHaveTextContent('Loading image');
   fireEvent.error(image);
   expect(screen.queryByRole('status')).not.toBeInTheDocument();
-  expect(screen.getByRole('img', { name: 'Service topology' })).toHaveTextContent('Preview unavailable');
+  expect(screen.getByRole('img', { name: 'Service topology' })).toBeInTheDocument();
+  expect(screen.getByText('Preview unavailable')).toBeInTheDocument();
+  expect(screen.getByText('Check the source')).toBeInTheDocument();
+  fireEvent.click(screen.getByRole('button', { name: 'Retry' }));
+  expect(retry).toHaveBeenCalledOnce();
   expect(screen.getByText('Topology').tagName).toBe('FIGCAPTION');
 });
 
