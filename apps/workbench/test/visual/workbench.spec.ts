@@ -119,7 +119,7 @@ test('failed dialog preserves context and background error uses toast', async ({
   await expect(dialog.getByRole('textbox', { name: 'Service name' })).toHaveValue('edge-router');
   await page.keyboard.press('Escape');
   await errors.getByRole('button', { name: 'Show background error' }).click();
-  await expect(page.getByText('Sync interrupted')).toBeVisible();
+  await expect(errors.locator('.ink-ui-toast-title')).toHaveText('Sync interrupted');
   await expect(page.getByRole('button', { name: 'Retry now' })).toBeVisible();
 });
 
