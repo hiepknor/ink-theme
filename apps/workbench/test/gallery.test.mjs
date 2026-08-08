@@ -43,7 +43,7 @@ test('workbench exercises the web and desktop foundation', () => {
 
 test('workbench exercises the extended component library', () => {
   for (const marker of [
-    'Accordion', 'Alert', 'Avatar', 'Breadcrumb', 'Combobox', 'DataTable', 'DataTableFilter', 'DataTableToolbar', 'FileList', 'FileUpload', 'ImageGallery', 'ImageSurface',
+    'Accordion', 'Alert', 'Avatar', 'Banner', 'Breadcrumb', 'Combobox', 'DataTable', 'DataTableFilter', 'DataTableToolbar', 'ErrorState', 'FileList', 'FileUpload', 'FormErrorSummary', 'ImageGallery', 'ImageSurface',
     'Pagination', 'Progress', 'Skeleton', 'Table', 'Toast',
   ]) {
     assert.ok(reactPreview.includes(marker), `Extended preview is missing ${marker}`);

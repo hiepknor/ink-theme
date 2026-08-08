@@ -2,7 +2,8 @@ import { Fragment as _Fragment, jsx as _jsx, jsxs as _jsxs } from "react/jsx-run
 import { forwardRef, useEffect, useId, useImperativeHandle, useRef, useState } from 'react';
 import { classes, describedBy } from './shared.js';
 import { Dialog, DialogContent } from './overlays.js';
-export const FileUpload = forwardRef(function FileUpload({ 'aria-describedby': ariaDescribedBy, className, description, disabled, error, id: idProp, label, onChange, onFilesChange, prompt = 'Choose files or drop them here', ...props }, forwardedRef) {
+import { ErrorMessage } from './feedback.js';
+export const FileUpload = forwardRef(function FileUpload({ 'aria-describedby': ariaDescribedBy, className, description, disabled, error, errorLive = 'off', id: idProp, label, onChange, onFilesChange, prompt = 'Choose files or drop them here', ...props }, forwardedRef) {
     const id = idProp ?? `ink-upload-${useId()}`;
     const inputRef = useRef(null);
     const [dragging, setDragging] = useState(false);
@@ -23,7 +24,7 @@ export const FileUpload = forwardRef(function FileUpload({ 'aria-describedby': a
         receive(files);
     }
     return _jsxs("div", { className: "ink-ui-upload-field", children: [_jsx("span", { className: "ink-ui-label", id: `${id}-label`, children: label }), _jsx("input", { ...props, ref: inputRef, id: id, type: "file", disabled: disabled, className: classes('ink-ui-upload-input', className), "aria-labelledby": `${id}-label`, "aria-invalid": error ? true : undefined, "aria-describedby": describedBy(ariaDescribedBy, descriptionId, errorId), onChange: (event) => { onChange?.(event); receive(event.currentTarget.files); } }), _jsxs("label", { className: "ink-ui-upload-dropzone", "data-dragging": dragging || undefined, "data-disabled": disabled || undefined, htmlFor: id, onDragEnter: (event) => { event.preventDefault(); if (!disabled)
-                    setDragging(true); }, onDragOver: (event) => event.preventDefault(), onDragLeave: () => setDragging(false), onDrop: handleDrop, children: [_jsx("span", { className: "ink-ui-upload-mark", "aria-hidden": "true", children: "\u2191" }), _jsx("strong", { children: prompt }), _jsx("span", { className: "ink-ui-description", children: props.accept ? `Accepted: ${props.accept}` : 'Any file type' })] }), description && _jsx("div", { className: "ink-ui-description", id: descriptionId, children: description }), error && _jsx("div", { className: "ink-ui-error", id: errorId, children: error })] });
+                    setDragging(true); }, onDragOver: (event) => event.preventDefault(), onDragLeave: () => setDragging(false), onDrop: handleDrop, children: [_jsx("span", { className: "ink-ui-upload-mark", "aria-hidden": "true", children: "\u2191" }), _jsx("strong", { children: prompt }), _jsx("span", { className: "ink-ui-description", children: props.accept ? `Accepted: ${props.accept}` : 'Any file type' })] }), description && _jsx("div", { className: "ink-ui-description", id: descriptionId, children: description }), error && _jsx(ErrorMessage, { id: errorId, live: errorLive, children: error })] });
 });
 export const ImageSurface = forwardRef(function ImageSurface({ alt, aspectRatio = 'auto', caption, className, decoding = 'async', fallback = 'Image unavailable', fit = 'cover', loading = 'lazy', loadingFallback = 'Loading image', onError, onLoad, src, ...props }, ref) {
     const [failed, setFailed] = useState(false);

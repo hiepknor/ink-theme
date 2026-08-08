@@ -7,6 +7,7 @@ import {
   AccordionTrigger,
   Alert,
   Avatar,
+  Banner,
   Badge,
   Breadcrumb,
   BreadcrumbLink,
@@ -30,8 +31,10 @@ import {
   DataTableFilter,
   DataTableToolbar,
   EmptyState,
+  ErrorState,
   FileList,
   FileUpload,
+  FormErrorSummary,
   IconButton,
   InkProvider,
   ImageSurface,
@@ -66,6 +69,7 @@ import {
   TextArea,
   TextField,
   Toast,
+  ToastAction,
   ToastClose,
   ToastDescription,
   ToastProvider,
@@ -97,6 +101,28 @@ const serviceRows = [
   { id: 'web-gateway', name: 'Web gateway', owner: 'Platform', region: 'Singapore', status: 'Healthy' },
   { id: 'event-relay', name: 'Event relay', owner: 'Platform', region: 'Tokyo', status: 'Healthy' },
 ];
+
+function ErrorExperienceWorkbench() {
+  const [submitted, setSubmitted] = useState(true);
+  const [focusSummary, setFocusSummary] = useState(false);
+  const [toastOpen, setToastOpen] = useState(false);
+  const [tableError, setTableError] = useState(true);
+  const errors = submitted ? [
+    { fieldId: 'error-service-name', label: 'Service name', message: 'Use at least three characters' },
+    { fieldId: 'error-region', label: 'Region', message: 'Select a deployment region' },
+  ] : [];
+  return <ToastProvider swipeDirection="right"><Stack gap="lg" data-testid="error-experience">
+    <div><p className="text-sm font-semibold">Error hierarchy and recovery</p><p className="text-xs text-fg-3">Errors stay next to their source and escalate only when the affected scope grows.</p></div>
+    <Banner tone="warning" title="Working offline" actions={<Button density="compact">Reconnect</Button>}>Changes remain on this device until the connection returns.</Banner>
+    <div className="grid gap-4 md:grid-cols-2">
+      <Card><CardHeader><CardTitle>Field and form errors</CardTitle><CardDescription>Submit-level summary links back to each invalid control.</CardDescription></CardHeader><CardContent><form className="grid gap-3" onSubmit={(event) => { event.preventDefault(); setSubmitted(true); setFocusSummary(true); }}><FormErrorSummary errors={errors} focusOnMount={focusSummary} /><TextField id="error-service-name" label="Service name" defaultValue="x" error={submitted ? 'Use at least three characters' : undefined} /><Select id="error-region" label="Region" placeholder="Choose a region" error={submitted ? 'Select a deployment region' : undefined} options={[{ label: 'Singapore', value: 'sg' }, { label: 'Tokyo', value: 'jp' }]} /><Inline><Button type="submit" variant="primary">Validate form</Button><Button onClick={() => { setSubmitted(false); setFocusSummary(false); }}>Clear errors</Button></Inline></form></CardContent></Card>
+      <Card><CardHeader><CardTitle>Section failure</CardTitle><CardDescription>Replace only the region that cannot render.</CardDescription></CardHeader><CardContent><ErrorState title="Preview unavailable" description="The rendering service did not respond." details="Request ID: req_01INK_THEME" actions={<><Button density="compact" variant="primary">Retry</Button><Button density="compact">Open logs</Button></>} /></CardContent></Card>
+    </div>
+    <DataTable caption="Service health cache" columns={[{ id: 'name', header: 'Service', cell: (row) => row.name }, { id: 'region', header: 'Region', cell: (row) => row.region }, { id: 'status', header: 'Last known status', cell: (row) => row.status }]} rows={serviceRows.slice(0, 3)} getRowId={(row) => row.id} error={tableError ? 'Refresh failed. Showing data from two minutes ago.' : undefined} errorMode="stale" errorTitle="Could not refresh services" errorActions={tableError && <Button density="compact" onClick={() => setTableError(false)}>Retry refresh</Button>} />
+    <Inline wrap><Dialog><DialogTrigger asChild><Button>Open failed dialog</Button></DialogTrigger><DialogContent title="Create service" description="The dialog remains open so entered data is preserved."><Stack><Alert tone="danger" live="off" title="Service was not created">The name is already in use.<div className="ink-ui-alert-actions"><Button density="compact">Check availability</Button></div></Alert><TextField label="Service name" defaultValue="edge-router" /><Button variant="primary">Try again</Button></Stack></DialogContent></Dialog><Button onClick={() => setToastOpen(true)}>Show background error</Button></Inline>
+    <Toast open={toastOpen} onOpenChange={setToastOpen} tone="danger"><ToastTitle>Sync interrupted</ToastTitle><ToastDescription>Your edits are safe and will retry automatically.</ToastDescription><ToastAction altText="Retry synchronization">Retry now</ToastAction><ToastClose aria-label="Dismiss notification">×</ToastClose></Toast><ToastViewport />
+  </Stack></ToastProvider>;
+}
 
 function DataTableWorkbench() {
   const [query, setQuery] = useState('');
@@ -268,6 +294,8 @@ function ReactPreview() {
       <DesktopFoundation />
       <Separator />
       <ComponentBreadth />
+      <Separator />
+      <ErrorExperienceWorkbench />
       <Separator />
       <DataTableWorkbench />
       <Separator />

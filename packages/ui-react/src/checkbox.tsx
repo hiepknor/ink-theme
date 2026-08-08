@@ -1,11 +1,13 @@
 import { forwardRef, useId, type InputHTMLAttributes, type ReactNode } from 'react';
 import { classes, describedBy, type InkDensity } from './shared.js';
 import { useInkDensity } from './ink-provider.js';
+import { ErrorMessage, type FeedbackLive } from './feedback.js';
 
 export interface CheckboxProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type'> {
   density?: InkDensity;
   description?: ReactNode;
   error?: ReactNode;
+  errorLive?: FeedbackLive;
   label: ReactNode;
 }
 
@@ -17,6 +19,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(function Che
     density: densityOverride,
     description,
     error,
+    errorLive = 'off',
     id: idProp,
     label,
     ...props
@@ -45,7 +48,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(function Che
         <span>{label}</span>
       </label>
       {description && <div className="ink-ui-description ink-ui-check-copy" id={descriptionId}>{description}</div>}
-      {error && <div className="ink-ui-error ink-ui-check-copy" id={errorId}>{error}</div>}
+      {error && <ErrorMessage className="ink-ui-check-copy" id={errorId} live={errorLive}>{error}</ErrorMessage>}
     </div>
   );
 });

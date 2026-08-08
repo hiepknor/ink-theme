@@ -1,5 +1,6 @@
 import { type HTMLAttributes, type ReactNode, type TableHTMLAttributes, type TdHTMLAttributes, type ThHTMLAttributes } from 'react';
 import { type SelectOption } from './forms.js';
+import { type FeedbackLive } from './feedback.js';
 export type TableProps = TableHTMLAttributes<HTMLTableElement>;
 export declare const Table: import("react").ForwardRefExoticComponent<TableProps & import("react").RefAttributes<HTMLTableElement>>;
 export declare const TableHeader: import("react").ForwardRefExoticComponent<HTMLAttributes<HTMLTableSectionElement> & import("react").RefAttributes<HTMLTableSectionElement>>;
@@ -31,6 +32,10 @@ export interface DataTableProps<Row> extends Omit<HTMLAttributes<HTMLDivElement>
     columns: DataTableColumn<Row>[];
     empty?: ReactNode;
     error?: ReactNode;
+    errorActions?: ReactNode;
+    errorLive?: FeedbackLive;
+    errorMode?: 'replace' | 'stale';
+    errorTitle?: ReactNode;
     getRowId: (row: Row) => string;
     loading?: boolean;
     loadingLabel?: ReactNode;
@@ -42,7 +47,7 @@ export interface DataTableProps<Row> extends Omit<HTMLAttributes<HTMLDivElement>
     sort?: DataTableSort;
     toolbar?: ReactNode;
 }
-export declare function DataTable<Row>({ caption, className, columns, empty, error, getRowId, loading, loadingLabel, onSelectionChange, onSortChange, pagination, rows, selectedRowIds, sort, toolbar, ...props }: DataTableProps<Row>): import("react").JSX.Element;
+export declare function DataTable<Row>({ caption, className, columns, empty, error, errorActions, errorLive, errorMode, errorTitle, getRowId, loading, loadingLabel, onSelectionChange, onSortChange, pagination, rows, selectedRowIds, sort, toolbar, ...props }: DataTableProps<Row>): import("react").JSX.Element;
 export interface DataTableToolbarProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onChange'> {
     actions?: ReactNode;
     filters?: ReactNode;

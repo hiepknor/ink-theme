@@ -1,7 +1,9 @@
 import { type HTMLAttributes, type ImgHTMLAttributes, type InputHTMLAttributes, type ReactNode } from 'react';
+import { type FeedbackLive } from './feedback.js';
 export interface FileUploadProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type'> {
     description?: ReactNode;
     error?: ReactNode;
+    errorLive?: FeedbackLive;
     label: ReactNode;
     onFilesChange?: (files: File[]) => void;
     prompt?: ReactNode;

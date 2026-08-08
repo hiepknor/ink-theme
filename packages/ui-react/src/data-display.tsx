@@ -1,6 +1,7 @@
 import { forwardRef, type ChangeEvent, type HTMLAttributes, type ReactNode, type TableHTMLAttributes, type TdHTMLAttributes, type ThHTMLAttributes } from 'react';
 import { classes } from './shared.js';
 import { Select, type SelectOption } from './forms.js';
+import { Alert, ErrorState, type FeedbackLive } from './feedback.js';
 
 export type TableProps = TableHTMLAttributes<HTMLTableElement>;
 export const Table = forwardRef<HTMLTableElement, TableProps>(function Table({ className, ...props }, ref) {
@@ -33,6 +34,10 @@ export interface DataTableProps<Row> extends Omit<HTMLAttributes<HTMLDivElement>
   columns: DataTableColumn<Row>[];
   empty?: ReactNode;
   error?: ReactNode;
+  errorActions?: ReactNode;
+  errorLive?: FeedbackLive;
+  errorMode?: 'replace' | 'stale';
+  errorTitle?: ReactNode;
   getRowId: (row: Row) => string;
   loading?: boolean;
   loadingLabel?: ReactNode;
@@ -49,7 +54,7 @@ function SelectionControl({ checked, indeterminate, label, onChange }: { checked
   return <label className="ink-ui-table-check"><input type="checkbox" checked={checked} ref={(node) => { if (node) node.indeterminate = Boolean(indeterminate); }} aria-label={label} onChange={onChange} /><span aria-hidden="true" /></label>;
 }
 
-export function DataTable<Row>({ caption, className, columns, empty = 'No results', error, getRowId, loading = false, loadingLabel = 'Loading data', onSelectionChange, onSortChange, pagination, rows, selectedRowIds = [], sort, toolbar, ...props }: DataTableProps<Row>) {
+export function DataTable<Row>({ caption, className, columns, empty = 'No results', error, errorActions, errorLive = 'polite', errorMode = 'replace', errorTitle = 'Unable to load data', getRowId, loading = false, loadingLabel = 'Loading data', onSelectionChange, onSortChange, pagination, rows, selectedRowIds = [], sort, toolbar, ...props }: DataTableProps<Row>) {
   const selectable = Boolean(onSelectionChange);
   const rowIds = rows.map(getRowId);
   const selected = new Set(selectedRowIds);
@@ -65,8 +70,9 @@ export function DataTable<Row>({ caption, className, columns, empty = 'No result
     checked ? next.add(id) : next.delete(id);
     onSelectionChange?.(Array.from(next));
   }
-  const stateContent = error ?? (loading ? loadingLabel : (rows.length === 0 ? empty : undefined));
-  return <div className={classes('ink-ui-data-table', className)} aria-busy={loading || undefined} {...props}>{toolbar}<Table><TableCaption>{caption}</TableCaption><TableHeader><TableRow>{selectable && <TableHead className="ink-ui-table-select" scope="col"><SelectionControl checked={allSelected} indeterminate={!allSelected && selectedVisible.length > 0} label="Select all rows" onChange={(event) => toggleAll(event.currentTarget.checked)} /></TableHead>}{columns.map((column) => {
+  const replaceError = error !== undefined && (errorMode === 'replace' || rows.length === 0);
+  const stateContent = replaceError ? <ErrorState title={errorTitle} description={error} actions={errorActions} live={errorLive} /> : (loading ? loadingLabel : (rows.length === 0 ? empty : undefined));
+  return <div className={classes('ink-ui-data-table', className)} aria-busy={loading || undefined} {...props}>{toolbar}{error !== undefined && !replaceError && <Alert tone="danger" live={errorLive} title={errorTitle}>{error}<div className="ink-ui-alert-actions">{errorActions}</div></Alert>}<Table><TableCaption>{caption}</TableCaption><TableHeader><TableRow>{selectable && <TableHead className="ink-ui-table-select" scope="col"><SelectionControl checked={allSelected} indeterminate={!allSelected && selectedVisible.length > 0} label="Select all rows" onChange={(event) => toggleAll(event.currentTarget.checked)} /></TableHead>}{columns.map((column) => {
     const active = sort?.columnId === column.id;
     return <TableHead key={column.id} scope="col" aria-sort={active ? sort.direction : column.sortable ? 'none' : undefined} data-align={column.align}>{column.sortable ? <button type="button" className="ink-ui-table-sort" onClick={() => onSortChange?.({ columnId: column.id, direction: active && sort.direction === 'ascending' ? 'descending' : 'ascending' })}>{column.header}<span aria-hidden="true">{active ? (sort.direction === 'ascending' ? '↑' : '↓') : '↕'}</span></button> : column.header}</TableHead>;
   })}</TableRow></TableHeader><TableBody>{stateContent !== undefined ? <TableRow><TableCell className="ink-ui-table-state" colSpan={columns.length + (selectable ? 1 : 0)}>{loading && <span className="ink-ui-spinner" aria-hidden="true" />}{stateContent}</TableCell></TableRow> : rows.map((row) => {

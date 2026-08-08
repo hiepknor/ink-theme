@@ -2,6 +2,7 @@ import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import { forwardRef } from 'react';
 import { classes } from './shared.js';
 import { Select } from './forms.js';
+import { Alert, ErrorState } from './feedback.js';
 export const Table = forwardRef(function Table({ className, ...props }, ref) {
     return _jsx("div", { className: "ink-ui-table-scroll", children: _jsx("table", { ref: ref, className: classes('ink-ui-table', className), ...props }) });
 });
@@ -15,7 +16,7 @@ function SelectionControl({ checked, indeterminate, label, onChange }) {
     return _jsxs("label", { className: "ink-ui-table-check", children: [_jsx("input", { type: "checkbox", checked: checked, ref: (node) => { if (node)
                     node.indeterminate = Boolean(indeterminate); }, "aria-label": label, onChange: onChange }), _jsx("span", { "aria-hidden": "true" })] });
 }
-export function DataTable({ caption, className, columns, empty = 'No results', error, getRowId, loading = false, loadingLabel = 'Loading data', onSelectionChange, onSortChange, pagination, rows, selectedRowIds = [], sort, toolbar, ...props }) {
+export function DataTable({ caption, className, columns, empty = 'No results', error, errorActions, errorLive = 'polite', errorMode = 'replace', errorTitle = 'Unable to load data', getRowId, loading = false, loadingLabel = 'Loading data', onSelectionChange, onSortChange, pagination, rows, selectedRowIds = [], sort, toolbar, ...props }) {
     const selectable = Boolean(onSelectionChange);
     const rowIds = rows.map(getRowId);
     const selected = new Set(selectedRowIds);
@@ -31,8 +32,9 @@ export function DataTable({ caption, className, columns, empty = 'No results', e
         checked ? next.add(id) : next.delete(id);
         onSelectionChange?.(Array.from(next));
     }
-    const stateContent = error ?? (loading ? loadingLabel : (rows.length === 0 ? empty : undefined));
-    return _jsxs("div", { className: classes('ink-ui-data-table', className), "aria-busy": loading || undefined, ...props, children: [toolbar, _jsxs(Table, { children: [_jsx(TableCaption, { children: caption }), _jsx(TableHeader, { children: _jsxs(TableRow, { children: [selectable && _jsx(TableHead, { className: "ink-ui-table-select", scope: "col", children: _jsx(SelectionControl, { checked: allSelected, indeterminate: !allSelected && selectedVisible.length > 0, label: "Select all rows", onChange: (event) => toggleAll(event.currentTarget.checked) }) }), columns.map((column) => {
+    const replaceError = error !== undefined && (errorMode === 'replace' || rows.length === 0);
+    const stateContent = replaceError ? _jsx(ErrorState, { title: errorTitle, description: error, actions: errorActions, live: errorLive }) : (loading ? loadingLabel : (rows.length === 0 ? empty : undefined));
+    return _jsxs("div", { className: classes('ink-ui-data-table', className), "aria-busy": loading || undefined, ...props, children: [toolbar, error !== undefined && !replaceError && _jsxs(Alert, { tone: "danger", live: errorLive, title: errorTitle, children: [error, _jsx("div", { className: "ink-ui-alert-actions", children: errorActions })] }), _jsxs(Table, { children: [_jsx(TableCaption, { children: caption }), _jsx(TableHeader, { children: _jsxs(TableRow, { children: [selectable && _jsx(TableHead, { className: "ink-ui-table-select", scope: "col", children: _jsx(SelectionControl, { checked: allSelected, indeterminate: !allSelected && selectedVisible.length > 0, label: "Select all rows", onChange: (event) => toggleAll(event.currentTarget.checked) }) }), columns.map((column) => {
                                     const active = sort?.columnId === column.id;
                                     return _jsx(TableHead, { scope: "col", "aria-sort": active ? sort.direction : column.sortable ? 'none' : undefined, "data-align": column.align, children: column.sortable ? _jsxs("button", { type: "button", className: "ink-ui-table-sort", onClick: () => onSortChange?.({ columnId: column.id, direction: active && sort.direction === 'ascending' ? 'descending' : 'ascending' }), children: [column.header, _jsx("span", { "aria-hidden": "true", children: active ? (sort.direction === 'ascending' ? '↑' : '↓') : '↕' })] }) : column.header }, column.id);
                                 })] }) }), _jsx(TableBody, { children: stateContent !== undefined ? _jsx(TableRow, { children: _jsxs(TableCell, { className: "ink-ui-table-state", colSpan: columns.length + (selectable ? 1 : 0), children: [loading && _jsx("span", { className: "ink-ui-spinner", "aria-hidden": "true" }), stateContent] }) }) : rows.map((row) => {

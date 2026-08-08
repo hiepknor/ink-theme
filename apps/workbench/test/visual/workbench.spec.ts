@@ -93,6 +93,36 @@ test('data table composition and interactions', async ({ page }) => {
   await expect(dataTable.getByText('No services match these filters.')).toBeVisible();
 });
 
+test('error hierarchy, placement, and recovery', async ({ page }) => {
+  const errors = page.getByTestId('error-experience');
+  await expect(errors).toBeVisible();
+  await expect(errors).toHaveScreenshot('error-experience.png');
+  await expect(errors.getByRole('status', { name: 'System notice' })).toContainText('Working offline');
+
+  await errors.getByRole('button', { name: 'Clear errors' }).click();
+  await expect(errors.getByRole('alert')).toHaveCount(0);
+  await errors.getByRole('button', { name: 'Validate form' }).click();
+  await expect(errors.getByRole('alert')).toBeFocused();
+  await errors.getByRole('link', { name: /Service name/ }).click();
+  await expect(errors.getByRole('textbox', { name: 'Service name' })).toBeFocused();
+
+  await errors.getByRole('button', { name: 'Retry refresh' }).click();
+  await expect(errors.getByText('Could not refresh services')).not.toBeVisible();
+  await expect(errors.getByRole('table', { name: 'Service health cache' })).toContainText('Edge router');
+});
+
+test('failed dialog preserves context and background error uses toast', async ({ page }) => {
+  const errors = page.getByTestId('error-experience');
+  await errors.getByRole('button', { name: 'Open failed dialog' }).click();
+  const dialog = page.getByRole('dialog', { name: 'Create service' });
+  await expect(dialog.getByText('Service was not created')).toBeVisible();
+  await expect(dialog.getByRole('textbox', { name: 'Service name' })).toHaveValue('edge-router');
+  await page.keyboard.press('Escape');
+  await errors.getByRole('button', { name: 'Show background error' }).click();
+  await expect(errors.locator('.ink-ui-toast-title')).toHaveText('Sync interrupted');
+  await expect(page.getByRole('button', { name: 'Retry now' })).toBeVisible();
+});
+
 test('media gallery lightbox', async ({ page }) => {
   const media = page.getByTestId('media-workbench');
   await media.getByRole('button', { name: 'Open Contained architecture artwork' }).click();

@@ -2,15 +2,15 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { expect, test, vi } from 'vitest';
 import {
-  Accordion, AccordionContent, AccordionItem, AccordionTrigger, Alert, Avatar, Badge,
+  Accordion, AccordionContent, AccordionItem, AccordionTrigger, Alert, Avatar, Banner, Badge,
   Breadcrumb, BreadcrumbLink, Button, ButtonGroup, Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle, Combobox, Dialog,
-  DataTable, DataTableToolbar, DialogContent, DialogTrigger, Drawer, DrawerContent, DrawerTrigger, EmptyState, FileList, FileUpload, FilterChip,
+  DataTable, DataTableToolbar, DialogContent, DialogTrigger, Drawer, DrawerContent, DrawerTrigger, EmptyState, ErrorBoundary, ErrorMessage, ErrorState, FileList, FileUpload, FilterChip, FormErrorSummary,
   IconButton, ImageGallery, ImageSurface, Inline, Menu, MenuContent, MenuItem, MenuTrigger, Panel, Popover,
   Pagination, PaginationLink, PopoverContent, PopoverTrigger, Progress, RadioGroup,
   Select, Separator, Sidebar, Skeleton, Spinner,
   Stack, StatusBar, StatusMark, Switch, Tabs, TabsContent, TabsList, TabsTrigger,
   Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow,
-  TextArea, Toast, ToastDescription, ToastProvider, ToastTitle, ToastViewport,
+  TextArea, TextField, Toast, ToastDescription, ToastProvider, ToastTitle, ToastViewport,
   Toolbar, Tooltip, TooltipContent, TooltipProvider, TooltipTrigger, VisuallyHidden,
 } from '../src/index.js';
 
@@ -111,11 +111,45 @@ test('feedback components keep meaning in accessible text', () => {
 });
 
 test('extended feedback exposes live semantics and progress values', () => {
-  render(<ToastProvider><Alert tone="danger" title="Failed">Retry deployment</Alert><Progress label="Upload" value={40} /><Skeleton label="Loading table" /><Toast open><ToastTitle>Saved</ToastTitle><ToastDescription>Configuration updated</ToastDescription></Toast><ToastViewport /></ToastProvider>);
+  render(<ToastProvider><Alert tone="danger" live="assertive" title="Failed">Retry deployment</Alert><Progress label="Upload" value={40} /><Skeleton label="Loading table" /><Toast open><ToastTitle>Saved</ToastTitle><ToastDescription>Configuration updated</ToastDescription></Toast><ToastViewport /></ToastProvider>);
   expect(screen.getByRole('alert')).toHaveTextContent('Retry deployment');
   expect(screen.getByRole('progressbar', { name: 'Upload' })).toHaveAttribute('aria-valuenow', '40');
   expect(screen.getByRole('status', { name: 'Loading table' })).toBeInTheDocument();
   expect(screen.getByText('Saved')).toBeInTheDocument();
+});
+
+test('visual severity remains separate from live announcement priority', () => {
+  render(<><Alert tone="danger" title="Static failure">Already present</Alert><Alert tone="danger" live="assertive" title="New failure">Just happened</Alert><ErrorMessage live="polite">Name is unavailable</ErrorMessage></>);
+  expect(screen.getByText('Already present').closest('.ink-ui-alert')).not.toHaveAttribute('role');
+  expect(screen.getByRole('alert')).toHaveTextContent('Just happened');
+  expect(screen.getByRole('status')).toHaveTextContent('Name is unavailable');
+});
+
+test('form error summary focuses after submit and links to invalid controls', async () => {
+  render(<><FormErrorSummary focusOnMount errors={[{ fieldId: 'service-name', label: 'Service name', message: 'Required' }]} /><TextField id="service-name" label="Service name" error="Required" /></>);
+  const summary = await screen.findByRole('alert');
+  expect(summary).toHaveFocus();
+  expect(screen.getByRole('link', { name: 'Service name: Required' })).toHaveAttribute('href', '#service-name');
+  expect(screen.getByRole('textbox')).toHaveAttribute('aria-describedby', 'service-name-error');
+});
+
+test('persistent banners and scoped error states expose explicit recovery hierarchy', () => {
+  render(<><Banner title="Offline" actions={<Button>Reconnect</Button>}>Changes are stored locally.</Banner><ErrorState title="Preview unavailable" description="Renderer timed out" actions={<Button>Retry</Button>} details="Request 42" /></>);
+  expect(screen.getByRole('status', { name: 'System notice' })).toHaveTextContent('Offline');
+  expect(screen.getByText('Preview unavailable').closest('.ink-ui-error-state')).toHaveTextContent('Retry');
+  expect(screen.getByText('Technical details')).toBeInTheDocument();
+});
+
+test('error boundary reports render failures and resets when application keys change', () => {
+  const consoleError = vi.spyOn(console, 'error').mockImplementation(() => undefined);
+  const onError = vi.fn();
+  function Unstable({ fail }: { fail: boolean }) { if (fail) throw new Error('Render failed'); return <div>Recovered content</div>; }
+  const { rerender } = render(<ErrorBoundary resetKeys={[0]} onError={onError} fallback={({ error }) => <div>Fallback: {error.message}</div>}><Unstable fail /></ErrorBoundary>);
+  expect(screen.getByText('Fallback: Render failed')).toBeInTheDocument();
+  expect(onError).toHaveBeenCalledWith(expect.any(Error), expect.objectContaining({ componentStack: expect.any(String) }));
+  rerender(<ErrorBoundary resetKeys={[1]} onError={onError}><Unstable fail={false} /></ErrorBoundary>);
+  expect(screen.getByText('Recovered content')).toBeInTheDocument();
+  consoleError.mockRestore();
 });
 
 test('combobox, disclosure, navigation, and table preserve native semantics', async () => {
@@ -160,6 +194,17 @@ test('data table announces loading, empty, and error states inside the table', (
   expect(screen.getByRole('table')).toHaveTextContent('No jobs found');
   rerender(<DataTable {...props} error="Jobs unavailable" />);
   expect(screen.getByRole('table')).toHaveTextContent('Jobs unavailable');
+});
+
+test('data table can preserve stale rows while exposing a refresh recovery alert', async () => {
+  const user = userEvent.setup();
+  const retry = vi.fn();
+  const rows = [{ id: 'router', name: 'Router' }];
+  render(<DataTable caption="Services" columns={[{ id: 'name', header: 'Name', cell: (row) => row.name }]} rows={rows} getRowId={(row) => row.id} error="Refresh timed out" errorMode="stale" errorActions={<Button onClick={retry}>Retry refresh</Button>} />);
+  expect(screen.getByRole('table')).toHaveTextContent('Router');
+  expect(screen.getByRole('status')).toHaveTextContent('Refresh timed out');
+  await user.click(screen.getByRole('button', { name: 'Retry refresh' }));
+  expect(retry).toHaveBeenCalled();
 });
 
 test('tabs provide keyboard navigation and panel semantics', async () => {
