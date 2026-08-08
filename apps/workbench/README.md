@@ -19,7 +19,7 @@ The Playwright suite captures density, desktop-shell, and overlay contracts in
 Chromium. Run the committed Linux baselines with:
 
 ```sh
-pnpm exec playwright install --with-deps chromium
+pnpm --filter @hiepknor/ink-workbench exec playwright install --with-deps chromium
 pnpm test:visual
 ```
 
