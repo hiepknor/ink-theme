@@ -11,6 +11,7 @@ verification. It contains:
 - High-severity dependency review on pull requests.
 - Chromium visual regression against reviewed Linux baselines.
 - Tauri frontend build and locked Rust compilation on Linux.
+- RustSec audit, cargo-deny policy, and downstream patch integrity/expiry checks.
 - One aggregate required status named `CI Gate`.
 
 Branch protection should require only `CI Gate`. Matrix jobs may evolve without
@@ -34,12 +35,19 @@ pull request and automated gate remain mandatory for administrators.
 ## Dependency maintenance
 
 Dependabot opens grouped weekly updates for npm development dependencies and
-GitHub Actions. Dependency updates go through the same Node compatibility,
-build, package, and dependency-review gates as application changes.
+GitHub Actions, plus a monthly grouped update for the Tauri/WebKitGTK Rust
+runtime. Dependency updates go through the same compatibility, build, package,
+security, and dependency-review gates as application changes.
 
 The package manager version must remain compatible with the minimum Node engine
 declared by the root workspace. A package-manager major upgrade must therefore
 be tested in the minimum Node matrix job before merge.
+
+The Linux Tauri graph currently uses a downstream-patched `glib 0.18.5` for
+RUSTSEC-2024-0429. The exception is valid only while the checked-in source hash,
+Cargo patch, lockfile shape, advisory record, and review deadline all match. CI
+fails if the graph moves away from that version without removing the exception,
+making the transition back to a patched upstream release mandatory.
 
 ## Release gate
 
