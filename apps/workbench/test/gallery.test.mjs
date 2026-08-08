@@ -75,7 +75,7 @@ test('gallery keeps status meaning in visible text', () => {
 });
 
 test('gallery previews controls and interactive states', () => {
-  for (const marker of ['<input', '<select', '<textarea', 'disabled', 'focus-visible']) {
+  for (const marker of ['<input', '<select', '<textarea', 'disabled', 'readonly', 'required', 'placeholder', 'aria-invalid="true"', 'focus-visible']) {
     assert.ok(gallery.includes(marker), `Gallery is missing control state ${marker}`);
   }
 });

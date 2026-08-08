@@ -53,4 +53,7 @@ These need a validated consumer use case before their behavior is made public:
   their visual rendering.
 - Framework-agnostic bordered buttons and fields use the same internal focus
   vocabulary as the React package; borderless links keep an external outline.
+- The native HTML workbench covers normal, placeholder, required, readonly,
+  invalid, disabled field, disabled option, and native choice states. Coarse
+  pointers receive a 44px minimum target in the reference treatment.
 - New visual contracts require Linux-generated regression baselines.
