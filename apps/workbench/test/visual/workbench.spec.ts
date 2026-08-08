@@ -1,8 +1,30 @@
 import { expect, test } from '@playwright/test';
 
 test.beforeEach(async ({ page }) => {
-  await page.goto('/');
+  await page.goto('/#/all');
   await expect(page.locator('#react-preview')).toBeVisible();
+});
+
+test('catalog navigation exposes focused component pages', async ({ page }) => {
+  await page.goto('/#/overview');
+  const nav = page.getByRole('navigation', { name: 'Component catalog' });
+  await expect(page.getByRole('heading', { name: 'Overview' })).toBeVisible();
+  await expect(nav.getByRole('link', { name: 'Overview' })).toHaveAttribute('aria-current', 'page');
+  await nav.getByRole('link', { name: 'Data' }).click();
+  await expect(page).toHaveURL(/#\/data$/);
+  await expect(page.getByRole('heading', { name: 'Data' })).toBeFocused();
+  await expect(page.getByTestId('data-table-workbench')).toBeVisible();
+  await expect(page.getByTestId('desktop-foundation')).toHaveCount(0);
+});
+
+test('catalog navigation adapts to mobile without hiding sections', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/#/overview');
+  const nav = page.getByRole('navigation', { name: 'Component catalog' });
+  await expect(nav).toBeVisible();
+  await nav.getByRole('link', { name: 'Forms' }).click();
+  await expect(page.getByRole('heading', { name: 'Forms' })).toBeVisible();
+  await expect(page.locator('[data-density-preview="touch"]')).toBeVisible();
 });
 
 for (const density of ['compact', 'default', 'touch']) {
@@ -188,7 +210,7 @@ test('drawer overlay', async ({ page }) => {
 test('motion contract is active without reduced motion', async ({ browser }) => {
   const context = await browser.newContext({ reducedMotion: 'no-preference' });
   const page = await context.newPage();
-  await page.goto('/');
+  await page.goto('/#/all');
   await page.getByRole('button', { name: 'Open drawer' }).click();
   const drawer = page.getByRole('dialog', { name: 'Service inspector' });
   await expect(drawer).toBeVisible();
