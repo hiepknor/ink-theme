@@ -41,6 +41,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(function Che
           aria-describedby={describedBy(ariaDescribedBy, descriptionId, errorId)}
           aria-invalid={ariaInvalid ?? (error ? true : undefined)}
         />
+        <span className="ink-ui-checkbox-control" aria-hidden="true" />
         <span>{label}</span>
       </label>
       {description && <div className="ink-ui-description ink-ui-check-copy" id={descriptionId}>{description}</div>}

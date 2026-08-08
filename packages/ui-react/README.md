@@ -52,8 +52,13 @@ The desktop foundation also exports:
 - Disclosure: `Accordion` compound parts.
 - Navigation: `Breadcrumb` and `Pagination` compound parts.
 - Data display: semantic `Table` compound parts.
+- Composition: `Card`, `CardHeader`, `CardTitle`, `CardDescription`, `CardContent`, and `CardFooter`.
 - Desktop shell: `Toolbar`, `Sidebar`, `Panel`, `Tabs`, and `StatusBar`.
-- Overlays: `Dialog`, `Popover`, `Tooltip`, and `Menu` compound parts.
+- Overlays: `Dialog`, `Drawer`, `Popover`, `Tooltip`, and `Menu` compound parts.
+
+Ink motion uses the shared duration and easing tokens for state transitions.
+Overlay, disclosure, select, and toast motion is automatically removed when a
+consumer requests reduced motion.
 
 Dialog, popover, tooltip, menu, tabs, accordion, and toast behavior builds on Radix Primitives.
 Ink owns their visual adapter and accessible required props; Radix owns focus,

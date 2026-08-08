@@ -11,6 +11,12 @@ import {
   BreadcrumbLink,
   Button,
   ButtonGroup,
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
   Checkbox,
   Combobox,
   Dialog,
@@ -80,6 +86,11 @@ function ComponentBreadth() {
     <div><p className="text-sm font-semibold">Extended component library</p><p className="text-xs text-fg-3">Navigation, disclosure, data, and application feedback contracts.</p></div>
     <Breadcrumb><BreadcrumbLink href="#react-preview">Workbench</BreadcrumbLink><BreadcrumbLink href="#components">Components</BreadcrumbLink><span aria-current="page">Feedback</span></Breadcrumb>
     <div className="grid gap-3 md:grid-cols-2"><Alert title="Deployment ready" tone="ok">All validation gates passed.</Alert><Alert title="Action required" tone="danger">Two environment variables are missing.</Alert></div>
+    <div className="grid gap-4 md:grid-cols-3" data-testid="card-composition">
+      <Card><CardHeader><CardTitle>API gateway</CardTitle><CardDescription>Production service</CardDescription></CardHeader><CardContent><StatusMark tone="ok" label="Healthy" /></CardContent><CardFooter><Button density="compact">Inspect</Button></CardFooter></Card>
+      <Card><CardHeader><CardTitle>Event worker</CardTitle><CardDescription>Background queue</CardDescription></CardHeader><CardContent><StatusMark tone="warning" label="Starting" /></CardContent><CardFooter><Button density="compact">Inspect</Button></CardFooter></Card>
+      <Card><CardHeader><CardTitle>Archive store</CardTitle><CardDescription>Cold storage</CardDescription></CardHeader><CardContent><StatusMark tone="danger" label="Degraded" /></CardContent><CardFooter><Button density="compact" variant="primary">Resolve</Button></CardFooter></Card>
+    </div>
     <Progress label="Package coverage" value={72} />
     <Skeleton style={{ width: '55%' }} />
     <Combobox label="Runtime" description="Type or choose a supported runtime" options={[{ label: 'Node.js 20', value: 'node-20' }, { label: 'Node.js 22', value: 'node-22' }, { label: 'Node.js 24', value: 'node-24' }]} />

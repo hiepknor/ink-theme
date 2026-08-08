@@ -17,7 +17,7 @@ export const AccordionTrigger = forwardRef<ComponentRef<typeof AccordionPrimitiv
 });
 
 export const AccordionContent = forwardRef<ComponentRef<typeof AccordionPrimitive.Content>, ComponentPropsWithoutRef<typeof AccordionPrimitive.Content>>(function AccordionContent(
-  { className, ...props }, ref,
+  { children, className, ...props }, ref,
 ) {
-  return <AccordionPrimitive.Content ref={ref} className={classes('ink-ui-accordion-content', className)} {...props} />;
+  return <AccordionPrimitive.Content ref={ref} className={classes('ink-ui-accordion-content', className)} {...props}><div className="ink-ui-accordion-content-inner">{children}</div></AccordionPrimitive.Content>;
 });

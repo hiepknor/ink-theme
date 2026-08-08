@@ -21,6 +21,7 @@ only when all of its exit criteria pass.
 - [x] Build the first accessible React UI vertical slice.
 - [x] Complete the web and desktop UI foundation with visual and Tauri gates.
 - [x] Add the first UI breadth checkpoint for application-level composition.
+- [x] Complete the first UI/UX visual audit and motion pass.
 
 ## Milestone 1 — Theme 0.2.0
 
