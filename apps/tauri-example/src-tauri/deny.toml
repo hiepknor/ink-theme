@@ -1,7 +1,7 @@
 [advisories]
-ignore = [
-  { id = "RUSTSEC-2024-0429", reason = "Upstream fix backported verbatim in vendor/glib-0.18.5-ink1; see security/advisories/RUSTSEC-2024-0429.md" },
-]
+# Fail unmaintained crates only when Ink selects them directly. Tauri currently
+# carries legacy GTK3 and rust-unic crates transitively with no safe upgrade.
+unmaintained = "workspace"
 
 [bans]
 multiple-versions = "warn"
