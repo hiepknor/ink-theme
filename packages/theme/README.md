@@ -40,6 +40,17 @@ entrypoint and add `ink-strict` to its root:
 <main class="ink-strict">...</main>
 ```
 
+### Native HTML baseline
+
+The default stylesheet preserves native form semantics while normalizing
+typography, text color, accent and caret colors, disabled behavior, selection,
+focus, and forced-colors support. Bordered buttons use an internal focus
+baseline; text inputs, textareas, and native selects use a compact inset mark.
+
+Native selects deliberately retain the operating-system popup. Applications
+that require deterministic option rendering should use the custom `Select`
+from `@hiepknor/ink-ui-react`.
+
 For more control, import individual layers:
 
 ```css

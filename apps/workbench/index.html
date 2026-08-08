@@ -78,7 +78,7 @@
         </div>
       </section>
 
-      <section class="grid gap-3" aria-labelledby="controls-title">
+      <section class="grid gap-3" aria-labelledby="controls-title" data-testid="native-compatibility">
         <h2 id="controls-title" class="gallery-label">Native HTML compatibility</h2>
         <p class="mb-3 text-xs text-fg-3">Raw browser controls verify the CSS theme fallback. Ink React components—including the custom Select—are reviewed in the next section.</p>
         <div class="gallery-section grid gap-px bg-line md:grid-cols-2">
@@ -92,16 +92,22 @@
               <select class="gallery-control" name="environment">
                 <option>Production</option>
                 <option>Staging</option>
+                <option disabled>Unavailable region</option>
               </select>
             </label>
             <label class="grid gap-1.5 text-xs font-semibold">
+              <span>Deployment tag <span class="font-normal text-fg-3">(required)</span></span>
+              <input class="gallery-control" name="tag" placeholder="release-2026-08" required />
+            </label>
+            <label class="grid gap-1.5 text-xs font-semibold">
               Description
-              <textarea class="gallery-control min-h-20 resize-y" name="description">Routes public traffic.</textarea>
+              <textarea class="gallery-control min-h-20 resize-y" name="description" readonly>Routes public traffic.</textarea>
             </label>
             <div class="flex flex-wrap gap-4 text-xs">
-              <label class="flex items-center gap-2"><input type="checkbox" class="size-4 accent-accent" checked /> Tracing</label>
-              <label class="flex items-center gap-2"><input type="radio" name="tier" class="size-4 accent-accent" checked /> Primary</label>
-              <label class="flex items-center gap-2"><input type="radio" name="tier" class="size-4 accent-accent" /> Replica</label>
+              <label class="gallery-native-choice"><input type="checkbox" class="size-4 accent-accent" checked /> Tracing</label>
+              <label class="gallery-native-choice"><input type="radio" name="tier" class="size-4 accent-accent" checked /> Primary</label>
+              <label class="gallery-native-choice"><input type="radio" name="tier" class="size-4 accent-accent" /> Replica</label>
+              <label class="gallery-native-choice text-fg-3"><input type="checkbox" class="size-4 accent-accent" disabled /> Unavailable</label>
             </div>
           </form>
           <div class="grid content-start gap-4 bg-surface p-4">
@@ -110,10 +116,15 @@
               <p class="mt-1 text-xs text-fg-3">Use Tab to review keyboard focus.</p>
             </div>
             <div class="flex flex-wrap gap-3">
-              <button class="ink-lift min-h-9 border border-line-strong bg-fg px-3 text-xs font-semibold text-bg">Primary</button>
-              <button class="min-h-9 border border-line-strong bg-surface px-3 text-xs font-semibold">Secondary</button>
-              <button class="min-h-9 border border-line bg-recessed px-3 text-xs text-fg-3" disabled>Disabled</button>
+              <button type="button" class="ink-lift min-h-9 border border-line-strong bg-fg px-3 text-xs font-semibold text-bg">Primary</button>
+              <button type="button" class="min-h-9 border border-line-strong bg-surface px-3 text-xs font-semibold">Secondary</button>
+              <button type="button" class="min-h-9 border border-line bg-recessed px-3 text-xs text-fg-3" disabled>Disabled</button>
             </div>
+            <label class="grid gap-1.5 text-xs font-semibold">
+              Invalid service
+              <input class="gallery-control" value="duplicate" aria-invalid="true" aria-describedby="native-service-error" />
+              <span id="native-service-error" class="border-l-2 border-line-strong pl-2 font-medium">Service already exists</span>
+            </label>
             <label class="grid gap-1.5 text-xs font-semibold">
               Disabled field
               <input class="gallery-control" value="Unavailable" disabled />
@@ -147,7 +158,7 @@
           <div class="gallery-section min-w-0 overflow-x-auto">
             <header class="flex min-h-14 items-center justify-between gap-4 border-b border-line px-4">
               <div><h3 class="text-sm font-semibold">Service registry</h3><p class="text-xs text-fg-3">Three current records</p></div>
-              <button class="ink-lift min-h-9 border border-line-strong bg-fg px-3 text-[13px] font-semibold text-bg transition-transform hover:-translate-x-px hover:-translate-y-px focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent motion-reduce:transition-none">Create service</button>
+              <button class="ink-lift min-h-9 border border-line-strong bg-fg px-3 text-[13px] font-semibold text-bg transition-transform hover:-translate-x-px hover:-translate-y-px motion-reduce:transition-none">Create service</button>
             </header>
             <table class="w-full min-w-[560px] border-collapse text-[13px]">
               <thead><tr class="border-b border-line bg-recessed text-left"><th class="gallery-label h-10 px-3">Service</th><th class="gallery-label h-10 px-3">State</th><th class="gallery-label h-10 px-3 text-right">Requests</th><th class="gallery-label h-10 px-3">Observed</th></tr></thead>

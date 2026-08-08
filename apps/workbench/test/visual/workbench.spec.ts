@@ -13,6 +13,32 @@ for (const density of ['compact', 'default', 'touch']) {
   });
 }
 
+test('native HTML compatibility matrix', async ({ page }) => {
+  const native = page.getByTestId('native-compatibility');
+  await expect(native).toBeVisible();
+  await expect(native).toHaveScreenshot('native-html-compatibility.png');
+
+  await expect(native.getByRole('textbox', { name: /Deployment tag/ })).toHaveAttribute('required', '');
+  await expect(native.getByRole('textbox', { name: 'Description' })).toHaveAttribute('readonly', '');
+  await expect(native.getByRole('textbox', { name: 'Invalid service' })).toHaveAttribute('aria-invalid', 'true');
+  await expect(native.getByText('Service already exists')).toHaveAttribute('id', 'native-service-error');
+  await expect(native.getByRole('option', { name: 'Unavailable region' })).toHaveAttribute('disabled', '');
+});
+
+test('native bordered controls use internal focus', async ({ page }) => {
+  const controls = [
+    page.locator('input[name="service"]'),
+    page.locator('select[name="environment"]'),
+    page.locator('textarea[name="description"]'),
+    page.getByTestId('native-compatibility').getByRole('button', { name: 'Secondary' }),
+  ];
+  for (const control of controls) {
+    await control.focus();
+    expect(await control.evaluate((element) => getComputedStyle(element).outlineStyle)).toBe('none');
+    expect(await control.evaluate((element) => getComputedStyle(element).boxShadow)).not.toBe('none');
+  }
+});
+
 test('desktop application shell', async ({ page }) => {
   const shell = page.getByTestId('desktop-foundation');
   await expect(shell).toBeVisible();

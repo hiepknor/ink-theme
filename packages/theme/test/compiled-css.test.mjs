@@ -50,6 +50,8 @@ test('Tailwind compiles every public token and pattern utility', async () => {
   assert.ok(css.includes('::selection'), 'Compiled CSS is missing selection colors');
   assert.ok(css.includes(':focus-visible'), 'Compiled CSS is missing the focus ring');
   assert.ok(css.includes('accent-color:var(--color-accent)'), 'Compiled CSS is missing form accent color');
+  assert.ok(css.includes('font:inherit'), 'Compiled CSS is missing native control font inheritance');
+  assert.ok(css.includes('cursor:not-allowed'), 'Compiled CSS is missing disabled control behavior');
   assert.ok(css.includes('prefers-reduced-motion:reduce'), 'Pressable motion preference was not emitted');
   assert.ok(css.includes('forced-colors:active'), 'Forced-colors fallback was not emitted');
   assert.ok(!css.includes('border-radius:0!important'), 'Default entrypoint enabled strict mode');
