@@ -93,10 +93,33 @@ jobs:
       - run: pnpm --filter @hiepknor/ink-tauri-example build
       - run: cargo check --locked --manifest-path apps/tauri-example/src-tauri/Cargo.toml
 
+  rust-security:
+    name: Rust Security
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@v7
+      - name: Verify downstream security patch and expiry
+        run: node scripts/check-rust-security-patch.mjs
+      - name: Audit RustSec advisories
+        uses: rustsec/audit-check@v2.0.0
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          working-directory: apps/tauri-example/src-tauri
+          ignore: RUSTSEC-2024-0429
+      - name: Enforce Rust dependency policy
+        uses: EmbarkStudios/cargo-deny-action@v2.1.1
+        with:
+          manifest-path: apps/tauri-example/src-tauri/Cargo.toml
+          arguments: --all-features --config apps/tauri-example/src-tauri/deny.toml
+          command: check
+          command-arguments: advisories bans sources
+
   gate:
     name: CI Gate
     if: always()
-    needs: [verify, dependency-review, visual-regression, tauri-integration]
+    needs: [verify, dependency-review, visual-regression, tauri-integration, rust-security]
     runs-on: ubuntu-latest
     timeout-minutes: 2
 
@@ -107,8 +130,10 @@ jobs:
           DEPENDENCY_REVIEW_RESULT: ${{ needs.dependency-review.result }}
           VISUAL_RESULT: ${{ needs.visual-regression.result }}
           TAURI_RESULT: ${{ needs.tauri-integration.result }}
+          RUST_SECURITY_RESULT: ${{ needs.rust-security.result }}
         run: |
           test "$VERIFY_RESULT" = "success"
           test "$DEPENDENCY_REVIEW_RESULT" = "success" || test "$DEPENDENCY_REVIEW_RESULT" = "skipped"
           test "$VISUAL_RESULT" = "success"
           test "$TAURI_RESULT" = "success"
+          test "$RUST_SECURITY_RESULT" = "success"

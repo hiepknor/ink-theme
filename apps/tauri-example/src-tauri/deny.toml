@@ -1,0 +1,13 @@
+[advisories]
+ignore = [
+  { id = "RUSTSEC-2024-0429", reason = "Upstream fix backported verbatim in vendor/glib-0.18.5-ink1; see security/advisories/RUSTSEC-2024-0429.md" },
+]
+
+[bans]
+multiple-versions = "warn"
+wildcards = "deny"
+
+[sources]
+unknown-registry = "deny"
+unknown-git = "deny"
+allow-registry = ["https://github.com/rust-lang/crates.io-index"]

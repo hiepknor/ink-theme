@@ -13,3 +13,8 @@ tauri-build = { version = "2", features = [] }
 
 [dependencies]
 tauri = { version = "2", features = [] }
+
+# Temporary downstream remediation for RUSTSEC-2024-0429. The vendored source
+# is glib 0.18.5 with only upstream gtk-rs/gtk-rs-core#1343 backported.
+[patch.crates-io]
+glib = { path = "../../../vendor/glib-0.18.5-ink1" }

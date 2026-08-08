@@ -18,3 +18,12 @@ updates:
       github-actions:
         patterns: ['*']
     open-pull-requests-limit: 3
+
+  - package-ecosystem: cargo
+    directory: /apps/tauri-example/src-tauri
+    schedule:
+      interval: monthly
+    groups:
+      tauri-runtime:
+        patterns: ['tauri*', 'wry', 'webkit2gtk*', 'glib*', 'gtk*']
+    open-pull-requests-limit: 3
