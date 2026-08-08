@@ -34,3 +34,15 @@ export interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
     label: ReactNode;
 }
 export declare const Select: import("react").ForwardRefExoticComponent<SelectProps & import("react").RefAttributes<HTMLSelectElement>>;
+export interface ComboboxOption {
+    label: string;
+    value: string;
+}
+export interface ComboboxProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'list'> {
+    density?: InkDensity;
+    description?: ReactNode;
+    error?: ReactNode;
+    label: ReactNode;
+    options: ComboboxOption[];
+}
+export declare const Combobox: import("react").ForwardRefExoticComponent<ComboboxProps & import("react").RefAttributes<HTMLInputElement>>;

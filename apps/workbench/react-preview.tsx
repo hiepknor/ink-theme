@@ -1,10 +1,18 @@
 import { StrictMode, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+  Alert,
   Badge,
+  Breadcrumb,
+  BreadcrumbLink,
   Button,
   ButtonGroup,
   Checkbox,
+  Combobox,
   Dialog,
   DialogContent,
   DialogTrigger,
@@ -17,13 +25,17 @@ import {
   MenuItem,
   MenuTrigger,
   Panel,
+  Pagination,
+  PaginationLink,
   Popover,
   PopoverContent,
   PopoverTrigger,
+  Progress,
   RadioGroup,
   Select,
   Separator,
   Sidebar,
+  Skeleton,
   Spinner,
   Stack,
   StatusBar,
@@ -36,6 +48,19 @@ import {
   TabsTrigger,
   TextArea,
   TextField,
+  Toast,
+  ToastClose,
+  ToastDescription,
+  ToastProvider,
+  ToastTitle,
+  ToastViewport,
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
   Toolbar,
   Tooltip,
   TooltipContent,
@@ -45,6 +70,22 @@ import {
 } from '@hiepknor/ink-ui-react';
 
 const densities: InkDensity[] = ['compact', 'default', 'touch'];
+
+function ComponentBreadth() {
+  const [toastOpen, setToastOpen] = useState(false);
+  return <ToastProvider swipeDirection="right"><Stack gap="lg" data-testid="component-breadth">
+    <div><p className="text-sm font-semibold">Extended component library</p><p className="text-xs text-fg-3">Navigation, disclosure, data, and application feedback contracts.</p></div>
+    <Breadcrumb><BreadcrumbLink href="#react-preview">Workbench</BreadcrumbLink><BreadcrumbLink href="#components">Components</BreadcrumbLink><span aria-current="page">Feedback</span></Breadcrumb>
+    <div className="grid gap-3 md:grid-cols-2"><Alert title="Deployment ready" tone="ok">All validation gates passed.</Alert><Alert title="Action required" tone="danger">Two environment variables are missing.</Alert></div>
+    <Progress label="Package coverage" value={72} />
+    <Skeleton style={{ width: '55%' }} />
+    <Combobox label="Runtime" description="Type or choose a supported runtime" options={[{ label: 'Node.js 20', value: 'node-20' }, { label: 'Node.js 22', value: 'node-22' }, { label: 'Node.js 24', value: 'node-24' }]} />
+    <Accordion type="single" collapsible defaultValue="architecture"><AccordionItem value="architecture"><AccordionTrigger>Architecture</AccordionTrigger><AccordionContent>Tokens are shared; renderers stay platform-specific.</AccordionContent></AccordionItem><AccordionItem value="release"><AccordionTrigger>Release policy</AccordionTrigger><AccordionContent>Every published contract passes the aggregate CI gate.</AccordionContent></AccordionItem></Accordion>
+    <Table><TableCaption>Representative service inventory</TableCaption><TableHeader><TableRow><TableHead scope="col">Service</TableHead><TableHead scope="col">Region</TableHead><TableHead scope="col">Status</TableHead></TableRow></TableHeader><TableBody><TableRow><TableCell>edge-router</TableCell><TableCell>Singapore</TableCell><TableCell><StatusMark tone="ok" label="Ready" /></TableCell></TableRow><TableRow><TableCell>audit-worker</TableCell><TableCell>Tokyo</TableCell><TableCell><StatusMark tone="warning" label="Pending" /></TableCell></TableRow></TableBody></Table>
+    <Inline justify="between"><Pagination><PaginationLink href="#previous" aria-label="Previous page">←</PaginationLink><PaginationLink href="#page-1" current>1</PaginationLink><PaginationLink href="#page-2">2</PaginationLink><PaginationLink href="#next" aria-label="Next page">→</PaginationLink></Pagination><Button onClick={() => setToastOpen(true)}>Show toast</Button></Inline>
+    <Toast open={toastOpen} onOpenChange={setToastOpen} tone="ok"><ToastTitle>Changes saved</ToastTitle><ToastDescription>The service configuration is up to date.</ToastDescription><ToastClose aria-label="Close">×</ToastClose></Toast><ToastViewport />
+  </Stack></ToastProvider>;
+}
 
 function DesktopFoundation() {
   return (
@@ -130,6 +171,8 @@ function ReactPreview() {
       ))}
       <Separator />
       <DesktopFoundation />
+      <Separator />
+      <ComponentBreadth />
     </Surface>
     </TooltipProvider>
   );

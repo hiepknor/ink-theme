@@ -45,3 +45,14 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(function Select
   const density = useInkDensity(densityOverride);
   return <div className="ink-ui-field" data-density={density}><label className="ink-ui-label" htmlFor={id}>{label}</label><select {...props} ref={ref} id={id} className={classes('ink-ui-input ink-ui-select', className)} aria-invalid={ariaInvalid ?? (error ? true : undefined)} aria-describedby={describedBy(ariaDescribedBy, description ? `${id}-description` : undefined, error ? `${id}-error` : undefined)}>{children}</select><FieldCopy id={id} description={description} error={error} /></div>;
 });
+
+export interface ComboboxOption { label: string; value: string; }
+export interface ComboboxProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'list'> { density?: InkDensity; description?: ReactNode; error?: ReactNode; label: ReactNode; options: ComboboxOption[]; }
+export const Combobox = forwardRef<HTMLInputElement, ComboboxProps>(function Combobox(
+  { 'aria-describedby': ariaDescribedBy, 'aria-invalid': ariaInvalid, className, density: densityOverride, description, error, id: idProp, label, options, ...props }, ref,
+) {
+  const id = idProp ?? `ink-combobox-${useId()}`;
+  const listId = `${id}-options`;
+  const density = useInkDensity(densityOverride);
+  return <div className="ink-ui-field" data-density={density}><label className="ink-ui-label" htmlFor={id}>{label}</label><input {...props} ref={ref} id={id} list={listId} role="combobox" aria-autocomplete="list" className={classes('ink-ui-input ink-ui-combobox', className)} aria-invalid={ariaInvalid ?? (error ? true : undefined)} aria-describedby={describedBy(ariaDescribedBy, description ? `${id}-description` : undefined, error ? `${id}-error` : undefined)} /><datalist id={listId}>{options.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}</datalist><FieldCopy id={id} description={description} error={error} /></div>;
+});

@@ -19,6 +19,12 @@ test('desktop application shell', async ({ page }) => {
   await expect(shell).toHaveScreenshot('desktop-shell.png');
 });
 
+test('extended component library', async ({ page }) => {
+  const breadth = page.getByTestId('component-breadth');
+  await expect(breadth).toBeVisible();
+  await expect(breadth).toHaveScreenshot('component-breadth.png');
+});
+
 test('dialog overlay', async ({ page }) => {
   await page.getByRole('button', { name: 'Open dialog' }).click();
   await expect(page.getByRole('dialog', { name: 'Create service' })).toBeVisible();

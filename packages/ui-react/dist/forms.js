@@ -23,3 +23,9 @@ export const Select = forwardRef(function Select({ 'aria-describedby': ariaDescr
     const density = useInkDensity(densityOverride);
     return _jsxs("div", { className: "ink-ui-field", "data-density": density, children: [_jsx("label", { className: "ink-ui-label", htmlFor: id, children: label }), _jsx("select", { ...props, ref: ref, id: id, className: classes('ink-ui-input ink-ui-select', className), "aria-invalid": ariaInvalid ?? (error ? true : undefined), "aria-describedby": describedBy(ariaDescribedBy, description ? `${id}-description` : undefined, error ? `${id}-error` : undefined), children: children }), _jsx(FieldCopy, { id: id, description: description, error: error })] });
 });
+export const Combobox = forwardRef(function Combobox({ 'aria-describedby': ariaDescribedBy, 'aria-invalid': ariaInvalid, className, density: densityOverride, description, error, id: idProp, label, options, ...props }, ref) {
+    const id = idProp ?? `ink-combobox-${useId()}`;
+    const listId = `${id}-options`;
+    const density = useInkDensity(densityOverride);
+    return _jsxs("div", { className: "ink-ui-field", "data-density": density, children: [_jsx("label", { className: "ink-ui-label", htmlFor: id, children: label }), _jsx("input", { ...props, ref: ref, id: id, list: listId, role: "combobox", "aria-autocomplete": "list", className: classes('ink-ui-input ink-ui-combobox', className), "aria-invalid": ariaInvalid ?? (error ? true : undefined), "aria-describedby": describedBy(ariaDescribedBy, description ? `${id}-description` : undefined, error ? `${id}-error` : undefined) }), _jsx("datalist", { id: listId, children: options.map((option) => _jsx("option", { value: option.value, children: option.label }, option.value)) }), _jsx(FieldCopy, { id: id, description: description, error: error })] });
+});

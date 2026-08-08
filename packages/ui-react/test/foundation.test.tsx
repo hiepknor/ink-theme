@@ -2,12 +2,16 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { expect, test, vi } from 'vitest';
 import {
-  Badge, Button, ButtonGroup, Dialog, DialogContent, DialogTrigger, EmptyState,
+  Accordion, AccordionContent, AccordionItem, AccordionTrigger, Alert, Badge,
+  Breadcrumb, BreadcrumbLink, Button, ButtonGroup, Combobox, Dialog,
+  DialogContent, DialogTrigger, EmptyState,
   IconButton, Inline, Menu, MenuContent, MenuItem, MenuTrigger, Panel, Popover,
-  PopoverContent, PopoverTrigger, RadioGroup, Select, Separator, Sidebar, Spinner,
+  Pagination, PaginationLink, PopoverContent, PopoverTrigger, Progress, RadioGroup,
+  Select, Separator, Sidebar, Skeleton, Spinner,
   Stack, StatusBar, StatusMark, Switch, Tabs, TabsContent, TabsList, TabsTrigger,
-  TextArea, Toolbar, Tooltip, TooltipContent, TooltipProvider, TooltipTrigger,
-  VisuallyHidden,
+  Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow,
+  TextArea, Toast, ToastDescription, ToastProvider, ToastTitle, ToastViewport,
+  Toolbar, Tooltip, TooltipContent, TooltipProvider, TooltipTrigger, VisuallyHidden,
 } from '../src/index.js';
 
 test('layout and desktop shell preserve semantic roles', () => {
@@ -47,6 +51,26 @@ test('feedback components keep meaning in accessible text', () => {
   expect(screen.getByText('Failed')).toBeInTheDocument();
   expect(screen.getByRole('status', { name: 'Syncing' })).toBeInTheDocument();
   expect(screen.getByText('No services')).toBeInTheDocument();
+});
+
+test('extended feedback exposes live semantics and progress values', () => {
+  render(<ToastProvider><Alert tone="danger" title="Failed">Retry deployment</Alert><Progress label="Upload" value={40} /><Skeleton label="Loading table" /><Toast open><ToastTitle>Saved</ToastTitle><ToastDescription>Configuration updated</ToastDescription></Toast><ToastViewport /></ToastProvider>);
+  expect(screen.getByRole('alert')).toHaveTextContent('Retry deployment');
+  expect(screen.getByRole('progressbar', { name: 'Upload' })).toHaveAttribute('aria-valuenow', '40');
+  expect(screen.getByRole('status', { name: 'Loading table' })).toBeInTheDocument();
+  expect(screen.getByText('Saved')).toBeInTheDocument();
+});
+
+test('combobox, disclosure, navigation, and table preserve native semantics', async () => {
+  const user = userEvent.setup();
+  render(<><Combobox label="Runtime" options={[{ label: 'Node 20', value: 'node-20' }]} /><Accordion type="single" collapsible><AccordionItem value="one"><AccordionTrigger>Details</AccordionTrigger><AccordionContent>Architecture notes</AccordionContent></AccordionItem></Accordion><Breadcrumb><BreadcrumbLink href="/">Home</BreadcrumbLink><span aria-current="page">Components</span></Breadcrumb><Pagination><PaginationLink href="?page=1" current>1</PaginationLink><PaginationLink href="?page=2">2</PaginationLink></Pagination><Table><TableCaption>Services</TableCaption><TableHeader><TableRow><TableHead scope="col">Name</TableHead></TableRow></TableHeader><TableBody><TableRow><TableCell>Router</TableCell></TableRow></TableBody></Table></>);
+  expect(screen.getByRole('combobox', { name: 'Runtime' })).toHaveAttribute('list');
+  await user.click(screen.getByRole('button', { name: 'Details' }));
+  expect(screen.getByText('Architecture notes')).toBeVisible();
+  expect(screen.getByRole('navigation', { name: 'Breadcrumb' })).toBeInTheDocument();
+  expect(screen.getByRole('navigation', { name: 'Pagination' })).toBeInTheDocument();
+  expect(screen.getByRole('link', { name: '1' })).toHaveAttribute('aria-current', 'page');
+  expect(screen.getByRole('table', { name: 'Services' })).toBeInTheDocument();
 });
 
 test('tabs provide keyboard navigation and panel semantics', async () => {

@@ -41,6 +41,16 @@ test('workbench exercises the web and desktop foundation', () => {
   assert.ok(reactPreview.includes('Desktop application shell'));
 });
 
+test('workbench exercises the extended component library', () => {
+  for (const marker of [
+    'Accordion', 'Alert', 'Breadcrumb', 'Combobox', 'Pagination', 'Progress',
+    'Skeleton', 'Table', 'Toast',
+  ]) {
+    assert.ok(reactPreview.includes(marker), `Extended preview is missing ${marker}`);
+  }
+  assert.ok(reactPreview.includes('Extended component library'));
+});
+
 test('gallery reviews every public screentone recipe', () => {
   for (const utility of [
     'ink-tone-solid',

@@ -94,3 +94,11 @@ reimplement their focus scope, dismiss layer, floating position, or roving
 keyboard behavior. Wrapper tests verify that required titles, labels, content,
 Escape dismissal, focus restoration, and keyboard selection survive the
 adapter boundary.
+
+## UI breadth checkpoint
+
+The web renderer also provides application-level building blocks for alerts,
+toasts, progress, skeleton loading, accordion disclosure, breadcrumbs,
+pagination, semantic tables, and native single-value suggestions. Products own
+message copy, routing, pagination state, table sorting/data, and remote search.
+Ink owns visual states, semantic markup, keyboard behavior, and density.
