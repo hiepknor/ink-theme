@@ -537,3 +537,29 @@
   .ink-ui-table-check span, .ink-ui-file-item, .ink-ui-avatar, .ink-ui-error-summary, .ink-ui-error-state-mark, .ink-ui-banner { border-color: CanvasText; }
   .ink-ui-progress > span { background: Highlight; }
 }
+
+@media (pointer: coarse) {
+  .ink-ui-button,
+  .ink-ui-icon-button,
+  .ink-ui-input,
+  .ink-ui-select-item,
+  .ink-ui-check-label,
+  .ink-ui-switch-label,
+  .ink-ui-pagination-item,
+  .ink-ui-media-action,
+  .ink-ui-tabs-trigger,
+  .ink-ui-accordion-trigger,
+  .ink-ui-menu-item,
+  .ink-ui-overlay-close,
+  .ink-ui-toast-close,
+  .ink-ui-toast-action,
+  .ink-ui-filter-chip {
+    min-height: var(--ink-dimension-control-height-touch);
+  }
+
+  .ink-ui-icon-button,
+  .ink-ui-overlay-close,
+  .ink-ui-toast-close {
+    min-width: var(--ink-dimension-control-height-touch);
+  }
+}

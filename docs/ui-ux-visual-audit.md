@@ -50,6 +50,18 @@ forced-colors support, and visual regression coverage.
 - Route pagination and controlled data-table pagination used different controls,
   spacing, and selected states. Links and buttons now share one visual contract;
   long controlled ranges compact through the same ellipsis primitive.
+- The component catalog previously documented only a subset of stable root
+  contracts and allowed API defaults to drift from implementation. A registry
+  coverage gate now distinguishes root contracts from composed exports and
+  verifies documented defaults for high-risk shared primitives.
+- The catalog command palette did not restore focus after keyboard dismissal.
+  It now returns focus to its visible trigger for both click and shortcut entry.
+- Catalog mode previously hid the compatibility gallery only through CSS,
+  leaving duplicate landmarks and inactive form fields in the browser model.
+  Legacy regions are now hidden and inert while catalog routes are active.
+- Mobile checks previously proved only that pages did not overflow. Coarse
+  pointers now receive the shared touch target token, with browser gates for
+  target size, forced colors, and reduced motion.
 
 ## Deliberately deferred
 
@@ -58,7 +70,8 @@ These need a validated consumer use case before their behavior is made public:
 - Advanced async/virtualized combobox and multi-select.
 - Date and time picker with locale and timezone policy.
 - Data-grid column resizing, inline editing, pinning, and virtualization.
-- Command palette and tree navigation.
+- Product command frameworks with nested actions, recents, and remote search.
+  The private workbench finder remains a local documentation navigation tool.
 - Rich-text editing.
 - Mobile-native components; these belong to `@hiepknor/ink-ui-native` rather
   than sharing DOM/CSS implementations.
