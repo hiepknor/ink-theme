@@ -28,6 +28,9 @@ forced-colors support, and visual regression coverage.
   coherent motion language. Motion now uses design tokens and fully respects
   `prefers-reduced-motion`.
 - Visual tests did not isolate toolbar balance or card composition.
+- Upload and image workflows were absent. The public media contract now covers
+  native file selection, drag/drop delivery, image fit and aspect ratios, and
+  loading, success, error, and caption states.
 
 ## Deliberately deferred
 

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" role="img" aria-labelledby="title description">
+  <title id="title">Abstract service architecture</title>
+  <desc id="description">Monochrome connected panels and routing lines.</desc>
+  <rect width="800" height="450" fill="#f6f6f6"/>
+  <path d="M0 75h800M0 225h800M0 375h800M100 0v450M300 0v450M500 0v450M700 0v450" stroke="#e2e2e2"/>
+  <rect x="76" y="76" width="208" height="126" fill="#fff" stroke="#111" stroke-width="4"/>
+  <rect x="516" y="248" width="208" height="126" fill="#111"/>
+  <path d="M284 139h126v172h106M388 289l22 22-22 22" fill="none" stroke="#111" stroke-width="8"/>
+  <circle cx="180" cy="139" r="22" fill="#111"/>
+  <path d="M564 288h112M564 311h78M564 334h96" stroke="#fff" stroke-width="8"/>
+</svg>

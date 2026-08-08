@@ -1,11 +1,11 @@
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { expect, test, vi } from 'vitest';
 import {
   Accordion, AccordionContent, AccordionItem, AccordionTrigger, Alert, Badge,
   Breadcrumb, BreadcrumbLink, Button, ButtonGroup, Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle, Combobox, Dialog,
-  DialogContent, DialogTrigger, Drawer, DrawerContent, DrawerTrigger, EmptyState,
-  IconButton, Inline, Menu, MenuContent, MenuItem, MenuTrigger, Panel, Popover,
+  DialogContent, DialogTrigger, Drawer, DrawerContent, DrawerTrigger, EmptyState, FileUpload,
+  IconButton, ImageSurface, Inline, Menu, MenuContent, MenuItem, MenuTrigger, Panel, Popover,
   Pagination, PaginationLink, PopoverContent, PopoverTrigger, Progress, RadioGroup,
   Select, Separator, Sidebar, Skeleton, Spinner,
   Stack, StatusBar, StatusMark, Switch, Tabs, TabsContent, TabsList, TabsTrigger,
@@ -30,6 +30,29 @@ test('card composition preserves article hierarchy', () => {
   expect(card).toHaveClass('ink-ui-card');
   expect(screen.getByRole('heading', { name: 'Gateway', level: 3 })).toBeInTheDocument();
   expect(card).toHaveTextContent('Production serviceHealthyInspect');
+});
+
+test('file upload exposes native input and reports selected files', async () => {
+  const user = userEvent.setup();
+  const onFilesChange = vi.fn();
+  render(<FileUpload label="Artwork" accept="image/png" description="PNG only" onFilesChange={onFilesChange} />);
+  const input = screen.getByLabelText('Artwork');
+  const file = new File(['image'], 'service.png', { type: 'image/png' });
+  await user.upload(input, file);
+  expect(input).toHaveAttribute('type', 'file');
+  expect(input).toHaveAttribute('accept', 'image/png');
+  expect(onFilesChange).toHaveBeenCalledWith([file]);
+  expect(screen.getByText('PNG only')).toHaveAttribute('id', expect.stringContaining('-description'));
+});
+
+test('image surface preserves alt text and renders an error fallback', () => {
+  render(<ImageSurface src="broken.png" alt="Service topology" aspectRatio="video" fallback="Preview unavailable" caption="Topology" />);
+  const image = screen.getByRole('img', { name: 'Service topology' });
+  expect(screen.getByRole('status')).toHaveTextContent('Loading image');
+  fireEvent.error(image);
+  expect(screen.queryByRole('status')).not.toBeInTheDocument();
+  expect(screen.getByRole('img', { name: 'Service topology' })).toHaveTextContent('Preview unavailable');
+  expect(screen.getByText('Topology').tagName).toBe('FIGCAPTION');
 });
 
 test('actions expose names and grouped density', () => {

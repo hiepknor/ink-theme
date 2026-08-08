@@ -1,4 +1,4 @@
-import { StrictMode, useState } from 'react';
+import { StrictMode, useEffect, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import {
   Accordion,
@@ -26,8 +26,10 @@ import {
   DrawerContent,
   DrawerTrigger,
   EmptyState,
+  FileUpload,
   IconButton,
   InkProvider,
+  ImageSurface,
   Inline,
   Menu,
   MenuContent,
@@ -79,6 +81,24 @@ import {
 } from '@hiepknor/ink-ui-react';
 
 const densities: InkDensity[] = ['compact', 'default', 'touch'];
+
+function MediaWorkbench() {
+  const [preview, setPreview] = useState('/sample-media.svg');
+  const [fileName, setFileName] = useState('sample-media.svg');
+  useEffect(() => () => { if (preview.startsWith('blob:')) URL.revokeObjectURL(preview); }, [preview]);
+  return <Stack gap="lg" data-testid="media-workbench">
+    <div><p className="text-sm font-semibold">Upload and image surfaces</p><p className="text-xs text-fg-3">Native file input semantics with a deterministic Ink presentation.</p></div>
+    <div className="grid gap-4 md:grid-cols-2">
+      <FileUpload label="Service artwork" accept="image/png,image/jpeg,image/svg+xml" description={fileName ? `Selected: ${fileName}` : 'Maximum size is validated by the product.'} onFilesChange={(files) => { const file = files[0]; if (!file) return; setPreview(URL.createObjectURL(file)); setFileName(file.name); }} />
+      <ImageSurface src={preview} alt="Abstract service architecture preview" aspectRatio="video" caption={fileName} />
+    </div>
+    <div className="grid gap-4 md:grid-cols-3">
+      <ImageSurface src="/sample-media.svg" alt="Contained architecture artwork" aspectRatio="square" fit="contain" caption="Contain · square" />
+      <ImageSurface src="/sample-media.svg" alt="Cropped architecture artwork" aspectRatio="portrait" fit="cover" caption="Cover · portrait" />
+      <ImageSurface src="/missing-image.png" alt="Unavailable service artwork" aspectRatio="square" fallback="No preview available" caption="Error fallback" />
+    </div>
+  </Stack>;
+}
 
 function ComponentBreadth() {
   const [toastOpen, setToastOpen] = useState(false);
@@ -189,6 +209,8 @@ function ReactPreview() {
       <DesktopFoundation />
       <Separator />
       <ComponentBreadth />
+      <Separator />
+      <MediaWorkbench />
     </Surface>
     </TooltipProvider>
   );

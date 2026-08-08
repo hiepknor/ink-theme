@@ -10,7 +10,7 @@ const [manifest] = JSON.parse(execFileSync('npm', ['pack', '--dry-run', '--json'
 const actual = manifest.files.map(({ path }) => path).sort();
 const modules = [
   'actions', 'button', 'checkbox', 'data-display', 'desktop', 'disclosure',
-  'feedback', 'forms', 'index', 'ink-provider', 'layout', 'navigation',
+  'feedback', 'forms', 'index', 'ink-provider', 'layout', 'media', 'navigation',
   'overlays', 'shared', 'surface', 'text-field',
 ];
 const expected = [

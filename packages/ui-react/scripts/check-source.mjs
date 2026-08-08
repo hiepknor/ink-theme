@@ -7,7 +7,7 @@ const styles = await read('src/styles.css');
 
 for (const component of [
   'Badge', 'Button', 'ButtonGroup', 'Checkbox', 'Dialog', 'EmptyState',
-  'IconButton', 'InkProvider', 'Inline', 'Menu', 'Panel', 'Popover',
+  'FileUpload', 'IconButton', 'ImageSurface', 'InkProvider', 'Inline', 'Menu', 'Panel', 'Popover',
   'RadioGroup', 'Select', 'Separator', 'Sidebar', 'Spinner', 'Stack',
   'StatusBar', 'StatusMark', 'Surface', 'Switch', 'Tabs', 'TextArea',
   'TextField', 'Toolbar', 'Tooltip', 'VisuallyHidden',
