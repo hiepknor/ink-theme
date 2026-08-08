@@ -1,4 +1,4 @@
-import { Children, forwardRef, type AnchorHTMLAttributes, type HTMLAttributes, type ReactNode } from 'react';
+import { Children, forwardRef, type AnchorHTMLAttributes, type ButtonHTMLAttributes, type HTMLAttributes, type ReactNode } from 'react';
 import { classes } from './shared.js';
 
 export interface BreadcrumbProps extends HTMLAttributes<HTMLElement> { label?: string; separator?: ReactNode; }
@@ -21,5 +21,20 @@ export const Pagination = forwardRef<HTMLElement, PaginationProps>(function Pagi
 
 export interface PaginationLinkProps extends AnchorHTMLAttributes<HTMLAnchorElement> { current?: boolean; }
 export const PaginationLink = forwardRef<HTMLAnchorElement, PaginationLinkProps>(function PaginationLink({ className, current, ...props }, ref) {
-  return <a ref={ref} className={classes('ink-ui-pagination-link', className)} aria-current={current ? 'page' : undefined} data-current={current || undefined} {...props} />;
+  return <a ref={ref} className={classes('ink-ui-pagination-item ink-ui-pagination-link', className)} aria-current={current ? 'page' : undefined} data-current={current || undefined} {...props} />;
+});
+
+export interface PaginationButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> { current?: boolean; }
+export const PaginationButton = forwardRef<HTMLButtonElement, PaginationButtonProps>(function PaginationButton({ className, current, type = 'button', ...props }, ref) {
+  return <button ref={ref} type={type} className={classes('ink-ui-pagination-item ink-ui-pagination-button', className)} aria-current={current ? 'page' : undefined} data-current={current || undefined} {...props} />;
+});
+
+export type PaginationEllipsisProps = HTMLAttributes<HTMLSpanElement>;
+export const PaginationEllipsis = forwardRef<HTMLSpanElement, PaginationEllipsisProps>(function PaginationEllipsis({ className, children = '…', ...props }, ref) {
+  return <span ref={ref} className={classes('ink-ui-pagination-ellipsis', className)} aria-hidden="true" {...props}>{children}</span>;
+});
+
+export type PaginationStatusProps = HTMLAttributes<HTMLSpanElement>;
+export const PaginationStatus = forwardRef<HTMLSpanElement, PaginationStatusProps>(function PaginationStatus({ className, ...props }, ref) {
+  return <span ref={ref} className={classes('ink-ui-pagination-status', className)} {...props} />;
 });

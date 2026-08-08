@@ -93,6 +93,18 @@ test('data table composition and interactions', async ({ page }) => {
   await expect(dataTable.getByText('No services match these filters.')).toBeVisible();
 });
 
+test('link and controlled pagination share one visual contract', async ({ page }) => {
+  const link = page.getByTestId('component-breadth').getByRole('link', { name: '2' });
+  const button = page.getByTestId('data-table-workbench').getByRole('button', { name: 'Go to page 2' });
+  const linkStyle = await link.evaluate((element) => { const style = getComputedStyle(element); return { height: style.height, border: style.border, padding: style.padding, fontSize: style.fontSize }; });
+  const buttonStyle = await button.evaluate((element) => { const style = getComputedStyle(element); return { height: style.height, border: style.border, padding: style.padding, fontSize: style.fontSize }; });
+  expect(buttonStyle).toEqual(linkStyle);
+  await button.click();
+  const dataTable = page.getByTestId('data-table-workbench');
+  await expect(dataTable.getByText('Page 2 of 2')).toBeVisible();
+  await expect(dataTable.getByRole('button', { name: 'Page 2' })).toHaveAttribute('aria-current', 'page');
+});
+
 test('error hierarchy, placement, and recovery', async ({ page }) => {
   const errors = page.getByTestId('error-experience');
   await expect(errors).toBeVisible();

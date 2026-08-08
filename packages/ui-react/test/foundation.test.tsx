@@ -6,7 +6,7 @@ import {
   Breadcrumb, BreadcrumbLink, Button, ButtonGroup, Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle, Combobox, Dialog,
   DataTable, DataTableToolbar, DialogContent, DialogTrigger, Drawer, DrawerContent, DrawerTrigger, EmptyState, ErrorBoundary, ErrorMessage, ErrorState, FileList, FileUpload, FilterChip, FormErrorSummary,
   IconButton, ImageGallery, ImageSurface, Inline, Menu, MenuContent, MenuItem, MenuTrigger, Panel, Popover,
-  Pagination, PaginationLink, PopoverContent, PopoverTrigger, Progress, RadioGroup,
+  Pagination, PaginationButton, PaginationEllipsis, PaginationLink, PaginationStatus, PopoverContent, PopoverTrigger, Progress, RadioGroup,
   Select, Separator, Sidebar, Skeleton, Spinner,
   Stack, StatusBar, StatusMark, Switch, Tabs, TabsContent, TabsList, TabsTrigger,
   Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow,
@@ -182,7 +182,7 @@ test('data table composes controlled search, sort, selection, filters, and pagin
   expect(onSelectionChange).toHaveBeenCalledWith(['router']);
   await user.click(screen.getByRole('button', { name: 'Remove filter' }));
   expect(onRemove).toHaveBeenCalled();
-  await user.click(screen.getByRole('button', { name: 'Next' }));
+  await user.click(screen.getByRole('button', { name: 'Next page' }));
   expect(onPageChange).toHaveBeenCalledWith(2);
 });
 
@@ -194,6 +194,21 @@ test('data table announces loading, empty, and error states inside the table', (
   expect(screen.getByRole('table')).toHaveTextContent('No jobs found');
   rerender(<DataTable {...props} error="Jobs unavailable" />);
   expect(screen.getByRole('table')).toHaveTextContent('Jobs unavailable');
+});
+
+test('data table pagination uses the shared page controls and compacts long ranges', () => {
+  render(<DataTable caption="Services" columns={[{ id: 'name', header: 'Name', cell: (row: { id: string; name: string }) => row.name }]} rows={[]} getRowId={(row) => row.id} pagination={{ page: 5, pageCount: 10, onPageChange: vi.fn(), totalLabel: '100 services' }} />);
+  const pagination = screen.getByRole('navigation', { name: 'Table pagination' });
+  expect(pagination).toHaveTextContent('←1…456…10→');
+  expect(screen.getByRole('button', { name: 'Page 5' })).toHaveAttribute('aria-current', 'page');
+  expect(screen.getByText('Page 5 of 10')).toHaveAttribute('aria-live', 'polite');
+});
+
+test('link and button pagination primitives share current and ellipsis semantics', () => {
+  render(<Pagination><PaginationLink href="?page=1">1</PaginationLink><PaginationButton current>2</PaginationButton><PaginationEllipsis /><PaginationStatus>Page 2 of 8</PaginationStatus></Pagination>);
+  expect(screen.getByRole('button', { name: '2' })).toHaveClass('ink-ui-pagination-item');
+  expect(screen.getByRole('button', { name: '2' })).toHaveAttribute('aria-current', 'page');
+  expect(screen.getAllByText('…')[0]).toHaveAttribute('aria-hidden', 'true');
 });
 
 test('data table can preserve stale rows while exposing a refresh recovery alert', async () => {

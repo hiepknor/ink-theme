@@ -51,7 +51,7 @@ The desktop foundation also exports:
 - Feedback: `Badge`, `StatusMark`, `Spinner`, `EmptyState`, `Alert`, `Progress`, `Skeleton`, and `Toast`.
 - Error recovery: `ErrorMessage`, `FormErrorSummary`, scoped `ErrorState`, persistent `Banner`, and render-failure `ErrorBoundary`.
 - Disclosure: `Accordion` compound parts.
-- Navigation: `Breadcrumb` and `Pagination` compound parts.
+- Navigation: `Breadcrumb` plus shared `PaginationLink`, `PaginationButton`, `PaginationEllipsis`, and `PaginationStatus` compound parts.
 - Data display: semantic `Table` parts plus controlled `DataTable`, `DataTableToolbar`, custom `DataTableFilter`, and `FilterChip` composition.
 - Composition: `Card`, `CardHeader`, `CardTitle`, `CardDescription`, `CardContent`, and `CardFooter`.
 - Media: native-input-backed `FileUpload`, controlled `FileList`, resilient `ImageSurface`, fallback-aware `Avatar`, and accessible `ImageGallery` lightbox.

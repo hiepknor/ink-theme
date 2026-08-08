@@ -3,6 +3,7 @@ import { forwardRef } from 'react';
 import { classes } from './shared.js';
 import { Select } from './forms.js';
 import { Alert, ErrorState } from './feedback.js';
+import { Pagination, PaginationButton, PaginationEllipsis, PaginationStatus } from './navigation.js';
 export const Table = forwardRef(function Table({ className, ...props }, ref) {
     return _jsx("div", { className: "ink-ui-table-scroll", children: _jsx("table", { ref: ref, className: classes('ink-ui-table', className), ...props }) });
 });
@@ -15,6 +16,20 @@ export const TableCaption = forwardRef(function TableCaption({ className, ...pro
 function SelectionControl({ checked, indeterminate, label, onChange }) {
     return _jsxs("label", { className: "ink-ui-table-check", children: [_jsx("input", { type: "checkbox", checked: checked, ref: (node) => { if (node)
                     node.indeterminate = Boolean(indeterminate); }, "aria-label": label, onChange: onChange }), _jsx("span", { "aria-hidden": "true" })] });
+}
+function paginationItems(page, pageCount) {
+    if (pageCount <= 5)
+        return Array.from({ length: pageCount }, (_, index) => index + 1);
+    const pages = new Set([1, pageCount, page - 1, page, page + 1]);
+    const visible = Array.from(pages).filter((item) => item >= 1 && item <= pageCount).sort((a, b) => a - b);
+    const result = [];
+    visible.forEach((item, index) => {
+        const previous = visible[index - 1];
+        if (previous !== undefined && item - previous > 1)
+            result.push(previous === 1 ? 'ellipsis-start' : 'ellipsis-end');
+        result.push(item);
+    });
+    return result;
 }
 export function DataTable({ caption, className, columns, empty = 'No results', error, errorActions, errorLive = 'polite', errorMode = 'replace', errorTitle = 'Unable to load data', getRowId, loading = false, loadingLabel = 'Loading data', onSelectionChange, onSortChange, pagination, rows, selectedRowIds = [], sort, toolbar, ...props }) {
     const selectable = Boolean(onSelectionChange);
@@ -34,13 +49,15 @@ export function DataTable({ caption, className, columns, empty = 'No results', e
     }
     const replaceError = error !== undefined && (errorMode === 'replace' || rows.length === 0);
     const stateContent = replaceError ? _jsx(ErrorState, { title: errorTitle, description: error, actions: errorActions, live: errorLive }) : (loading ? loadingLabel : (rows.length === 0 ? empty : undefined));
+    const pageCount = Math.max(1, pagination?.pageCount ?? 1);
+    const currentPage = Math.min(pageCount, Math.max(1, pagination?.page ?? 1));
     return _jsxs("div", { className: classes('ink-ui-data-table', className), "aria-busy": loading || undefined, ...props, children: [toolbar, error !== undefined && !replaceError && _jsxs(Alert, { tone: "danger", live: errorLive, title: errorTitle, children: [error, _jsx("div", { className: "ink-ui-alert-actions", children: errorActions })] }), _jsxs(Table, { children: [_jsx(TableCaption, { children: caption }), _jsx(TableHeader, { children: _jsxs(TableRow, { children: [selectable && _jsx(TableHead, { className: "ink-ui-table-select", scope: "col", children: _jsx(SelectionControl, { checked: allSelected, indeterminate: !allSelected && selectedVisible.length > 0, label: "Select all rows", onChange: (event) => toggleAll(event.currentTarget.checked) }) }), columns.map((column) => {
                                     const active = sort?.columnId === column.id;
                                     return _jsx(TableHead, { scope: "col", "aria-sort": active ? sort.direction : column.sortable ? 'none' : undefined, "data-align": column.align, children: column.sortable ? _jsxs("button", { type: "button", className: "ink-ui-table-sort", onClick: () => onSortChange?.({ columnId: column.id, direction: active && sort.direction === 'ascending' ? 'descending' : 'ascending' }), children: [column.header, _jsx("span", { "aria-hidden": "true", children: active ? (sort.direction === 'ascending' ? '↑' : '↓') : '↕' })] }) : column.header }, column.id);
                                 })] }) }), _jsx(TableBody, { children: stateContent !== undefined ? _jsx(TableRow, { children: _jsxs(TableCell, { className: "ink-ui-table-state", colSpan: columns.length + (selectable ? 1 : 0), children: [loading && _jsx("span", { className: "ink-ui-spinner", "aria-hidden": "true" }), stateContent] }) }) : rows.map((row) => {
                             const id = getRowId(row);
                             return _jsxs(TableRow, { "data-selected": selected.has(id) || undefined, children: [selectable && _jsx(TableCell, { className: "ink-ui-table-select", children: _jsx(SelectionControl, { checked: selected.has(id), label: `Select row ${id}`, onChange: (event) => toggleRow(id, event.currentTarget.checked) }) }), columns.map((column) => _jsx(TableCell, { "data-align": column.align, children: column.cell(row) }, column.id))] }, id);
-                        }) })] }), pagination && _jsxs("div", { className: "ink-ui-data-pagination", children: [_jsx("span", { className: "ink-ui-description", children: pagination.totalLabel }), _jsxs("span", { children: ["Page ", pagination.page, " of ", Math.max(1, pagination.pageCount)] }), _jsxs("div", { className: "ink-ui-data-pagination-actions", children: [_jsx("button", { type: "button", className: "ink-ui-media-action", disabled: pagination.page <= 1, onClick: () => pagination.onPageChange(pagination.page - 1), children: "Previous" }), _jsx("button", { type: "button", className: "ink-ui-media-action", disabled: pagination.page >= pagination.pageCount, onClick: () => pagination.onPageChange(pagination.page + 1), children: "Next" })] })] })] });
+                        }) })] }), pagination && _jsxs("div", { className: "ink-ui-data-pagination", children: [_jsx("span", { className: "ink-ui-description", children: pagination.totalLabel }), _jsxs(PaginationStatus, { "aria-live": "polite", children: ["Page ", currentPage, " of ", pageCount] }), _jsxs(Pagination, { label: "Table pagination", children: [_jsx(PaginationButton, { "aria-label": "Previous page", disabled: currentPage <= 1, onClick: () => pagination.onPageChange(currentPage - 1), children: "\u2190" }), paginationItems(currentPage, pageCount).map((item) => typeof item === 'number' ? _jsx(PaginationButton, { current: item === currentPage, "aria-label": item === currentPage ? `Page ${item}` : `Go to page ${item}`, onClick: () => pagination.onPageChange(item), children: item }, item) : _jsx(PaginationEllipsis, {}, item)), _jsx(PaginationButton, { "aria-label": "Next page", disabled: currentPage >= pageCount, onClick: () => pagination.onPageChange(currentPage + 1), children: "\u2192" })] })] })] });
 }
 export const DataTableToolbar = forwardRef(function DataTableToolbar({ actions, className, filters, onSearchChange, searchLabel = 'Search table', searchPlaceholder = 'Search', searchValue, ...props }, ref) {
     return _jsxs("div", { ref: ref, className: classes('ink-ui-data-toolbar', className), ...props, children: [_jsxs("label", { className: "ink-ui-data-search", children: [_jsx("span", { className: "ink-ui-sr-only", children: searchLabel }), _jsx("span", { "aria-hidden": "true", children: "\u2315" }), _jsx("input", { type: "search", value: searchValue, placeholder: searchPlaceholder, "aria-label": searchLabel, onChange: (event) => onSearchChange?.(event.currentTarget.value) })] }), filters && _jsx("div", { className: "ink-ui-data-filters", "aria-label": "Table filters", children: filters }), actions && _jsx("div", { className: "ink-ui-data-actions", children: actions })] });

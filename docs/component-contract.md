@@ -108,6 +108,11 @@ single-value suggestions. Products own message copy, routing, query state,
 table data, upload transport, and remote search.
 Ink owns visual states, semantic markup, keyboard behavior, and density.
 
+Pagination uses the same item geometry for route links and controlled buttons.
+Current pages expose `aria-current="page"`; disabled previous/next buttons remain
+non-interactive; long ranges use a non-interactive ellipsis. Products own URL
+construction and current-page data.
+
 ## Error hierarchy
 
 - Field validation uses `ErrorMessage` directly below the related control.
