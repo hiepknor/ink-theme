@@ -8,7 +8,10 @@ const [manifest] = JSON.parse(execFileSync('npm', ['pack', '--dry-run', '--json'
   encoding: 'utf8',
 }));
 const actual = manifest.files.map(({ path }) => path).sort();
-const modules = ['button', 'checkbox', 'index', 'ink-provider', 'shared', 'surface', 'text-field'];
+const modules = [
+  'actions', 'button', 'checkbox', 'desktop', 'feedback', 'forms', 'index',
+  'ink-provider', 'layout', 'overlays', 'shared', 'surface', 'text-field',
+];
 const expected = [
   'LICENSE',
   'README.md',

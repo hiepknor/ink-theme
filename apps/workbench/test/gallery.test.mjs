@@ -30,6 +30,17 @@ test('workbench exercises the React vertical slice and every density', () => {
   }
 });
 
+test('workbench exercises the web and desktop foundation', () => {
+  for (const marker of [
+    'ButtonGroup', 'Dialog', 'EmptyState', 'IconButton', 'Menu', 'Panel',
+    'Popover', 'RadioGroup', 'Select', 'Sidebar', 'Spinner', 'StatusBar',
+    'StatusMark', 'Switch', 'Tabs', 'TextArea', 'Toolbar', 'Tooltip',
+  ]) {
+    assert.ok(reactPreview.includes(marker), `Desktop preview is missing ${marker}`);
+  }
+  assert.ok(reactPreview.includes('Desktop application shell'));
+});
+
 test('gallery reviews every public screentone recipe', () => {
   for (const utility of [
     'ink-tone-solid',

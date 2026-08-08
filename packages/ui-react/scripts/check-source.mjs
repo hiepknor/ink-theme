@@ -5,7 +5,13 @@ const read = (path) => readFile(new URL(`../${path}`, import.meta.url), 'utf8');
 const index = await read('src/index.ts');
 const styles = await read('src/styles.css');
 
-for (const component of ['Button', 'Checkbox', 'InkProvider', 'Surface', 'TextField']) {
+for (const component of [
+  'Badge', 'Button', 'ButtonGroup', 'Checkbox', 'Dialog', 'EmptyState',
+  'IconButton', 'InkProvider', 'Inline', 'Menu', 'Panel', 'Popover',
+  'RadioGroup', 'Select', 'Separator', 'Sidebar', 'Spinner', 'Stack',
+  'StatusBar', 'StatusMark', 'Surface', 'Switch', 'Tabs', 'TextArea',
+  'TextField', 'Toolbar', 'Tooltip', 'VisuallyHidden',
+]) {
   assert.ok(index.includes(component), `Missing public component export: ${component}`);
 }
 for (const marker of [

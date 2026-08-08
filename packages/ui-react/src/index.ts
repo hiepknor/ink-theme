@@ -1,6 +1,12 @@
+export { ButtonGroup, type ButtonGroupProps, IconButton, type IconButtonProps } from './actions.js';
 export { Button, type ButtonProps, type ButtonVariant } from './button.js';
 export { Checkbox, type CheckboxProps } from './checkbox.js';
+export { Panel, Sidebar, StatusBar, Tabs, TabsContent, TabsList, TabsTrigger, Toolbar } from './desktop.js';
+export { Badge, type BadgeProps, EmptyState, type EmptyStateProps, type FeedbackTone, Spinner, type SpinnerProps, StatusMark, type StatusMarkProps } from './feedback.js';
+export { RadioGroup, type RadioGroupProps, type RadioOption, Select, type SelectProps, Switch, type SwitchProps, TextArea, type TextAreaProps } from './forms.js';
 export { InkProvider, type InkProviderProps, useInkDensity } from './ink-provider.js';
+export { Inline, type InlineProps, type LayoutAlign, type LayoutGap, Separator, type SeparatorProps, Stack, type StackProps, VisuallyHidden } from './layout.js';
+export { Dialog, DialogClose, DialogContent, type DialogContentProps, DialogTrigger, Menu, MenuContent, MenuItem, MenuSeparator, MenuTrigger, Popover, PopoverContent, type PopoverContentProps, PopoverTrigger, Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from './overlays.js';
 export { Surface, type SurfaceProps, type SurfaceVariant } from './surface.js';
 export { TextField, type TextFieldProps } from './text-field.js';
 export type { InkDensity } from './shared.js';

@@ -88,3 +88,9 @@ real browser application and a representative Electron or Tauri shell.
 The browser vertical slice is implemented in `packages/ui-react` and exercised
 by `apps/workbench`. Its Vite consumer fixture intentionally has no Tailwind
 plugin or configuration and verifies that unused JavaScript exports are removed.
+
+Desktop overlays and tabs adapt Radix Primitives. Ink does not fork or
+reimplement their focus scope, dismiss layer, floating position, or roving
+keyboard behavior. Wrapper tests verify that required titles, labels, content,
+Escape dismissal, focus restoration, and keyboard selection survive the
+adapter boundary.
