@@ -107,14 +107,16 @@ Exit criteria:
 
 ## Milestone 5 — Web and desktop UI foundation
 
-- [ ] Layout: `Stack`, `Inline`, `Separator`, and `VisuallyHidden`.
-- [ ] Actions: `IconButton` and `ButtonGroup`.
-- [ ] Forms: `TextArea`, `RadioGroup`, `Switch`, and `Select`.
-- [ ] Feedback: `Badge`, `StatusMark`, `Spinner`, and `EmptyState`.
-- [ ] Desktop: `Toolbar`, `Sidebar`, `Panel`, `Tabs`, and `StatusBar`.
-- [ ] Overlays: `Dialog`, `Popover`, `Tooltip`, and `Menu`.
-- [ ] Add Vite React and Tauri integration examples.
-- [ ] Add browser accessibility and visual regression coverage.
+- [x] Layout: `Stack`, `Inline`, `Separator`, and `VisuallyHidden`.
+- [x] Actions: `IconButton` and `ButtonGroup`.
+- [x] Forms: `TextArea`, `RadioGroup`, `Switch`, and `Select`.
+- [x] Feedback: `Badge`, `StatusMark`, `Spinner`, and `EmptyState`.
+- [x] Desktop: `Toolbar`, `Sidebar`, `Panel`, `Tabs`, and `StatusBar`.
+- [x] Overlays: `Dialog`, `Popover`, `Tooltip`, and `Menu`.
+- [x] Add a Tailwind-free Vite React integration example.
+- [ ] Add a representative Tauri integration example.
+- [x] Add browser accessibility and keyboard coverage.
+- [ ] Add browser visual regression coverage.
 
 Overlay components may build on accessible primitives. Ink must not implement
 focus traps, dismiss layers, or floating-positioning algorithms from scratch.

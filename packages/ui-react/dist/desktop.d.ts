@@ -1,0 +1,10 @@
+import { type HTMLAttributes } from 'react';
+import * as TabsPrimitive from '@radix-ui/react-tabs';
+export declare const Toolbar: import("react").ForwardRefExoticComponent<HTMLAttributes<HTMLDivElement> & import("react").RefAttributes<HTMLDivElement>>;
+export declare const Sidebar: import("react").ForwardRefExoticComponent<HTMLAttributes<HTMLElement> & import("react").RefAttributes<HTMLElement>>;
+export declare const Panel: import("react").ForwardRefExoticComponent<HTMLAttributes<HTMLElement> & import("react").RefAttributes<HTMLElement>>;
+export declare const StatusBar: import("react").ForwardRefExoticComponent<HTMLAttributes<HTMLDivElement> & import("react").RefAttributes<HTMLDivElement>>;
+export declare const Tabs: import("react").ForwardRefExoticComponent<TabsPrimitive.TabsProps & import("react").RefAttributes<HTMLDivElement>>;
+export declare const TabsList: import("react").ForwardRefExoticComponent<TabsPrimitive.TabsListProps & import("react").RefAttributes<HTMLDivElement>>;
+export declare const TabsTrigger: import("react").ForwardRefExoticComponent<TabsPrimitive.TabsTriggerProps & import("react").RefAttributes<HTMLButtonElement>>;
+export declare const TabsContent: import("react").ForwardRefExoticComponent<TabsPrimitive.TabsContentProps & import("react").RefAttributes<HTMLDivElement>>;

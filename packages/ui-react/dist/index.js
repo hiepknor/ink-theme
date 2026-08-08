@@ -1,5 +1,11 @@
+export { ButtonGroup, IconButton } from './actions.js';
 export { Button } from './button.js';
 export { Checkbox } from './checkbox.js';
+export { Panel, Sidebar, StatusBar, Tabs, TabsContent, TabsList, TabsTrigger, Toolbar } from './desktop.js';
+export { Badge, EmptyState, Spinner, StatusMark } from './feedback.js';
+export { RadioGroup, Select, Switch, TextArea } from './forms.js';
 export { InkProvider, useInkDensity } from './ink-provider.js';
+export { Inline, Separator, Stack, VisuallyHidden } from './layout.js';
+export { Dialog, DialogClose, DialogContent, DialogTrigger, Menu, MenuContent, MenuItem, MenuSeparator, MenuTrigger, Popover, PopoverContent, PopoverTrigger, Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from './overlays.js';
 export { Surface } from './surface.js';
 export { TextField } from './text-field.js';

@@ -21,6 +21,7 @@ test('a Tailwind-free Vite consumer builds and tree-shakes unused components', a
   for (const unused of ['function TextField', 'function Checkbox', 'function Surface']) {
     assert.ok(!js.includes(unused), `Consumer bundle retained unused export: ${unused}`);
   }
+  assert.ok(!js.includes('DismissableLayer'), 'Consumer bundle retained unused overlay primitives');
   assert.ok(css.includes('.ink-ui-button'), 'Consumer bundle is missing component CSS');
   assert.ok(css.includes('--ink-color-semantic-action'), 'Consumer bundle is missing generated tokens');
 });
