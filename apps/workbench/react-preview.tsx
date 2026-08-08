@@ -1,4 +1,4 @@
-import { StrictMode, useEffect, useState } from 'react';
+import { StrictMode, useEffect, useMemo, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import {
   Accordion,
@@ -6,6 +6,7 @@ import {
   AccordionItem,
   AccordionTrigger,
   Alert,
+  Avatar,
   Badge,
   Breadcrumb,
   BreadcrumbLink,
@@ -25,11 +26,16 @@ import {
   Drawer,
   DrawerContent,
   DrawerTrigger,
+  DataTable,
+  DataTableFilter,
+  DataTableToolbar,
   EmptyState,
+  FileList,
   FileUpload,
   IconButton,
   InkProvider,
   ImageSurface,
+  ImageGallery,
   Inline,
   Menu,
   MenuContent,
@@ -78,25 +84,78 @@ import {
   TooltipProvider,
   TooltipTrigger,
   type InkDensity,
+  type DataTableSort,
+  type UploadFileItem,
 } from '@hiepknor/ink-ui-react';
 
 const densities: InkDensity[] = ['compact', 'default', 'touch'];
 
+const serviceRows = [
+  { id: 'edge-router', name: 'Edge router', owner: 'Platform', region: 'Singapore', status: 'Healthy' },
+  { id: 'audit-worker', name: 'Audit worker', owner: 'Security', region: 'Tokyo', status: 'Pending' },
+  { id: 'archive-store', name: 'Archive store', owner: 'Data', region: 'Frankfurt', status: 'Degraded' },
+  { id: 'web-gateway', name: 'Web gateway', owner: 'Platform', region: 'Singapore', status: 'Healthy' },
+  { id: 'event-relay', name: 'Event relay', owner: 'Platform', region: 'Tokyo', status: 'Healthy' },
+];
+
+function DataTableWorkbench() {
+  const [query, setQuery] = useState('');
+  const [owner, setOwner] = useState('platform');
+  const [status, setStatus] = useState('all');
+  const [selected, setSelected] = useState<string[]>([]);
+  const [sort, setSort] = useState<DataTableSort>({ columnId: 'name', direction: 'ascending' });
+  const [page, setPage] = useState(1);
+  const pageSize = 3;
+  const filtered = useMemo(() => serviceRows.filter((row) => (owner === 'all' || row.owner.toLowerCase() === owner) && (status === 'all' || row.status.toLowerCase() === status) && Object.values(row).some((value) => value.toLowerCase().includes(query.toLowerCase()))).sort((left, right) => {
+    const first = String(left[sort.columnId as keyof typeof left]);
+    const second = String(right[sort.columnId as keyof typeof right]);
+    return first.localeCompare(second) * (sort.direction === 'ascending' ? 1 : -1);
+  }), [owner, query, sort, status]);
+  const pageCount = Math.max(1, Math.ceil(filtered.length / pageSize));
+  const visible = filtered.slice((page - 1) * pageSize, page * pageSize);
+  useEffect(() => setPage(1), [query, owner, status]);
+  return <Stack gap="lg" data-testid="data-table-workbench">
+    <div><p className="text-sm font-semibold">Controlled data table</p><p className="text-xs text-fg-3">Search, filter, sort, selection and pagination stay composable with product-owned data.</p></div>
+    <DataTable
+      caption="Service inventory"
+      columns={[
+        { id: 'name', header: 'Service', sortable: true, cell: (row) => <strong>{row.name}</strong> },
+        { id: 'owner', header: 'Owner', sortable: true, cell: (row) => row.owner },
+        { id: 'region', header: 'Region', sortable: true, cell: (row) => row.region },
+        { id: 'status', header: 'Status', sortable: true, cell: (row) => <StatusMark tone={row.status === 'Healthy' ? 'ok' : row.status === 'Pending' ? 'warning' : 'danger'} label={row.status} /> },
+      ]}
+      rows={visible}
+      getRowId={(row) => row.id}
+      selectedRowIds={selected}
+      onSelectionChange={setSelected}
+      sort={sort}
+      onSortChange={setSort}
+      empty="No services match these filters."
+      toolbar={<DataTableToolbar searchValue={query} onSearchChange={setQuery} searchPlaceholder="Search services" filters={<><DataTableFilter label="Filter by owner" value={owner} onValueChange={setOwner} options={[{ label: 'All owners', value: 'all' }, { label: 'Owner: Platform', value: 'platform' }, { label: 'Owner: Security', value: 'security' }, { label: 'Owner: Data', value: 'data' }]} /><DataTableFilter label="Filter by status" value={status} onValueChange={setStatus} options={[{ label: 'All statuses', value: 'all' }, { label: 'Status: Healthy', value: 'healthy' }, { label: 'Status: Pending', value: 'pending' }, { label: 'Status: Degraded', value: 'degraded' }]} /></>} actions={<>{(query || owner !== 'all' || status !== 'all') && <Button density="compact" variant="quiet" onClick={() => { setQuery(''); setOwner('all'); setStatus('all'); }}>Clear filters</Button>}{selected.length > 0 && <Button density="compact">Archive {selected.length}</Button>}</>} />}
+      pagination={{ page, pageCount, onPageChange: setPage, totalLabel: `${filtered.length} services` }}
+    />
+  </Stack>;
+}
+
 function MediaWorkbench() {
   const [preview, setPreview] = useState('/sample-media.svg');
   const [fileName, setFileName] = useState('sample-media.svg');
+  const [files, setFiles] = useState<UploadFileItem[]>([
+    { id: 'artwork', name: 'service-artwork.svg', size: 184320, status: 'success' },
+    { id: 'screens', name: 'screenshots.zip', size: 2411724, status: 'uploading', progress: 64 },
+    { id: 'brand', name: 'brand-source.psd', size: 8921170, status: 'error', error: 'Connection interrupted' },
+  ]);
   useEffect(() => () => { if (preview.startsWith('blob:')) URL.revokeObjectURL(preview); }, [preview]);
   return <Stack gap="lg" data-testid="media-workbench">
-    <div><p className="text-sm font-semibold">Upload and image surfaces</p><p className="text-xs text-fg-3">Native file input semantics with a deterministic Ink presentation.</p></div>
+    <div><p className="text-sm font-semibold">Upload and image workflows</p><p className="text-xs text-fg-3">Native input semantics, app-controlled queue state, resilient imagery and an accessible lightbox.</p></div>
     <div className="grid gap-4 md:grid-cols-2">
       <FileUpload label="Service artwork" accept="image/png,image/jpeg,image/svg+xml" description={fileName ? `Selected: ${fileName}` : 'Maximum size is validated by the product.'} onFilesChange={(files) => { const file = files[0]; if (!file) return; setPreview(URL.createObjectURL(file)); setFileName(file.name); }} />
       <ImageSurface src={preview} alt="Abstract service architecture preview" aspectRatio="video" caption={fileName} />
     </div>
-    <div className="grid gap-4 md:grid-cols-3">
-      <ImageSurface src="/sample-media.svg" alt="Contained architecture artwork" aspectRatio="square" fit="contain" caption="Contain · square" />
-      <ImageSurface src="/sample-media.svg" alt="Cropped architecture artwork" aspectRatio="portrait" fit="cover" caption="Cover · portrait" />
-      <ImageSurface src="/missing-image.png" alt="Unavailable service artwork" aspectRatio="square" fallback="No preview available" caption="Error fallback" />
-    </div>
+    <FileList items={files} onRemove={(item) => setFiles((current) => current.filter((candidate) => candidate.id !== item.id))} onRetry={(item) => setFiles((current) => current.map((candidate) => candidate.id === item.id ? { ...candidate, status: 'uploading', progress: 0, error: undefined } : candidate))} />
+    <Inline align="center"><Avatar name="Hiep Knor" src="/sample-avatar.svg" size="lg" /><Avatar name="Ink Theme" /><Avatar name="Unavailable User" src="/missing-avatar.png" /></Inline>
+    <ImageGallery items={[{ src: '/sample-media.svg', alt: 'Contained architecture artwork', caption: 'Architecture' }, { src: '/sample-media.svg', alt: 'Service topology artwork', caption: 'Topology' }, { src: '/sample-media.svg', alt: 'Deployment artwork', caption: 'Deployment' }]} />
+    <ImageSurface src="/missing-image.png" alt="Unavailable service artwork" aspectRatio="video" fallback="No preview available" caption="Error fallback" />
   </Stack>;
 }
 
@@ -209,6 +268,8 @@ function ReactPreview() {
       <DesktopFoundation />
       <Separator />
       <ComponentBreadth />
+      <Separator />
+      <DataTableWorkbench />
       <Separator />
       <MediaWorkbench />
     </Surface>

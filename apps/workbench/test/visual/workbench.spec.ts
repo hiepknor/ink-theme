@@ -79,6 +79,30 @@ test('upload and image surface composition', async ({ page }) => {
   await expect(media.getByRole('img', { name: 'Unavailable service artwork' })).toBeVisible();
 });
 
+test('data table composition and interactions', async ({ page }) => {
+  const dataTable = page.getByTestId('data-table-workbench');
+  await expect(dataTable).toBeVisible();
+  await expect(dataTable).toHaveScreenshot('data-table-workbench.png');
+  await dataTable.getByRole('combobox', { name: 'Filter by owner' }).click();
+  await page.getByRole('option', { name: 'All owners' }).click();
+  await expect(dataTable.getByText('5 services')).toBeVisible();
+  await dataTable.getByRole('button', { name: /Service/ }).click();
+  await dataTable.getByRole('checkbox', { name: 'Select row edge-router' }).check();
+  await expect(dataTable.getByRole('button', { name: 'Archive 1' })).toBeVisible();
+  await dataTable.getByRole('searchbox').fill('missing');
+  await expect(dataTable.getByText('No services match these filters.')).toBeVisible();
+});
+
+test('media gallery lightbox', async ({ page }) => {
+  const media = page.getByTestId('media-workbench');
+  await media.getByRole('button', { name: 'Open Contained architecture artwork' }).click();
+  const lightbox = page.getByRole('dialog', { name: 'Image preview' });
+  await expect(lightbox).toBeVisible();
+  await expect(lightbox).toHaveScreenshot('media-lightbox.png');
+  await lightbox.getByRole('button', { name: 'Next' }).click();
+  await expect(lightbox.getByRole('img', { name: 'Service topology artwork' })).toBeVisible();
+});
+
 test('custom select dropdown', async ({ page }) => {
   await page.getByTestId('desktop-foundation').getByRole('combobox', { name: 'Region', exact: true }).click();
   await expect(page.getByRole('option', { name: 'Singapore' })).toBeVisible();

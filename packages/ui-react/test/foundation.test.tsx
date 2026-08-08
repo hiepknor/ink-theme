@@ -2,10 +2,10 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { expect, test, vi } from 'vitest';
 import {
-  Accordion, AccordionContent, AccordionItem, AccordionTrigger, Alert, Badge,
+  Accordion, AccordionContent, AccordionItem, AccordionTrigger, Alert, Avatar, Badge,
   Breadcrumb, BreadcrumbLink, Button, ButtonGroup, Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle, Combobox, Dialog,
-  DialogContent, DialogTrigger, Drawer, DrawerContent, DrawerTrigger, EmptyState, FileUpload,
-  IconButton, ImageSurface, Inline, Menu, MenuContent, MenuItem, MenuTrigger, Panel, Popover,
+  DataTable, DataTableToolbar, DialogContent, DialogTrigger, Drawer, DrawerContent, DrawerTrigger, EmptyState, FileList, FileUpload, FilterChip,
+  IconButton, ImageGallery, ImageSurface, Inline, Menu, MenuContent, MenuItem, MenuTrigger, Panel, Popover,
   Pagination, PaginationLink, PopoverContent, PopoverTrigger, Progress, RadioGroup,
   Select, Separator, Sidebar, Skeleton, Spinner,
   Stack, StatusBar, StatusMark, Switch, Tabs, TabsContent, TabsList, TabsTrigger,
@@ -53,6 +53,29 @@ test('image surface preserves alt text and renders an error fallback', () => {
   expect(screen.queryByRole('status')).not.toBeInTheDocument();
   expect(screen.getByRole('img', { name: 'Service topology' })).toHaveTextContent('Preview unavailable');
   expect(screen.getByText('Topology').tagName).toBe('FIGCAPTION');
+});
+
+test('file list exposes upload progress and controlled retry and remove actions', async () => {
+  const user = userEvent.setup();
+  const retry = vi.fn();
+  const remove = vi.fn();
+  render(<FileList items={[{ id: 'one', name: 'art.png', status: 'uploading', progress: 45 }, { id: 'two', name: 'source.psd', status: 'error', error: 'Network failed' }]} onRetry={retry} onRemove={remove} />);
+  expect(screen.getByRole('progressbar', { name: 'Uploading art.png' })).toHaveAttribute('value', '45');
+  await user.click(screen.getByRole('button', { name: 'Retry source.psd' }));
+  expect(retry).toHaveBeenCalledWith(expect.objectContaining({ id: 'two' }));
+  await user.click(screen.getByRole('button', { name: 'Remove art.png' }));
+  expect(remove).toHaveBeenCalledWith(expect.objectContaining({ id: 'one' }));
+});
+
+test('avatar falls back to initials and gallery opens an accessible lightbox', async () => {
+  const user = userEvent.setup();
+  render(<><Avatar name="Ink Theme" /><ImageGallery items={[{ src: 'one.png', alt: 'First diagram' }, { src: 'two.png', alt: 'Second diagram' }]} /></>);
+  expect(screen.getByRole('img', { name: 'Ink Theme' })).toHaveTextContent('IT');
+  await user.click(screen.getByRole('button', { name: 'Open First diagram' }));
+  expect(screen.getByRole('dialog', { name: 'Image preview' })).toBeInTheDocument();
+  expect(screen.getByRole('img', { name: 'First diagram' })).toBeInTheDocument();
+  await user.click(screen.getByRole('button', { name: 'Next' }));
+  expect(screen.getByRole('img', { name: 'Second diagram' })).toBeInTheDocument();
 });
 
 test('actions expose names and grouped density', () => {
@@ -105,6 +128,38 @@ test('combobox, disclosure, navigation, and table preserve native semantics', as
   expect(screen.getByRole('navigation', { name: 'Pagination' })).toBeInTheDocument();
   expect(screen.getByRole('link', { name: '1' })).toHaveAttribute('aria-current', 'page');
   expect(screen.getByRole('table', { name: 'Services' })).toBeInTheDocument();
+});
+
+test('data table composes controlled search, sort, selection, filters, and pagination', async () => {
+  const user = userEvent.setup();
+  const onSearchChange = vi.fn();
+  const onSortChange = vi.fn();
+  const onSelectionChange = vi.fn();
+  const onPageChange = vi.fn();
+  const onRemove = vi.fn();
+  const rows = [{ id: 'router', name: 'Router', region: 'Singapore' }];
+  render(<DataTable caption="Services" columns={[{ id: 'name', header: 'Name', sortable: true, cell: (row) => row.name }, { id: 'region', header: 'Region', cell: (row) => row.region }]} rows={rows} getRowId={(row) => row.id} selectedRowIds={[]} onSelectionChange={onSelectionChange} onSortChange={onSortChange} toolbar={<DataTableToolbar onSearchChange={onSearchChange} filters={<FilterChip label="Healthy" onRemove={onRemove} />} />} pagination={{ page: 1, pageCount: 2, onPageChange, totalLabel: '2 services' }} />);
+  expect(screen.getByRole('table', { name: 'Services' })).toBeInTheDocument();
+  await user.type(screen.getByRole('searchbox', { name: 'Search table' }), 'route');
+  expect(onSearchChange).toHaveBeenLastCalledWith('route');
+  await user.click(screen.getByRole('button', { name: /Name/ }));
+  expect(onSortChange).toHaveBeenCalledWith({ columnId: 'name', direction: 'ascending' });
+  await user.click(screen.getByRole('checkbox', { name: 'Select row router' }));
+  expect(onSelectionChange).toHaveBeenCalledWith(['router']);
+  await user.click(screen.getByRole('button', { name: 'Remove filter' }));
+  expect(onRemove).toHaveBeenCalled();
+  await user.click(screen.getByRole('button', { name: 'Next' }));
+  expect(onPageChange).toHaveBeenCalledWith(2);
+});
+
+test('data table announces loading, empty, and error states inside the table', () => {
+  const props = { caption: 'Jobs', columns: [{ id: 'name', header: 'Name', cell: (row: { id: string; name: string }) => row.name }], rows: [], getRowId: (row: { id: string }) => row.id };
+  const { rerender } = render(<DataTable {...props} loading loadingLabel="Loading jobs" />);
+  expect(screen.getByRole('table', { name: 'Jobs' })).toHaveTextContent('Loading jobs');
+  rerender(<DataTable {...props} empty="No jobs found" />);
+  expect(screen.getByRole('table')).toHaveTextContent('No jobs found');
+  rerender(<DataTable {...props} error="Jobs unavailable" />);
+  expect(screen.getByRole('table')).toHaveTextContent('Jobs unavailable');
 });
 
 test('tabs provide keyboard navigation and panel semantics', async () => {

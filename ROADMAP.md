@@ -23,6 +23,8 @@ only when all of its exit criteria pass.
 - [x] Add the first UI breadth checkpoint for application-level composition.
 - [x] Complete the first UI/UX visual audit and motion pass.
 - [x] Add accessible upload and image-surface workflows.
+- [x] Add a controlled data-table and filter foundation.
+- [x] Complete upload queues, avatars, galleries, and lightbox workflows.
 
 ## Milestone 1 — Theme 0.2.0
 
@@ -137,8 +139,9 @@ Exit criteria:
 - [x] Disclosure: `Accordion`.
 - [x] Navigation: `Breadcrumb` and `Pagination`.
 - [x] Data display: semantic `Table` parts.
+- [x] Data workflows: controlled `DataTable`, toolbar search, custom filters, sorting, selection, pagination, and async states.
 - [x] Forms: native single-value `Combobox` suggestions.
-- [x] Media: `FileUpload` and `ImageSurface` with loading/error fallbacks.
+- [x] Media: `FileUpload`, `FileList`, `ImageSurface`, `Avatar`, and `ImageGallery` with an accessible lightbox.
 - [x] Add workbench examples and interaction coverage.
 
 Exit criteria:

@@ -31,6 +31,12 @@ forced-colors support, and visual regression coverage.
 - Upload and image workflows were absent. The public media contract now covers
   native file selection, drag/drop delivery, image fit and aspect ratios, and
   loading, success, error, and caption states.
+- Semantic tables lacked application data workflows. `DataTable` now composes
+  custom filters, search, sorting, selection, pagination, and loading, empty,
+  and error states without owning product data or network behavior.
+- Upload queues, user imagery, and image collections lacked reusable visual
+  contracts. File progress/retry/remove, avatar fallbacks, galleries, and an
+  accessible dialog-backed lightbox now share the Ink interaction language.
 
 ## Deliberately deferred
 
@@ -38,9 +44,9 @@ These need a validated consumer use case before their behavior is made public:
 
 - Advanced async/virtualized combobox and multi-select.
 - Date and time picker with locale and timezone policy.
-- Data-grid sorting, selection, editing, and virtualization.
+- Data-grid column resizing, inline editing, pinning, and virtualization.
 - Command palette and tree navigation.
-- File upload/dropzone and rich-text editing.
+- Rich-text editing.
 - Mobile-native components; these belong to `@hiepknor/ink-ui-native` rather
   than sharing DOM/CSS implementations.
 

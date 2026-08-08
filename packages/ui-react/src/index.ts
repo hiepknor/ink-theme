@@ -1,14 +1,14 @@
 export { ButtonGroup, type ButtonGroupProps, IconButton, type IconButtonProps } from './actions.js';
 export { Button, type ButtonProps, type ButtonVariant } from './button.js';
 export { Checkbox, type CheckboxProps } from './checkbox.js';
-export { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow, type TableProps } from './data-display.js';
+export { DataTable, type DataTableColumn, DataTableFilter, type DataTableFilterProps, type DataTablePagination, type DataTableProps, type DataTableSort, type DataTableSortDirection, DataTableToolbar, type DataTableToolbarProps, FilterChip, type FilterChipProps, Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow, type TableProps } from './data-display.js';
 export { Panel, Sidebar, StatusBar, Tabs, TabsContent, TabsList, TabsTrigger, Toolbar } from './desktop.js';
 export { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from './disclosure.js';
 export { Alert, type AlertProps, Badge, type BadgeProps, EmptyState, type EmptyStateProps, type FeedbackTone, Progress, type ProgressProps, Skeleton, type SkeletonProps, Spinner, type SpinnerProps, StatusMark, type StatusMarkProps, Toast, ToastAction, ToastClose, ToastDescription, ToastProvider, ToastTitle, ToastViewport, type ToastProps } from './feedback.js';
 export { Combobox, type ComboboxOption, type ComboboxProps, RadioGroup, type RadioGroupProps, type RadioOption, Select, type SelectOption, type SelectProps, Switch, type SwitchProps, TextArea, type TextAreaProps } from './forms.js';
 export { InkProvider, type InkProviderProps, useInkDensity } from './ink-provider.js';
 export { Inline, type InlineProps, type LayoutAlign, type LayoutGap, Separator, type SeparatorProps, Stack, type StackProps, VisuallyHidden } from './layout.js';
-export { FileUpload, type FileUploadProps, ImageSurface, type ImageSurfaceProps, type ImageAspectRatio, type ImageFit } from './media.js';
+export { Avatar, type AvatarProps, type AvatarSize, FileList, type FileListProps, FileUpload, type FileUploadProps, ImageGallery, type ImageGalleryItem, type ImageGalleryProps, ImageSurface, type ImageSurfaceProps, type ImageAspectRatio, type ImageFit, type UploadFileItem, type UploadFileStatus } from './media.js';
 export { Breadcrumb, BreadcrumbLink, type BreadcrumbLinkProps, type BreadcrumbProps, Pagination, PaginationLink, type PaginationLinkProps, type PaginationProps } from './navigation.js';
 export { Dialog, DialogClose, DialogContent, type DialogContentProps, DialogTrigger, Drawer, DrawerClose, DrawerContent, type DrawerContentProps, type DrawerSide, DrawerTrigger, Menu, MenuContent, MenuItem, MenuSeparator, MenuTrigger, Popover, PopoverContent, type PopoverContentProps, PopoverTrigger, Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from './overlays.js';
 export { Card, CardContent, CardDescription, CardFooter, CardHeader, type CardProps, CardTitle, Surface, type SurfaceProps, type SurfaceVariant } from './surface.js';
