@@ -159,6 +159,8 @@ Exit criteria:
 - [x] Document purpose, required states, key props, and accessibility guidance.
 - [x] Add component search and a keyboard command palette.
 - [x] Verify Forms, Feedback, Data, Media, Desktop, and API pages at a 390px viewport.
+- [x] Enforce touch-sized targets for coarse pointers and verify forced-colors and reduced-motion behavior.
+- [x] Gate registry coverage and documented defaults against public React exports.
 - [x] Preserve the full native compatibility and Linux visual-regression route.
 
 Exit criteria:

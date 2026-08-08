@@ -1,4 +1,4 @@
-import { StrictMode, useEffect, useMemo, useState } from 'react';
+import { StrictMode, useEffect, useMemo, useRef, useState, type RefObject } from 'react';
 import { createRoot } from 'react-dom/client';
 import { componentRegistry, findComponent, type ComponentDoc } from './component-registry';
 import {
@@ -264,7 +264,7 @@ function CatalogHeader({ page }: { page: typeof catalogPages[number] }) {
   return <header className="ink-catalog-intro">
     <div>
       <p className="gallery-label">Component catalog</p>
-      <h2 className="ink-catalog-title" tabIndex={-1} data-catalog-heading>{page.label}</h2>
+      <h1 className="ink-catalog-title" tabIndex={-1} data-catalog-heading>{page.label}</h1>
       <p className="ink-catalog-summary">{page.description}</p>
     </div>
     <div className="ink-catalog-tags" aria-label="Page coverage">
@@ -277,7 +277,7 @@ function CatalogOverview() {
   return <div className="ink-catalog-overview" data-testid="catalog-overview">
     <Surface variant="elevated" className="grid gap-3">
       <p className="gallery-label">One visual language</p>
-      <h3 className="text-xl font-semibold tracking-tight">A review surface for every product target.</h3>
+      <h2 className="text-xl font-semibold tracking-tight">A review surface for every product target.</h2>
       <p className="max-w-[68ch] text-sm text-fg-2">Inspect public components by responsibility instead of scrolling through a demo wall. Tokens remain portable to web, desktop, and mobile renderers; this catalog verifies the React implementation.</p>
       <Inline wrap><StatusMark tone="ok" label="Core contracts covered" /><StatusMark tone="warning" label="Native renderers planned" /></Inline>
     </Surface>
@@ -355,13 +355,13 @@ function ComponentDocumentation({ doc }: { doc: ComponentDoc }) {
   </Stack>;
 }
 
-function ComponentSearch({ open, onOpenChange }: { open: boolean; onOpenChange: (open: boolean) => void }) {
+function ComponentSearch({ open, onOpenChange, triggerRef }: { open: boolean; onOpenChange: (open: boolean) => void; triggerRef: RefObject<HTMLButtonElement | null> }) {
   const [query, setQuery] = useState('');
   const normalizedQuery = query.trim().toLowerCase();
   const results = normalizedQuery ? componentRegistry.filter((component) => `${component.name} ${component.category} ${component.description}`.toLowerCase().includes(normalizedQuery)).slice(0, 10) : [];
   const families = Array.from(new Set(componentRegistry.map((component) => component.category))).map((category) => ({ category, count: componentRegistry.filter((component) => component.category === category).length }));
   useEffect(() => { if (!open) setQuery(''); }, [open]);
-  return <Dialog open={open} onOpenChange={onOpenChange}><DialogContent title="Find a component" description="Search public Ink UI contracts by name, family, or purpose.">
+  return <Dialog open={open} onOpenChange={onOpenChange}><DialogContent title="Find a component" description="Search public Ink UI contracts by name, family, or purpose." onCloseAutoFocus={(event) => { event.preventDefault(); triggerRef.current?.focus(); }}>
     <Stack gap="md"><TextField autoFocus label="Search components" value={query} onChange={(event) => setQuery(event.currentTarget.value)} placeholder="Button, upload, navigation…" />
       {!normalizedQuery ? <div><p className="gallery-label mb-2">Browse by family</p><div className="ink-command-families">{families.map(({ category, count }) => <a href={`#/${categoryRoute(category)}`} onClick={() => onOpenChange(false)} key={category}><strong>{category}</strong><span>{count} components</span></a>)}</div></div>
         : <div><div className="mb-2 flex items-center justify-between gap-3"><p className="gallery-label">Component results</p><span className="text-xs text-fg-3">{results.length} found</span></div><div className="ink-command-results" role="list" aria-label="Component results">{results.map((component) => <a role="listitem" href={`#/component/${component.slug}`} onClick={() => onOpenChange(false)} key={component.slug}><span><strong>{component.name}</strong><small>{component.description}</small></span><Badge>{component.category}</Badge></a>)}{results.length === 0 && <EmptyState title="No component found" description="Try a component name, family, or purpose." />}</div></div>}
@@ -372,6 +372,7 @@ function ComponentSearch({ open, onOpenChange }: { open: boolean; onOpenChange: 
 function ReactPreview() {
   const [activePage, setActivePage] = useState<CatalogRoute>(readCatalogPage);
   const [searchOpen, setSearchOpen] = useState(false);
+  const searchTriggerRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     const syncRoute = () => {
@@ -423,17 +424,17 @@ function ReactPreview() {
       <div className="ink-catalog-shell" data-testid="catalog-shell">
         <aside className="ink-catalog-sidebar">
           <a className="ink-catalog-brand" href="#/overview"><span className="ink-tone-solid" aria-hidden="true" /> <span>Ink UI</span><small>Workbench</small></a>
-          <button className="ink-catalog-search" type="button" onClick={() => setSearchOpen(true)}><span>Find component</span><kbd>{navigator.platform.includes('Mac') ? '⌘' : 'Ctrl'} K</kbd></button>
+          <button ref={searchTriggerRef} className="ink-catalog-search" type="button" onClick={() => setSearchOpen(true)}><span>Find component</span><kbd>{navigator.platform.includes('Mac') ? '⌘' : 'Ctrl'} K</kbd></button>
           <nav className="ink-catalog-nav" aria-label="Component catalog">
             {catalogPages.map((page) => <a href={`#/${page.id}`} aria-current={activePage === page.id ? 'page' : undefined} key={page.id}>{page.label}</a>)}
           </nav>
           <p className="ink-catalog-version">@hiepknor/ink-ui-react</p>
         </aside>
-        <main className="ink-catalog-main" id="catalog-content">
-          {activeDoc ? <header className="ink-catalog-intro"><div><p className="gallery-label">{activeDoc.category} component</p><h2 className="ink-catalog-title" tabIndex={-1} data-catalog-heading>{activeDoc.name}</h2><p className="ink-catalog-summary">{activeDoc.description}</p></div><div className="ink-catalog-tags"><Badge>Stable</Badge><Badge>{activeDoc.states.length} states</Badge></div></header> : <CatalogHeader page={currentPage} />}
+        <div className="ink-catalog-main" id="catalog-content">
+          {activeDoc ? <header className="ink-catalog-intro"><div><p className="gallery-label">{activeDoc.category} component</p><h1 className="ink-catalog-title" tabIndex={-1} data-catalog-heading>{activeDoc.name}</h1><p className="ink-catalog-summary">{activeDoc.description}</p></div><div className="ink-catalog-tags"><Badge>Stable</Badge><Badge>{activeDoc.states.length} states</Badge></div></header> : <CatalogHeader page={currentPage} />}
           <Surface aria-label="React component examples" className="ink-catalog-content">{content}</Surface>
-        </main>
-        <ComponentSearch open={searchOpen} onOpenChange={setSearchOpen} />
+        </div>
+        <ComponentSearch open={searchOpen} onOpenChange={setSearchOpen} triggerRef={searchTriggerRef} />
       </div>
     </TooltipProvider>
   );

@@ -2,12 +2,16 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import test from 'node:test';
 
-const [gallery, galleryCss, galleryScript, reactPreview, componentRegistry] = await Promise.all([
+const [gallery, galleryCss, galleryScript, reactPreview, componentRegistry, reactIndex, feedbackSource, layoutSource, surfaceSource] = await Promise.all([
   readFile(new URL('../index.html', import.meta.url), 'utf8'),
   readFile(new URL('../gallery.css', import.meta.url), 'utf8'),
   readFile(new URL('../gallery.js', import.meta.url), 'utf8'),
   readFile(new URL('../react-preview.tsx', import.meta.url), 'utf8'),
   readFile(new URL('../component-registry.ts', import.meta.url), 'utf8'),
+  readFile(new URL('../../../packages/ui-react/src/index.ts', import.meta.url), 'utf8'),
+  readFile(new URL('../../../packages/ui-react/src/feedback.tsx', import.meta.url), 'utf8'),
+  readFile(new URL('../../../packages/ui-react/src/layout.tsx', import.meta.url), 'utf8'),
+  readFile(new URL('../../../packages/ui-react/src/surface.tsx', import.meta.url), 'utf8'),
 ]);
 
 const packageJson = JSON.parse(
@@ -61,6 +65,38 @@ test('component catalog documents public families and contracts', () => {
   }
   assert.ok(reactPreview.includes('Find a component'));
   assert.ok(reactPreview.includes('ComponentDocumentation'));
+});
+
+test('component registry covers every public root contract', () => {
+  const publicRuntimeExports = [...reactIndex.matchAll(/export \{([^}]+)\} from/g)]
+    .flatMap((match) => match[1].split(','))
+    .map((entry) => entry.trim())
+    .filter((entry) => entry && !entry.startsWith('type '))
+    .map((entry) => entry.split(/\s+as\s+/)[0]);
+  const documented = new Set([...componentRegistry.matchAll(/name: '([^']+)', slug:/g)].map((match) => match[1]));
+  const composedOrUtility = new Set([
+    'AccordionContent', 'AccordionItem', 'AccordionTrigger', 'BreadcrumbLink',
+    'CardContent', 'CardDescription', 'CardFooter', 'CardHeader', 'CardTitle',
+    'DataTableFilter', 'DataTableToolbar', 'DialogClose', 'DialogContent', 'DialogTrigger',
+    'DrawerClose', 'DrawerContent', 'DrawerTrigger', 'MenuContent', 'MenuItem',
+    'MenuSeparator', 'MenuTrigger', 'PaginationButton', 'PaginationEllipsis',
+    'PaginationLink', 'PaginationStatus', 'PopoverContent', 'PopoverTrigger',
+    'TableBody', 'TableCaption', 'TableCell', 'TableHead', 'TableHeader', 'TableRow',
+    'TabsContent', 'TabsList', 'TabsTrigger', 'ToastAction', 'ToastClose',
+    'ToastDescription', 'ToastProvider', 'ToastTitle', 'ToastViewport',
+    'TooltipContent', 'TooltipProvider', 'TooltipTrigger', 'useInkDensity',
+  ]);
+  const uncovered = [...new Set(publicRuntimeExports)].filter((name) => !documented.has(name) && !composedOrUtility.has(name));
+  assert.deepEqual(uncovered, [], `Undocumented public root contracts: ${uncovered.join(', ')}`);
+});
+
+test('documented public defaults match implementation', () => {
+  assert.ok(componentRegistry.includes("type: 'neutral | warning | danger', defaultValue: 'warning'"));
+  assert.ok(feedbackSource.includes("tone = 'warning'"));
+  assert.ok(componentRegistry.includes("type: 'surface | elevated | recessed', defaultValue: 'surface'"));
+  assert.ok(surfaceSource.includes("variant = 'surface'"));
+  assert.ok(componentRegistry.includes("name: 'wrap', type: 'boolean', defaultValue: 'true'"));
+  assert.ok(layoutSource.includes('wrap = true'));
 });
 
 test('gallery reviews every public screentone recipe', () => {

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Ink Theme visual review gallery" />
     <title>Ink Theme Gallery</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%23111'/%3E%3C/svg%3E" />
     <link rel="stylesheet" href="./gallery.css" />
     <script type="module" src="./gallery.js"></script>
     <script type="module" src="./react-preview.tsx"></script>
@@ -104,10 +105,10 @@
               <textarea class="gallery-control min-h-20 resize-y" name="description" readonly>Routes public traffic.</textarea>
             </label>
             <div class="flex flex-wrap gap-4 text-xs">
-              <label class="gallery-native-choice"><input type="checkbox" class="size-4 accent-accent" checked /> Tracing</label>
+              <label class="gallery-native-choice"><input type="checkbox" name="tracing" class="size-4 accent-accent" checked /> Tracing</label>
               <label class="gallery-native-choice"><input type="radio" name="tier" class="size-4 accent-accent" checked /> Primary</label>
               <label class="gallery-native-choice"><input type="radio" name="tier" class="size-4 accent-accent" /> Replica</label>
-              <label class="gallery-native-choice text-fg-3"><input type="checkbox" class="size-4 accent-accent" disabled /> Unavailable</label>
+              <label class="gallery-native-choice text-fg-3"><input type="checkbox" name="unavailable-option" class="size-4 accent-accent" disabled /> Unavailable</label>
             </div>
           </form>
           <div class="grid content-start gap-4 bg-surface p-4">
@@ -122,12 +123,12 @@
             </div>
             <label class="grid gap-1.5 text-xs font-semibold">
               Invalid service
-              <input class="gallery-control" value="duplicate" aria-invalid="true" aria-describedby="native-service-error" />
+              <input class="gallery-control" name="invalid-service" value="duplicate" aria-invalid="true" aria-describedby="native-service-error" />
               <span id="native-service-error" class="border-l-2 border-line-strong pl-2 font-medium">Service already exists</span>
             </label>
             <label class="grid gap-1.5 text-xs font-semibold">
               Disabled field
-              <input class="gallery-control" value="Unavailable" disabled />
+              <input class="gallery-control" name="disabled-service" value="Unavailable" disabled />
             </label>
             <a class="w-fit text-xs font-semibold underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent" href="#composition-title">Text link with focus state</a>
           </div>

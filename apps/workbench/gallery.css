@@ -200,7 +200,7 @@
     background: var(--color-surface);
     color: var(--color-fg);
     text-decoration: none;
-    transition: background-color 120ms ease, transform 120ms ease;
+    transition: background-color var(--ink-motion-duration-fast) var(--ink-motion-easing-standard), transform var(--ink-motion-duration-fast) var(--ink-motion-easing-standard);
   }
 
   .ink-catalog-card:hover {
@@ -498,6 +498,16 @@
   @media (prefers-reduced-motion: reduce) {
     .ink-catalog-card {
       transition: none;
+    }
+  }
+
+  @media (pointer: coarse) {
+    body:not([data-catalog-page='all']) .ink-catalog-search,
+    body:not([data-catalog-page='all']) .ink-catalog-nav a,
+    body:not([data-catalog-page='all']) .ink-doc-related a,
+    body:not([data-catalog-page='all']) .ink-command-results > a,
+    body:not([data-catalog-page='all']) .ink-command-families a {
+      min-height: var(--ink-dimension-control-height-touch);
     }
   }
 

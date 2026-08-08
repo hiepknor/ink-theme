@@ -46,12 +46,30 @@ test('command palette finds component contracts with the keyboard', async ({ pag
   await expect(dialog).toBeVisible();
   await expect(dialog.getByText('Browse by family')).toBeVisible();
   await expect(dialog.getByRole('link', { name: 'Forms 10 components' })).toBeVisible();
-  await expect(dialog.getByRole('link', { name: 'Feedback 6 components' })).toBeVisible();
+  await expect(dialog.getByRole('link', { name: 'Feedback 13 components' })).toBeVisible();
   await dialog.getByRole('textbox', { name: 'Search components' }).fill('upload queue');
   await expect(dialog.getByRole('listitem')).toHaveCount(1);
   await dialog.getByRole('listitem').click();
   await expect(page).toHaveURL(/#\/component\/file-list$/);
   await expect(page.getByRole('heading', { name: 'FileList', exact: true })).toBeVisible();
+});
+
+test('command palette restores focus to its visible trigger', async ({ page }) => {
+  await page.goto('/#/overview');
+  const trigger = page.getByRole('button', { name: /Find component/ });
+  await trigger.click();
+  await expect(page.getByRole('dialog', { name: 'Find a component' })).toBeVisible();
+  await page.keyboard.press('Escape');
+  await expect(trigger).toBeFocused();
+});
+
+test('catalog exposes one main landmark and removes legacy content from interaction', async ({ page }) => {
+  await page.goto('/#/component/button');
+  await expect(page.locator('main')).toHaveCount(1);
+  await expect(page.getByRole('heading', { level: 1, name: 'Button' })).toBeVisible();
+  await expect(page.locator('#theme-preview > [hidden]')).not.toHaveCount(0);
+  const hiddenInteractive = await page.locator('#theme-preview > [hidden]').locator('a,button,input,select,textarea').evaluateAll((elements) => elements.filter((element) => !(element.closest('[inert]'))).length);
+  expect(hiddenInteractive).toBe(0);
 });
 
 test('mobile catalog families do not overflow the viewport', async ({ page }) => {
@@ -62,6 +80,39 @@ test('mobile catalog families do not overflow the viewport', async ({ page }) =>
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
     expect(overflow, `${route} creates horizontal page overflow`).toBeLessThanOrEqual(0);
   }
+});
+
+test('coarse pointers receive touch-sized design-system targets', async ({ browser }) => {
+  const context = await browser.newContext({ hasTouch: true, isMobile: true, viewport: { width: 390, height: 844 } });
+  const page = await context.newPage();
+  await page.goto('/#/desktop');
+  const selectors = ['.ink-catalog-search', '.ink-catalog-nav a', '.ink-ui-button', '.ink-ui-icon-button', '.ink-ui-input', '.ink-ui-tabs-trigger', '.ink-ui-media-action', '.ink-ui-pagination-item'];
+  const undersized = await page.locator(selectors.join(',')).evaluateAll((elements) => elements.filter((element) => {
+    const style = getComputedStyle(element);
+    const rect = element.getBoundingClientRect();
+    return style.display !== 'none' && style.visibility !== 'hidden' && rect.width > 1 && rect.height > 1 && (rect.width < 44 || rect.height < 44);
+  }).map((element) => ({ className: element.className, text: element.textContent, rect: element.getBoundingClientRect().toJSON() })));
+  expect(undersized).toEqual([]);
+  await context.close();
+});
+
+test('forced colors preserve focus and reduced motion removes animation', async ({ browser }) => {
+  const forcedContext = await browser.newContext({ forcedColors: 'active' });
+  const forcedPage = await forcedContext.newPage();
+  await forcedPage.goto('/#/component/button');
+  const button = forcedPage.getByTestId('component-documentation').getByRole('button', { name: 'Secondary' });
+  await button.focus();
+  expect(await button.evaluate((element) => getComputedStyle(element).outlineStyle)).not.toBe('none');
+  await forcedContext.close();
+
+  const reducedContext = await browser.newContext({ reducedMotion: 'reduce' });
+  const reducedPage = await reducedContext.newPage();
+  await reducedPage.goto('/#/component/drawer');
+  await reducedPage.getByRole('button', { name: 'Open drawer' }).click();
+  const drawer = reducedPage.getByRole('dialog', { name: 'Service inspector' });
+  await expect(drawer).toBeVisible();
+  expect(await drawer.evaluate((element) => getComputedStyle(element).animationName)).toBe('none');
+  await reducedContext.close();
 });
 
 for (const density of ['compact', 'default', 'touch']) {
