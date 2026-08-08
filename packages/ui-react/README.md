@@ -53,6 +53,7 @@ The desktop foundation also exports:
 - Navigation: `Breadcrumb` and `Pagination` compound parts.
 - Data display: semantic `Table` compound parts.
 - Composition: `Card`, `CardHeader`, `CardTitle`, `CardDescription`, `CardContent`, and `CardFooter`.
+- Media: native-input-backed `FileUpload` and responsive `ImageSurface` with aspect, fit, loading, error, and caption states.
 - Desktop shell: `Toolbar`, `Sidebar`, `Panel`, `Tabs`, and `StatusBar`.
 - Overlays: `Dialog`, `Drawer`, `Popover`, `Tooltip`, and `Menu` compound parts.
 

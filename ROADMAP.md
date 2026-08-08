@@ -22,6 +22,7 @@ only when all of its exit criteria pass.
 - [x] Complete the web and desktop UI foundation with visual and Tauri gates.
 - [x] Add the first UI breadth checkpoint for application-level composition.
 - [x] Complete the first UI/UX visual audit and motion pass.
+- [x] Add accessible upload and image-surface workflows.
 
 ## Milestone 1 — Theme 0.2.0
 
@@ -137,6 +138,7 @@ Exit criteria:
 - [x] Navigation: `Breadcrumb` and `Pagination`.
 - [x] Data display: semantic `Table` parts.
 - [x] Forms: native single-value `Combobox` suggestions.
+- [x] Media: `FileUpload` and `ImageSurface` with loading/error fallbacks.
 - [x] Add workbench examples and interaction coverage.
 
 Exit criteria:

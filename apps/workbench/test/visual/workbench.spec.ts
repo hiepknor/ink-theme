@@ -71,6 +71,14 @@ test('card composition', async ({ page }) => {
   await expect(cards).toHaveScreenshot('card-composition.png');
 });
 
+test('upload and image surface composition', async ({ page }) => {
+  const media = page.getByTestId('media-workbench');
+  await expect(media).toBeVisible();
+  await expect(media).toHaveScreenshot('media-workbench.png');
+  await expect(media.getByText('Choose files or drop them here')).toBeVisible();
+  await expect(media.getByRole('img', { name: 'Unavailable service artwork' })).toBeVisible();
+});
+
 test('custom select dropdown', async ({ page }) => {
   await page.getByTestId('desktop-foundation').getByRole('combobox', { name: 'Region', exact: true }).click();
   await expect(page.getByRole('option', { name: 'Singapore' })).toBeVisible();
