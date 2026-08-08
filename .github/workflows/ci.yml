@@ -57,15 +57,20 @@ jobs:
 
     steps:
       - uses: actions/checkout@v7
-      - uses: pnpm/action-setup@v6
-      - uses: actions/setup-node@v7
-        with:
-          node-version: 20
-          cache: pnpm
-      - run: pnpm install --frozen-lockfile
-      - name: Install Playwright browser and system dependencies
-        run: pnpm --filter @hiepknor/ink-workbench exec playwright install --with-deps chromium
-      - run: pnpm test:visual
+      - name: Pull deterministic Playwright image
+        run: |
+          for attempt in 1 2 3; do
+            docker pull mcr.microsoft.com/playwright:v1.62.1-noble && exit 0
+            sleep "$((attempt * 10))"
+          done
+          exit 1
+      - name: Run visual regression in the baseline environment
+        run: |
+          docker run --rm --ipc=host \
+            --volume "$PWD:/work" \
+            --workdir /work \
+            mcr.microsoft.com/playwright:v1.62.1-noble \
+            bash -lc 'npm install --global pnpm@10.34.5 && pnpm install --frozen-lockfile && pnpm test:visual'
 
   tauri-integration:
     name: Tauri Integration
