@@ -169,6 +169,25 @@ Exit criteria:
 - Every documented component has a direct URL and related-component navigation.
 - Catalog pages do not introduce horizontal page overflow at the mobile gate.
 
+## Milestone 6.2 — Architecture hardening
+
+Complete this checkpoint before the native vertical slice. Keep the current
+package boundaries unless a real native consumer demonstrates the need for a
+shared contract package.
+
+- [x] Validate token structure, value types, units, aliases, and platform mappings before generation.
+- [ ] Replace string-based package gates with semantic module and CSS checks.
+- [ ] Consolidate the workbench on one React application architecture.
+- [ ] Document aggregate CSS loading and JavaScript tree-shaking separately.
+- [ ] Build a three-component native architecture spike before extracting shared component types.
+
+Exit criteria:
+
+- Invalid token sources fail with an actionable token path.
+- Public export and CSS gates cannot pass because of comments or marker strings.
+- The workbench has one rendering architecture without losing visual coverage.
+- Native contract extraction is supported by working web and native consumers.
+
 ## Milestone 7 — Native mobile vertical slice
 
 Begin only after the React component contracts have stabilized through real

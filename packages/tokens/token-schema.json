@@ -3,13 +3,102 @@
   "$id": "https://github.com/hiepknor/ink-theme/blob/main/packages/tokens/token-schema.json",
   "title": "Ink token source",
   "type": "object",
-  "required": ["tokens", "tailwind", "native", "allowedColors"],
+  "required": ["$schema", "tokens", "tailwind", "native", "allowedColors"],
   "properties": {
-    "$schema": { "type": "string" },
-    "tokens": { "type": "object", "minProperties": 1 },
-    "tailwind": { "type": "object", "minProperties": 1, "additionalProperties": { "type": "string" } },
-    "native": { "type": "object", "minProperties": 1 },
-    "allowedColors": { "type": "array", "items": { "type": "string", "pattern": "^#[0-9a-f]{6}$" }, "uniqueItems": true }
+    "$schema": { "type": "string", "minLength": 1 },
+    "tokens": {
+      "type": "object",
+      "required": ["color", "dimension", "typography", "motion", "shadow", "density"],
+      "properties": {
+        "color": {
+          "type": "object",
+          "required": ["primitive", "semantic"],
+          "properties": {
+            "primitive": { "$ref": "#/$defs/colorMap" },
+            "semantic": { "$ref": "#/$defs/aliasMap" }
+          },
+          "additionalProperties": false
+        },
+        "dimension": {
+          "type": "object",
+          "required": ["borderWidth", "spacing", "controlHeight", "radius"],
+          "properties": {
+            "borderWidth": { "$ref": "#/$defs/lengthMap" },
+            "spacing": { "$ref": "#/$defs/lengthMap" },
+            "controlHeight": { "$ref": "#/$defs/lengthMap" },
+            "radius": { "$ref": "#/$defs/lengthMap" }
+          },
+          "additionalProperties": false
+        },
+        "typography": {
+          "type": "object",
+          "required": ["fontFamily", "fontSize", "fontWeight", "lineHeight"],
+          "properties": {
+            "fontFamily": { "$ref": "#/$defs/stringMap" },
+            "fontSize": { "$ref": "#/$defs/lengthMap" },
+            "fontWeight": { "$ref": "#/$defs/fontWeightMap" },
+            "lineHeight": { "$ref": "#/$defs/positiveNumberMap" }
+          },
+          "additionalProperties": false
+        },
+        "motion": {
+          "type": "object",
+          "required": ["duration", "easing"],
+          "properties": {
+            "duration": { "$ref": "#/$defs/durationMap" },
+            "easing": { "$ref": "#/$defs/stringMap" }
+          },
+          "additionalProperties": false
+        },
+        "shadow": { "$ref": "#/$defs/stringMap" },
+        "density": {
+          "type": "object",
+          "minProperties": 1,
+          "additionalProperties": {
+            "type": "object",
+            "required": ["controlHeight"],
+            "properties": { "controlHeight": { "$ref": "#/$defs/alias" } },
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "tailwind": { "$ref": "#/$defs/aliasMap" },
+    "native": {
+      "type": "object",
+      "required": ["colors", "spacing", "controlHeight", "borderWidth", "fontSize", "fontWeight", "lineHeight", "motionDuration"],
+      "properties": {
+        "colors": { "$ref": "#/$defs/alias" },
+        "spacing": { "$ref": "#/$defs/alias" },
+        "controlHeight": { "$ref": "#/$defs/alias" },
+        "borderWidth": { "$ref": "#/$defs/alias" },
+        "fontSize": { "$ref": "#/$defs/alias" },
+        "fontWeight": { "$ref": "#/$defs/alias" },
+        "lineHeight": { "$ref": "#/$defs/alias" },
+        "motionDuration": { "$ref": "#/$defs/alias" }
+      },
+      "additionalProperties": false
+    },
+    "allowedColors": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/color" }
+    }
   },
-  "additionalProperties": false
+  "additionalProperties": false,
+  "$defs": {
+    "alias": { "type": "string", "pattern": "^\\{[a-zA-Z0-9.]+\\}$" },
+    "color": { "type": "string", "pattern": "^#[0-9a-f]{6}$" },
+    "length": { "type": "string", "pattern": "^\\d+(?:\\.\\d+)?px$" },
+    "duration": { "type": "string", "pattern": "^\\d+(?:\\.\\d+)?ms$" },
+    "stringMap": { "type": "object", "minProperties": 1, "additionalProperties": { "type": "string", "minLength": 1 } },
+    "aliasMap": { "type": "object", "minProperties": 1, "additionalProperties": { "$ref": "#/$defs/alias" } },
+    "colorMap": { "type": "object", "minProperties": 1, "additionalProperties": { "$ref": "#/$defs/color" } },
+    "lengthMap": { "type": "object", "minProperties": 1, "additionalProperties": { "$ref": "#/$defs/length" } },
+    "durationMap": { "type": "object", "minProperties": 1, "additionalProperties": { "$ref": "#/$defs/duration" } },
+    "fontWeightMap": { "type": "object", "minProperties": 1, "additionalProperties": { "type": "integer", "minimum": 1, "maximum": 1000 } },
+    "positiveNumberMap": { "type": "object", "minProperties": 1, "additionalProperties": { "type": "number", "exclusiveMinimum": 0 } }
+  }
 }

@@ -34,5 +34,12 @@ pnpm verify
 ```
 
 Generated files are committed so every consumer and the theme package can
-build independently. CI fails on unresolved or circular aliases, colors
-outside `allowedColors`, generated drift, or unexpected tarball contents.
+build independently. Before generation, the source validator rejects unknown
+categories, invalid CSS units and value types, malformed or unresolved aliases,
+incomplete platform mappings, duplicate allowlist entries, and circular
+references. CI also fails on colors outside `allowedColors`, generated drift,
+or unexpected tarball contents.
+
+The source contract intentionally accepts `px` dimensions and `ms` durations.
+The React Native output converts those values to unitless numbers; adding a new
+unit therefore requires an explicit generator and contract-test change.

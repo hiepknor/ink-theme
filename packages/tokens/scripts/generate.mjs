@@ -2,12 +2,14 @@ import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 import { flatten, kebab, nativeValue, resolveTokens, validateColors } from './lib.mjs';
+import { validateTokenSource } from './validate-source.mjs';
 
 const packageRoot = fileURLToPath(new URL('../', import.meta.url));
 const repoRoot = fileURLToPath(new URL('../../../', import.meta.url));
 const sourcePath = path.join(packageRoot, 'src/tokens.json');
 const source = JSON.parse(await readFile(sourcePath, 'utf8'));
 
+validateTokenSource(source);
 validateColors(source.tokens, source.allowedColors);
 const { resolved, resolveValue } = resolveTokens(source.tokens);
 const tailwind = resolveValue(source.tailwind);
