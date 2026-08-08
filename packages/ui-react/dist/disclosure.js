@@ -9,6 +9,6 @@ export const AccordionItem = forwardRef(function AccordionItem({ className, ...p
 export const AccordionTrigger = forwardRef(function AccordionTrigger({ children, className, ...props }, ref) {
     return _jsx(AccordionPrimitive.Header, { className: "ink-ui-accordion-header", children: _jsxs(AccordionPrimitive.Trigger, { ref: ref, className: classes('ink-ui-accordion-trigger', className), ...props, children: [children, _jsx("span", { "aria-hidden": "true", children: "+" })] }) });
 });
-export const AccordionContent = forwardRef(function AccordionContent({ className, ...props }, ref) {
-    return _jsx(AccordionPrimitive.Content, { ref: ref, className: classes('ink-ui-accordion-content', className), ...props });
+export const AccordionContent = forwardRef(function AccordionContent({ children, className, ...props }, ref) {
+    return _jsx(AccordionPrimitive.Content, { ref: ref, className: classes('ink-ui-accordion-content', className), ...props, children: _jsx("div", { className: "ink-ui-accordion-content-inner", children: children }) });
 });

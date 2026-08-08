@@ -10,5 +10,5 @@ export { InkProvider, useInkDensity } from './ink-provider.js';
 export { Inline, Separator, Stack, VisuallyHidden } from './layout.js';
 export { Breadcrumb, BreadcrumbLink, Pagination, PaginationLink } from './navigation.js';
 export { Dialog, DialogClose, DialogContent, DialogTrigger, Drawer, DrawerClose, DrawerContent, DrawerTrigger, Menu, MenuContent, MenuItem, MenuSeparator, MenuTrigger, Popover, PopoverContent, PopoverTrigger, Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from './overlays.js';
-export { Surface } from './surface.js';
+export { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle, Surface } from './surface.js';
 export { TextField } from './text-field.js';

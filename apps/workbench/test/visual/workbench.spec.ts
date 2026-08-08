@@ -19,10 +19,30 @@ test('desktop application shell', async ({ page }) => {
   await expect(shell).toHaveScreenshot('desktop-shell.png');
 });
 
+test('desktop toolbar balance', async ({ page }) => {
+  const toolbar = page.getByRole('toolbar', { name: 'Workspace tools' });
+  await expect(toolbar).toBeVisible();
+  await expect(toolbar).toHaveScreenshot('desktop-toolbar.png');
+});
+
+test('desktop toolbar returned focus', async ({ page }) => {
+  const actions = page.getByRole('button', { name: 'Actions' });
+  await actions.click();
+  await page.getByRole('menuitem', { name: 'Rename' }).click();
+  await expect(actions).toBeFocused();
+  await expect(page.getByRole('toolbar', { name: 'Workspace tools' })).toHaveScreenshot('desktop-toolbar-focused.png');
+});
+
 test('extended component library', async ({ page }) => {
   const breadth = page.getByTestId('component-breadth');
   await expect(breadth).toBeVisible();
   await expect(breadth).toHaveScreenshot('component-breadth.png');
+});
+
+test('card composition', async ({ page }) => {
+  const cards = page.getByTestId('card-composition');
+  await expect(cards).toBeVisible();
+  await expect(cards).toHaveScreenshot('card-composition.png');
 });
 
 test('custom select dropdown', async ({ page }) => {
@@ -37,6 +57,22 @@ test('textbox focus treatment', async ({ page }) => {
   await expect(textarea).toHaveScreenshot('textbox-focus.png');
 });
 
+test('bordered controls avoid external focus rings', async ({ page }) => {
+  const button = page.locator('[data-density-preview="default"]').getByRole('button', { name: 'Secondary' });
+  await button.focus();
+  expect(await button.evaluate((element) => getComputedStyle(element).outlineStyle)).toBe('none');
+  expect(await button.evaluate((element) => getComputedStyle(element).boxShadow)).not.toBe('none');
+
+  const checkbox = page.locator('[data-density-preview="default"]').getByRole('checkbox', { name: 'Tracing' });
+  await checkbox.focus();
+  expect(await checkbox.evaluate((element) => getComputedStyle(element).outlineStyle)).toBe('none');
+  expect(await checkbox.locator('xpath=..').evaluate((element) => getComputedStyle(element).textDecorationLine)).toContain('underline');
+
+  const nativeInput = page.locator('input[name="service"]');
+  await nativeInput.focus();
+  expect(await nativeInput.evaluate((element) => getComputedStyle(element).outlineStyle)).toBe('none');
+});
+
 test('dialog overlay', async ({ page }) => {
   await page.getByRole('button', { name: 'Open dialog' }).click();
   await expect(page.getByRole('dialog', { name: 'Create service' })).toBeVisible();
@@ -47,4 +83,15 @@ test('drawer overlay', async ({ page }) => {
   await page.getByRole('button', { name: 'Open drawer' }).click();
   await expect(page.getByRole('dialog', { name: 'Service inspector' })).toBeVisible();
   await expect(page).toHaveScreenshot('drawer-overlay.png');
+});
+
+test('motion contract is active without reduced motion', async ({ browser }) => {
+  const context = await browser.newContext({ reducedMotion: 'no-preference' });
+  const page = await context.newPage();
+  await page.goto('/');
+  await page.getByRole('button', { name: 'Open drawer' }).click();
+  const drawer = page.getByRole('dialog', { name: 'Service inspector' });
+  await expect(drawer).toBeVisible();
+  expect(await drawer.evaluate((element) => getComputedStyle(element).animationName)).toBe('ink-ui-from-right');
+  await context.close();
 });

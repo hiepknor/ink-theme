@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event';
 import { expect, test, vi } from 'vitest';
 import {
   Accordion, AccordionContent, AccordionItem, AccordionTrigger, Alert, Badge,
-  Breadcrumb, BreadcrumbLink, Button, ButtonGroup, Combobox, Dialog,
+  Breadcrumb, BreadcrumbLink, Button, ButtonGroup, Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle, Combobox, Dialog,
   DialogContent, DialogTrigger, Drawer, DrawerContent, DrawerTrigger, EmptyState,
   IconButton, Inline, Menu, MenuContent, MenuItem, MenuTrigger, Panel, Popover,
   Pagination, PaginationLink, PopoverContent, PopoverTrigger, Progress, RadioGroup,
@@ -22,6 +22,14 @@ test('layout and desktop shell preserve semantic roles', () => {
   expect(screen.getByRole('complementary', { name: 'Navigation' })).toBeInTheDocument();
   expect(screen.getByRole('region', { name: 'Inspector' })).toBeInTheDocument();
   expect(screen.getByRole('status')).toHaveTextContent('Ready');
+});
+
+test('card composition preserves article hierarchy', () => {
+  render(<Card><CardHeader><CardTitle>Gateway</CardTitle><CardDescription>Production service</CardDescription></CardHeader><CardContent>Healthy</CardContent><CardFooter><Button>Inspect</Button></CardFooter></Card>);
+  const card = screen.getByRole('article');
+  expect(card).toHaveClass('ink-ui-card');
+  expect(screen.getByRole('heading', { name: 'Gateway', level: 3 })).toBeInTheDocument();
+  expect(card).toHaveTextContent('Production serviceHealthyInspect');
 });
 
 test('actions expose names and grouped density', () => {

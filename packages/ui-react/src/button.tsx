@@ -38,7 +38,8 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
       aria-busy={loading || undefined}
       {...props}
     >
-      <span aria-hidden={loading || undefined}>{children}</span>
+      <span className="ink-ui-button-content" aria-hidden={loading || undefined}>{children}</span>
+      {loading && <span className="ink-ui-button-spinner" aria-hidden="true" />}
       {loading && <span className="ink-ui-sr-only">{loadingLabel}</span>}
     </button>
   );

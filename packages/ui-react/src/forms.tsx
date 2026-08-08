@@ -27,7 +27,7 @@ export const RadioGroup = forwardRef<HTMLFieldSetElement, RadioGroupProps>(funct
   { defaultValue, density: densityOverride, disabled, label, name, onValueChange, options, value, ...inputProps }, ref,
 ) {
   const density = useInkDensity(densityOverride);
-  return <fieldset ref={ref} className="ink-ui-choice-group" data-density={density} disabled={disabled}><legend className="ink-ui-label">{label}</legend>{options.map((option) => <label className="ink-ui-check-label" key={option.value}><input {...inputProps} className="ink-ui-radio" type="radio" name={name} value={option.value} disabled={option.disabled} checked={value === undefined ? undefined : value === option.value} defaultChecked={value === undefined ? defaultValue === option.value : undefined} onChange={(event) => onValueChange?.(event.currentTarget.value)} /><span>{option.label}</span></label>)}</fieldset>;
+  return <fieldset ref={ref} className="ink-ui-choice-group" data-density={density} disabled={disabled}><legend className="ink-ui-label">{label}</legend>{options.map((option) => <label className="ink-ui-check-label" key={option.value}><input {...inputProps} className="ink-ui-radio" type="radio" name={name} value={option.value} disabled={option.disabled} checked={value === undefined ? undefined : value === option.value} defaultChecked={value === undefined ? defaultValue === option.value : undefined} onChange={(event) => onValueChange?.(event.currentTarget.value)} /><span className="ink-ui-radio-control" aria-hidden="true" /><span>{option.label}</span></label>)}</fieldset>;
 });
 
 export interface SwitchProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type'> { density?: InkDensity; label: ReactNode; }
