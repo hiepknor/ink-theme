@@ -4,6 +4,12 @@ The private Vite workbench reviews tokens, typography, patterns, controls,
 interaction states, strict-mode scope, dense data, composition, and the React
 vertical slice without shipping application code in public packages.
 
+The default view is a hash-routed component catalog. Its sections are:
+`Overview`, `Foundations`, `Forms`, `Feedback`, `Data`, `Media`, and `Desktop`.
+Routes such as `/#/data` are dependency-free, reload-safe, and can be shared
+directly. `/#/all` retains the full native compatibility and visual-regression
+matrix used by CI.
+
 From the repository root:
 
 ```sh

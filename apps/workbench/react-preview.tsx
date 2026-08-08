@@ -239,72 +239,143 @@ function DesktopFoundation() {
   );
 }
 
-function ReactPreview() {
+const catalogPages = [
+  { id: 'overview', label: 'Overview', description: 'Coverage, principles, and entry points.', components: ['7 families', 'Web + desktop', 'Native-ready tokens'] },
+  { id: 'foundations', label: 'Foundations', description: 'Density, geometry, type, color, and interaction rules.', components: ['InkProvider', 'Surface', 'Density'] },
+  { id: 'forms', label: 'Forms', description: 'Input controls and their complete interaction states.', components: ['TextField', 'Select', 'Checkbox', 'Button'] },
+  { id: 'feedback', label: 'Feedback', description: 'Status, validation, failures, recovery, and notifications.', components: ['Alert', 'Banner', 'ErrorState', 'Toast'] },
+  { id: 'data', label: 'Data', description: 'Tables, filtering, selection, sorting, and pagination.', components: ['DataTable', 'Table', 'Pagination'] },
+  { id: 'media', label: 'Media', description: 'Uploads, image surfaces, galleries, and resilient fallbacks.', components: ['FileUpload', 'ImageSurface', 'ImageGallery'] },
+  { id: 'desktop', label: 'Desktop', description: 'Application shell, overlays, navigation, and status surfaces.', components: ['Toolbar', 'Sidebar', 'Dialog', 'Drawer'] },
+] as const;
+
+type CatalogPage = typeof catalogPages[number]['id'];
+
+function readCatalogPage(): CatalogPage | 'all' {
+  const route = window.location.hash.replace(/^#\/?/, '');
+  if (route === 'all') return 'all';
+  return catalogPages.some((page) => page.id === route) ? route as CatalogPage : 'overview';
+}
+
+function CatalogHeader({ page }: { page: typeof catalogPages[number] }) {
+  return <header className="ink-catalog-intro">
+    <div>
+      <p className="gallery-label">Component catalog</p>
+      <h2 className="ink-catalog-title" tabIndex={-1} data-catalog-heading>{page.label}</h2>
+      <p className="ink-catalog-summary">{page.description}</p>
+    </div>
+    <div className="ink-catalog-tags" aria-label="Page coverage">
+      {page.components.map((component) => <Badge key={component}>{component}</Badge>)}
+    </div>
+  </header>;
+}
+
+function CatalogOverview() {
+  return <div className="ink-catalog-overview" data-testid="catalog-overview">
+    <Surface variant="elevated" className="grid gap-3">
+      <p className="gallery-label">One visual language</p>
+      <h3 className="text-xl font-semibold tracking-tight">A review surface for every product target.</h3>
+      <p className="max-w-[68ch] text-sm text-fg-2">Inspect public components by responsibility instead of scrolling through a demo wall. Tokens remain portable to web, desktop, and mobile renderers; this catalog verifies the React implementation.</p>
+      <Inline wrap><StatusMark tone="ok" label="Core contracts covered" /><StatusMark tone="warning" label="Native renderers planned" /></Inline>
+    </Surface>
+    <div className="ink-catalog-card-grid">
+      {catalogPages.slice(1).map((page) => <a className="ink-catalog-card" href={`#/${page.id}`} key={page.id}>
+        <span className="gallery-label">{page.components.length} focus areas</span>
+        <strong>{page.label}</strong>
+        <span>{page.description}</span>
+        <span className="ink-catalog-card-action">Open section <span aria-hidden="true">→</span></span>
+      </a>)}
+    </div>
+  </div>;
+}
+
+function FormWorkbench({ catalog = true }: { catalog?: boolean }) {
   const [service, setService] = useState('edge-router');
   const [tracing, setTracing] = useState(true);
+  const examples = <>
+    {densities.map((density) => <InkProvider density={density} key={density}>
+      <Surface variant={density === 'default' ? 'elevated' : 'recessed'} className="grid gap-4" data-density-preview={density}>
+        <header className="flex items-center justify-between gap-3"><strong className="font-mono text-xs">{density}</strong><span className="text-xs text-fg-3">{density === 'compact' ? '32px' : density === 'touch' ? '48px' : '40px'}</span></header>
+        <div className="flex flex-wrap gap-3"><Button variant="primary">Primary</Button><Button>Secondary</Button><Button variant="quiet">Quiet</Button><Button disabled>Disabled</Button><Button loading loadingLabel="Creating service">Loading</Button></div>
+        <div className="grid gap-4 md:grid-cols-2">
+          <TextField label="Service name" description="Controlled text input" value={service} onChange={(event) => setService(event.currentTarget.value)} />
+          <TextField label="Read-only region" defaultValue="ap-southeast" readOnly />
+          <TextField label="Invalid service" defaultValue="duplicate" error="Service already exists" />
+          <TextField label="Disabled field" defaultValue="Unavailable" disabled />
+          <Select label="Custom deployment region" defaultValue="sg" options={[{ label: 'Singapore', value: 'sg' }, { label: 'Tokyo', value: 'jp' }, { label: 'Frankfurt', value: 'de' }]} />
+        </div>
+        <div className="grid gap-2"><Checkbox label="Tracing" description="Controlled checkbox" checked={tracing} onChange={(event) => setTracing(event.currentTarget.checked)} /><Checkbox label="Required review" error="Confirm before deployment" /><Checkbox label="Unavailable option" disabled /></div>
+      </Surface>
+    </InkProvider>)}
+  </>;
+  if (!catalog) return examples;
+  return <Stack gap="lg"><div><p className="text-sm font-semibold">Density and control states</p><p className="text-xs text-fg-3">Every control is shown across compact, default, and touch targets.</p></div>{examples}</Stack>;
+}
+
+function FoundationsWorkbench() {
+  return <Stack gap="lg" data-testid="foundations-workbench">
+    <Surface variant="recessed" className="grid gap-3"><p className="gallery-label">Renderer contract</p><h3 className="text-lg font-semibold">Tokens first, components second.</h3><p className="text-sm text-fg-2">Semantic color, spacing, typography, screentone, focus, and motion tokens are shared. Each platform renderer owns its native interaction semantics.</p></Surface>
+    <div className="grid gap-3 md:grid-cols-3"><Card><CardHeader><CardTitle>Compact · 32px</CardTitle><CardDescription>Dense desktop tools and data.</CardDescription></CardHeader></Card><Card><CardHeader><CardTitle>Default · 40px</CardTitle><CardDescription>General web product surfaces.</CardDescription></CardHeader></Card><Card><CardHeader><CardTitle>Touch · 48px</CardTitle><CardDescription>Coarse pointer and mobile targets.</CardDescription></CardHeader></Card></div>
+    <Alert title="Native fallback remains covered">Open the compatibility route to review raw HTML controls and strict-scope behavior.</Alert>
+    <Button onClick={() => { window.location.hash = '/all'; }}>Open native compatibility matrix</Button>
+  </Stack>;
+}
+
+function ReactPreview() {
+  const [activePage, setActivePage] = useState<CatalogPage | 'all'>(readCatalogPage);
+
+  useEffect(() => {
+    const syncRoute = () => {
+      const route = window.location.hash.replace(/^#\/?/, '');
+      if (route !== 'all' && !catalogPages.some((page) => page.id === route)) return;
+      setActivePage(readCatalogPage());
+      window.requestAnimationFrame(() => document.querySelector<HTMLElement>('[data-catalog-heading]')?.focus({ preventScroll: true }));
+    };
+    window.addEventListener('hashchange', syncRoute);
+    return () => window.removeEventListener('hashchange', syncRoute);
+  }, []);
+
+  useEffect(() => {
+    document.body.dataset.catalogPage = activePage;
+  }, [activePage]);
+
+  const currentPage = catalogPages.find((page) => page.id === activePage) ?? catalogPages[0];
+  const content = activePage === 'overview' ? <CatalogOverview />
+    : activePage === 'foundations' ? <FoundationsWorkbench />
+    : activePage === 'forms' ? <FormWorkbench />
+    : activePage === 'feedback' ? <Stack gap="xl"><ComponentBreadth /><Separator /><ErrorExperienceWorkbench /></Stack>
+    : activePage === 'data' ? <DataTableWorkbench />
+    : activePage === 'media' ? <MediaWorkbench />
+    : activePage === 'desktop' ? <DesktopFoundation />
+    : null;
+
+  if (activePage === 'all') {
+    return <TooltipProvider delayDuration={200}><Surface aria-label="React component examples" className="grid gap-5">
+      <div><p className="text-sm font-semibold">Tailwind-free package output</p><p className="mt-1 text-xs text-fg-3">Tab through native controls. Each row inherits density from InkProvider.</p></div>
+      <FormWorkbench catalog={false} /><Separator /><DesktopFoundation /><Separator /><ComponentBreadth /><Separator /><ErrorExperienceWorkbench /><Separator /><DataTableWorkbench /><Separator /><MediaWorkbench />
+    </Surface></TooltipProvider>;
+  }
 
   return (
     <TooltipProvider delayDuration={200}>
-    <Surface aria-label="React component examples" className="grid gap-5">
-      <div>
-        <p className="text-sm font-semibold">Tailwind-free package output</p>
-        <p className="mt-1 text-xs text-fg-3">Tab through native controls. Each row inherits density from InkProvider.</p>
+      <div className="ink-catalog-shell" data-testid="catalog-shell">
+        <aside className="ink-catalog-sidebar">
+          <a className="ink-catalog-brand" href="#/overview"><span className="ink-tone-solid" aria-hidden="true" /> <span>Ink UI</span><small>Workbench</small></a>
+          <nav className="ink-catalog-nav" aria-label="Component catalog">
+            {catalogPages.map((page) => <a href={`#/${page.id}`} aria-current={activePage === page.id ? 'page' : undefined} key={page.id}>{page.label}</a>)}
+          </nav>
+          <p className="ink-catalog-version">@hiepknor/ink-ui-react</p>
+        </aside>
+        <main className="ink-catalog-main" id="catalog-content">
+          <CatalogHeader page={currentPage} />
+          <Surface aria-label="React component examples" className="ink-catalog-content">{content}</Surface>
+        </main>
       </div>
-
-      {densities.map((density) => (
-        <InkProvider density={density} key={density}>
-          <Surface variant={density === 'default' ? 'elevated' : 'recessed'} className="grid gap-4" data-density-preview={density}>
-            <header className="flex items-center justify-between gap-3">
-              <strong className="font-mono text-xs">{density}</strong>
-              <span className="text-xs text-fg-3">{density === 'compact' ? '32px' : density === 'touch' ? '48px' : '40px'}</span>
-            </header>
-            <div className="flex flex-wrap gap-3">
-              <Button variant="primary">Primary</Button>
-              <Button>Secondary</Button>
-              <Button variant="quiet">Quiet</Button>
-              <Button disabled>Disabled</Button>
-              <Button loading loadingLabel="Creating service">Loading</Button>
-            </div>
-            <div className="grid gap-4 md:grid-cols-2">
-              <TextField
-                label="Service name"
-                description="Controlled text input"
-                value={service}
-                onChange={(event) => setService(event.currentTarget.value)}
-              />
-              <TextField label="Read-only region" defaultValue="ap-southeast" readOnly />
-              <TextField label="Invalid service" defaultValue="duplicate" error="Service already exists" />
-              <TextField label="Disabled field" defaultValue="Unavailable" disabled />
-              <Select label="Custom deployment region" defaultValue="sg" options={[{ label: 'Singapore', value: 'sg' }, { label: 'Tokyo', value: 'jp' }, { label: 'Frankfurt', value: 'de' }]} />
-            </div>
-            <div className="grid gap-2">
-              <Checkbox
-                label="Tracing"
-                description="Controlled checkbox"
-                checked={tracing}
-                onChange={(event) => setTracing(event.currentTarget.checked)}
-              />
-              <Checkbox label="Required review" error="Confirm before deployment" />
-              <Checkbox label="Unavailable option" disabled />
-            </div>
-          </Surface>
-        </InkProvider>
-      ))}
-      <Separator />
-      <DesktopFoundation />
-      <Separator />
-      <ComponentBreadth />
-      <Separator />
-      <ErrorExperienceWorkbench />
-      <Separator />
-      <DataTableWorkbench />
-      <Separator />
-      <MediaWorkbench />
-    </Surface>
     </TooltipProvider>
   );
 }
 
 const root = document.querySelector('#react-preview');
 if (!root) throw new Error('React preview root is missing');
+document.body.dataset.catalogPage = readCatalogPage();
 createRoot(root).render(<StrictMode><ReactPreview /></StrictMode>);
