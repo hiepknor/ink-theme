@@ -19,6 +19,7 @@ only when all of its exit criteria pass.
 - [x] Establish the pnpm workspace foundation without changing consumer imports.
 - [x] Generate cross-platform web and native tokens from one editable source.
 - [x] Build the first accessible React UI vertical slice.
+- [x] Complete the web and desktop UI foundation with visual and Tauri gates.
 
 ## Milestone 1 — Theme 0.2.0
 
@@ -114,9 +115,9 @@ Exit criteria:
 - [x] Desktop: `Toolbar`, `Sidebar`, `Panel`, `Tabs`, and `StatusBar`.
 - [x] Overlays: `Dialog`, `Popover`, `Tooltip`, and `Menu`.
 - [x] Add a Tailwind-free Vite React integration example.
-- [ ] Add a representative Tauri integration example.
+- [x] Add a representative Tauri integration example.
 - [x] Add browser accessibility and keyboard coverage.
-- [ ] Add browser visual regression coverage.
+- [x] Add browser visual regression coverage.
 
 Overlay components may build on accessible primitives. Ink must not implement
 focus traps, dismiss layers, or floating-positioning algorithms from scratch.

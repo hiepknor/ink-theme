@@ -4,3 +4,7 @@ dist/
 !packages/ui-react/dist/**
 *.tgz
 .DS_Store
+playwright-report/
+test-results/
+target/
+**/gen/schemas/

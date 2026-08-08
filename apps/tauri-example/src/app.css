@@ -1,0 +1,8 @@
+* { box-sizing: border-box; }
+html, body, #root { min-height: 100%; margin: 0; }
+body { background: var(--ink-color-semantic-background); color: var(--ink-color-semantic-foreground); font-family: var(--ink-typography-font-family-sans); }
+.desktop-frame { display: grid; min-height: 100vh; grid-template-rows: auto 1fr auto; }
+.desktop-content { display: grid; grid-template-columns: 220px minmax(0, 1fr); }
+.desktop-content > .ink-ui-panel { border-width: 0; }
+.desktop-spacer { flex: 1; }
+@media (max-width: 720px) { .desktop-content { grid-template-columns: 1fr; } .desktop-content > .ink-ui-sidebar { display: none; } }

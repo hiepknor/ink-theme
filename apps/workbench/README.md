@@ -12,3 +12,23 @@ pnpm dev
 
 Create a production build with `pnpm build`. Output is written to
 `dist/workbench` and is not published to npm.
+
+## Visual regression
+
+The Playwright suite captures density, desktop-shell, and overlay contracts in
+Chromium. Run the committed Linux baselines with:
+
+```sh
+pnpm --filter @hiepknor/ink-workbench exec playwright install --with-deps chromium
+pnpm test:visual
+```
+
+Update baselines only for an intentional visual-contract change. Because pixel
+output is platform-specific, run this command in the same Linux environment
+used by CI (`mcr.microsoft.com/playwright:v1.62.1-noble`):
+
+```sh
+pnpm test:visual --update-snapshots
+```
+
+Review every changed PNG before committing it.

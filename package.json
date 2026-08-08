@@ -4,6 +4,7 @@
   "type": "module",
   "scripts": {
     "dev": "pnpm --filter @hiepknor/ink-workbench dev",
+    "test:visual": "pnpm --filter @hiepknor/ink-workbench test:visual",
     "check": "pnpm -r --if-present run check",
     "test": "pnpm -r --if-present run test",
     "build": "pnpm -r --if-present run build",
