@@ -45,18 +45,22 @@ export interface ImageSurfaceProps extends Omit<ImgHTMLAttributes<HTMLImageEleme
   aspectRatio?: ImageAspectRatio;
   caption?: ReactNode;
   fallback?: ReactNode;
+  fallbackDescription?: ReactNode;
   fit?: ImageFit;
   loadingFallback?: ReactNode;
+  onRetry?: () => void;
+  retryLabel?: ReactNode;
 }
 
 export const ImageSurface = forwardRef<HTMLImageElement, ImageSurfaceProps>(function ImageSurface(
-  { alt, aspectRatio = 'auto', caption, className, decoding = 'async', fallback = 'Image unavailable', fit = 'cover', loading = 'lazy', loadingFallback = 'Loading image', onError, onLoad, src, ...props }, ref,
+  { alt, aspectRatio = 'auto', caption, className, decoding = 'async', fallback = 'Image unavailable', fallbackDescription, fit = 'cover', loading = 'lazy', loadingFallback = 'Loading image', onError, onLoad, onRetry, retryLabel = 'Retry', src, ...props }, ref,
 ) {
   const [failed, setFailed] = useState(false);
   const [loaded, setLoaded] = useState(false);
   useEffect(() => { setFailed(false); setLoaded(false); }, [src]);
   const pending = Boolean(src) && !failed && !loaded;
-  return <figure className="ink-ui-image-surface" data-aspect={aspectRatio} data-fit={fit} aria-busy={pending || undefined}><div className="ink-ui-image-stage">{failed || !src ? <div className="ink-ui-image-fallback" role="img" aria-label={alt}><span className="ink-ui-image-mark" aria-hidden="true" />{fallback}</div> : <><img {...props} ref={ref} className={classes('ink-ui-image', className)} src={src} alt={alt} loading={loading} decoding={decoding} onError={(event) => { setFailed(true); setLoaded(false); onError?.(event); }} onLoad={(event) => { setFailed(false); setLoaded(true); onLoad?.(event); }} />{pending && <div className="ink-ui-image-loading" role="status"><span className="ink-ui-spinner" aria-hidden="true" /><span>{loadingFallback}</span></div>}</>}</div>{caption && <figcaption className="ink-ui-image-caption">{caption}</figcaption>}</figure>;
+  const state = !src ? 'empty' : failed ? 'error' : loaded ? 'ready' : 'loading';
+  return <figure className="ink-ui-image-surface" data-aspect={aspectRatio} data-fit={fit} data-state={state} aria-busy={pending || undefined}><div className="ink-ui-image-stage">{failed || !src ? <div className="ink-ui-image-fallback"><span className="ink-ui-sr-only" role="img" aria-label={alt} /><span className="ink-ui-image-mark" aria-hidden="true" /><span className="ink-ui-image-fallback-copy" aria-live={failed ? 'polite' : undefined}><strong>{fallback}</strong>{fallbackDescription && <span>{fallbackDescription}</span>}</span>{failed && onRetry && <button type="button" className="ink-ui-media-action" onClick={onRetry}>{retryLabel}</button>}</div> : <><img {...props} ref={ref} className={classes('ink-ui-image', className)} src={src} alt={alt} loading={loading} decoding={decoding} onError={(event) => { setFailed(true); setLoaded(false); onError?.(event); }} onLoad={(event) => { setFailed(false); setLoaded(true); onLoad?.(event); }} />{pending && <div className="ink-ui-image-loading" role="status"><span className="ink-ui-spinner" aria-hidden="true" /><span>{loadingFallback}</span></div>}</>}</div>{caption && <figcaption className="ink-ui-image-caption">{caption}</figcaption>}</figure>;
 });
 
 export type UploadFileStatus = 'queued' | 'uploading' | 'success' | 'error';

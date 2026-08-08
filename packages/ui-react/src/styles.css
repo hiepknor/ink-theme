@@ -47,7 +47,9 @@
 .ink-ui-image-surface[data-aspect='auto'] .ink-ui-image { height: auto; }
 .ink-ui-image-surface[data-fit='cover'] .ink-ui-image { object-fit: cover; }
 .ink-ui-image-surface[data-fit='contain'] .ink-ui-image { object-fit: contain; }
-.ink-ui-image-fallback { display: grid; min-height: 160px; place-content: center; justify-items: center; gap: var(--ink-dimension-spacing-sm); padding: var(--ink-dimension-spacing-lg); color: var(--ink-color-semantic-foreground-muted); text-align: center; }
+.ink-ui-image-fallback { display: grid; min-height: 160px; place-content: center; justify-items: center; gap: var(--ink-dimension-spacing-md); padding: var(--ink-dimension-spacing-xl); color: var(--ink-color-semantic-foreground-muted); text-align: center; }
+.ink-ui-image-fallback-copy { display: grid; max-width: 40ch; gap: var(--ink-dimension-spacing-xs); font-size: var(--ink-typography-font-size-sm); }
+.ink-ui-image-fallback-copy strong { color: var(--ink-color-semantic-foreground); font-weight: var(--ink-typography-font-weight-medium); }
 .ink-ui-image-loading { position: absolute; inset: 0; display: grid; place-content: center; justify-items: center; gap: var(--ink-dimension-spacing-sm); background: var(--ink-color-semantic-recessed); color: var(--ink-color-semantic-foreground-muted); font-size: var(--ink-typography-font-size-sm); }
 .ink-ui-image-mark { width: 40px; height: 32px; border: 1px solid var(--ink-color-semantic-border-strong); background: linear-gradient(135deg, transparent 48%, var(--ink-color-semantic-border-strong) 49% 52%, transparent 53%); }
 .ink-ui-image-caption { padding: var(--ink-dimension-spacing-sm) var(--ink-dimension-spacing-md); border-top: 1px solid var(--ink-color-semantic-border); background: var(--ink-color-semantic-surface); color: var(--ink-color-semantic-foreground-muted); font-size: var(--ink-typography-font-size-sm); }

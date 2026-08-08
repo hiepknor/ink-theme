@@ -176,9 +176,9 @@ package boundaries unless a real native consumer demonstrates the need for a
 shared contract package.
 
 - [x] Validate token structure, value types, units, aliases, and platform mappings before generation.
-- [ ] Replace string-based package gates with semantic module and CSS checks.
+- [x] Replace string-based package gates with semantic module and CSS checks.
 - [ ] Consolidate the workbench on one React application architecture.
-- [ ] Document aggregate CSS loading and JavaScript tree-shaking separately.
+- [x] Document aggregate CSS loading and JavaScript tree-shaking separately.
 - [ ] Build a three-component native architecture spike before extracting shared component types.
 
 Exit criteria:

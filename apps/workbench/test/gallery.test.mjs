@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import test from 'node:test';
+import { analyzeComponentRegistry, analyzeModuleExports } from '../../../packages/ui-react/scripts/analyze-contracts.mjs';
 
 const [gallery, galleryCss, galleryScript, reactPreview, componentRegistry, reactIndex, feedbackSource, layoutSource, surfaceSource] = await Promise.all([
   readFile(new URL('../index.html', import.meta.url), 'utf8'),
@@ -68,12 +69,8 @@ test('component catalog documents public families and contracts', () => {
 });
 
 test('component registry covers every public root contract', () => {
-  const publicRuntimeExports = [...reactIndex.matchAll(/export \{([^}]+)\} from/g)]
-    .flatMap((match) => match[1].split(','))
-    .map((entry) => entry.trim())
-    .filter((entry) => entry && !entry.startsWith('type '))
-    .map((entry) => entry.split(/\s+as\s+/)[0]);
-  const documented = new Set([...componentRegistry.matchAll(/name: '([^']+)', slug:/g)].map((match) => match[1]));
+  const publicRuntimeExports = analyzeModuleExports(reactIndex).runtime;
+  const documented = analyzeComponentRegistry(componentRegistry);
   const composedOrUtility = new Set([
     'AccordionContent', 'AccordionItem', 'AccordionTrigger', 'BreadcrumbLink',
     'CardContent', 'CardDescription', 'CardFooter', 'CardHeader', 'CardTitle',
@@ -86,7 +83,7 @@ test('component registry covers every public root contract', () => {
     'ToastDescription', 'ToastProvider', 'ToastTitle', 'ToastViewport',
     'TooltipContent', 'TooltipProvider', 'TooltipTrigger', 'useInkDensity',
   ]);
-  const uncovered = [...new Set(publicRuntimeExports)].filter((name) => !documented.has(name) && !composedOrUtility.has(name));
+  const uncovered = [...publicRuntimeExports].filter((name) => !documented.has(name) && !composedOrUtility.has(name));
   assert.deepEqual(uncovered, [], `Undocumented public root contracts: ${uncovered.join(', ')}`);
 });
 
