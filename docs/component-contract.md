@@ -102,3 +102,9 @@ toasts, progress, skeleton loading, accordion disclosure, breadcrumbs,
 pagination, semantic tables, and native single-value suggestions. Products own
 message copy, routing, pagination state, table sorting/data, and remote search.
 Ink owns visual states, semantic markup, keyboard behavior, and density.
+
+`Select` is a custom accessible popup rather than a browser-rendered select. It
+uses option data plus controlled or uncontrolled value props, supports typeahead
+and arrow-key navigation, and delegates popup/focus behavior to Radix Select.
+Inputs and textareas use an inset focus indicator to avoid changing their visual
+footprint; forced-colors mode retains a system outline.

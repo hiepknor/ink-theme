@@ -105,7 +105,7 @@ function DesktopFoundation() {
           <Sidebar aria-label="Project navigation"><Stack gap="sm"><strong className="text-xs">PROJECT</strong><Button variant="quiet">Overview</Button><Button variant="quiet">Services</Button></Stack></Sidebar>
           <Tabs defaultValue="editor">
             <TabsList aria-label="Workspace views"><TabsTrigger value="editor">Editor</TabsTrigger><TabsTrigger value="preview">Preview</TabsTrigger></TabsList>
-            <TabsContent value="editor"><Stack><TextArea label="Description" defaultValue="Routes public traffic." /><RadioGroup label="Tier" name="preview-tier" defaultValue="primary" options={[{ label: 'Primary', value: 'primary' }, { label: 'Replica', value: 'replica' }]} /><Switch label="Tracing enabled" defaultChecked /><Select label="Region" defaultValue="sg"><option value="sg">Singapore</option><option value="jp">Tokyo</option></Select></Stack></TabsContent>
+            <TabsContent value="editor"><Stack><TextArea label="Description" defaultValue="Routes public traffic." /><RadioGroup label="Tier" name="preview-tier" defaultValue="primary" options={[{ label: 'Primary', value: 'primary' }, { label: 'Replica', value: 'replica' }]} /><Switch label="Tracing enabled" defaultChecked /><Select label="Region" defaultValue="sg" options={[{ label: 'Singapore', value: 'sg' }, { label: 'Tokyo', value: 'jp' }, { label: 'Frankfurt', value: 'de' }]} /></Stack></TabsContent>
             <TabsContent value="preview"><EmptyState title="No preview selected" description="Choose a service from the sidebar." actions={<Button>Select service</Button>} /></TabsContent>
           </Tabs>
         </div>

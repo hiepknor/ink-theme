@@ -25,6 +25,18 @@ test('extended component library', async ({ page }) => {
   await expect(breadth).toHaveScreenshot('component-breadth.png');
 });
 
+test('custom select dropdown', async ({ page }) => {
+  await page.getByRole('combobox', { name: 'Region' }).click();
+  await expect(page.getByRole('option', { name: 'Singapore' })).toBeVisible();
+  await expect(page).toHaveScreenshot('select-dropdown.png');
+});
+
+test('textbox focus treatment', async ({ page }) => {
+  const textarea = page.getByTestId('desktop-foundation').getByRole('textbox', { name: 'Description' });
+  await textarea.focus();
+  await expect(textarea).toHaveScreenshot('textbox-focus.png');
+});
+
 test('dialog overlay', async ({ page }) => {
   await page.getByRole('button', { name: 'Open dialog' }).click();
   await expect(page.getByRole('dialog', { name: 'Create service' })).toBeVisible();

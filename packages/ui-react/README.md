@@ -25,6 +25,20 @@ The default entrypoint includes the component stylesheet. The
 `@hiepknor/ink-ui-react/styles.css` export is available for tooling that needs
 an explicit CSS entrypoint.
 
+Custom selects receive data through `options` and expose `value`,
+`defaultValue`, and `onValueChange` instead of browser `<option>` children:
+
+```tsx
+<Select
+  label="Region"
+  defaultValue="sg"
+  options={[
+    { label: 'Singapore', value: 'sg' },
+    { label: 'Tokyo', value: 'jp' },
+  ]}
+/>
+```
+
 Core components are `InkProvider`, `Surface`, `Button`, `TextField`, and
 `Checkbox`. Interactive components inherit `compact`, `default`, or `touch`
 density from the provider and accept a local `density` override.
@@ -33,7 +47,7 @@ The desktop foundation also exports:
 
 - Layout: `Stack`, `Inline`, `Separator`, and `VisuallyHidden`.
 - Actions: `IconButton` and `ButtonGroup`.
-- Forms: `TextArea`, `RadioGroup`, `Switch`, native `Select`, and datalist-backed `Combobox`.
+- Forms: `TextArea`, `RadioGroup`, `Switch`, custom accessible `Select`, and datalist-backed `Combobox`.
 - Feedback: `Badge`, `StatusMark`, `Spinner`, `EmptyState`, `Alert`, `Progress`, `Skeleton`, and `Toast`.
 - Disclosure: `Accordion` compound parts.
 - Navigation: `Breadcrumb` and `Pagination` compound parts.
@@ -44,6 +58,9 @@ The desktop foundation also exports:
 Dialog, popover, tooltip, menu, tabs, accordion, and toast behavior builds on Radix Primitives.
 Ink owns their visual adapter and accessible required props; Radix owns focus,
 dismissal, positioning, and keyboard algorithms.
+
+Text inputs and textareas use a compact inset focus indicator. Forced-colors
+mode restores the platform highlight outline so keyboard focus remains visible.
 
 Native DOM attributes and refs are forwarded to the primary element. Form
 labels, descriptions, and errors are associated programmatically. Product

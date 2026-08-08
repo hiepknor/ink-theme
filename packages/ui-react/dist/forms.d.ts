@@ -1,4 +1,4 @@
-import { type InputHTMLAttributes, type ReactNode, type SelectHTMLAttributes, type TextareaHTMLAttributes } from 'react';
+import { type ButtonHTMLAttributes, type InputHTMLAttributes, type ReactNode, type TextareaHTMLAttributes } from 'react';
 import { type InkDensity } from './shared.js';
 export interface TextAreaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
     density?: InkDensity;
@@ -27,13 +27,28 @@ export interface SwitchProps extends Omit<InputHTMLAttributes<HTMLInputElement>,
     label: ReactNode;
 }
 export declare const Switch: import("react").ForwardRefExoticComponent<SwitchProps & import("react").RefAttributes<HTMLInputElement>>;
-export interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
+export interface SelectOption {
+    disabled?: boolean;
+    label: ReactNode;
+    value: string;
+}
+export interface SelectProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'defaultValue' | 'onChange' | 'value'> {
+    defaultOpen?: boolean;
+    defaultValue?: string;
     density?: InkDensity;
     description?: ReactNode;
     error?: ReactNode;
     label: ReactNode;
+    name?: string;
+    onOpenChange?: (open: boolean) => void;
+    onValueChange?: (value: string) => void;
+    open?: boolean;
+    options: SelectOption[];
+    placeholder?: ReactNode;
+    required?: boolean;
+    value?: string;
 }
-export declare const Select: import("react").ForwardRefExoticComponent<SelectProps & import("react").RefAttributes<HTMLSelectElement>>;
+export declare const Select: import("react").ForwardRefExoticComponent<SelectProps & import("react").RefAttributes<HTMLButtonElement>>;
 export interface ComboboxOption {
     label: string;
     value: string;
