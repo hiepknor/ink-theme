@@ -4,7 +4,7 @@ import { expect, test, vi } from 'vitest';
 import {
   Accordion, AccordionContent, AccordionItem, AccordionTrigger, Alert, Badge,
   Breadcrumb, BreadcrumbLink, Button, ButtonGroup, Combobox, Dialog,
-  DialogContent, DialogTrigger, EmptyState,
+  DialogContent, DialogTrigger, Drawer, DrawerContent, DrawerTrigger, EmptyState,
   IconButton, Inline, Menu, MenuContent, MenuItem, MenuTrigger, Panel, Popover,
   Pagination, PaginationLink, PopoverContent, PopoverTrigger, Progress, RadioGroup,
   Select, Separator, Sidebar, Skeleton, Spinner,
@@ -94,6 +94,17 @@ test('dialog traps interaction and closes with Escape', async () => {
   await user.keyboard('{Escape}');
   expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
   expect(screen.getByRole('button', { name: 'Open dialog' })).toHaveFocus();
+});
+
+test('drawer exposes its side and closes with Escape', async () => {
+  const user = userEvent.setup();
+  render(<Drawer><DrawerTrigger asChild><Button>Open inspector</Button></DrawerTrigger><DrawerContent side="left" title="Inspector" description="Deployment settings"><Button>Save</Button></DrawerContent></Drawer>);
+  await user.click(screen.getByRole('button', { name: 'Open inspector' }));
+  expect(screen.getByRole('dialog', { name: 'Inspector' })).toHaveAttribute('data-side', 'left');
+  expect(screen.getByRole('button', { name: 'Save' })).toHaveFocus();
+  await user.keyboard('{Escape}');
+  expect(screen.queryByRole('dialog', { name: 'Inspector' })).not.toBeInTheDocument();
+  expect(screen.getByRole('button', { name: 'Open inspector' })).toHaveFocus();
 });
 
 test('popover, tooltip, and menu expose keyboard-accessible content', async () => {

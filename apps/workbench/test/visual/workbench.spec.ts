@@ -42,3 +42,9 @@ test('dialog overlay', async ({ page }) => {
   await expect(page.getByRole('dialog', { name: 'Create service' })).toBeVisible();
   await expect(page).toHaveScreenshot('dialog-overlay.png');
 });
+
+test('drawer overlay', async ({ page }) => {
+  await page.getByRole('button', { name: 'Open drawer' }).click();
+  await expect(page.getByRole('dialog', { name: 'Service inspector' })).toBeVisible();
+  await expect(page).toHaveScreenshot('drawer-overlay.png');
+});

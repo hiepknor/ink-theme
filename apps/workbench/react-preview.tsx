@@ -16,6 +16,9 @@ import {
   Dialog,
   DialogContent,
   DialogTrigger,
+  Drawer,
+  DrawerContent,
+  DrawerTrigger,
   EmptyState,
   IconButton,
   InkProvider,
@@ -113,6 +116,7 @@ function DesktopFoundation() {
       </Panel>
       <Inline>
         <Dialog><DialogTrigger asChild><Button variant="primary">Open dialog</Button></DialogTrigger><DialogContent title="Create service" description="Review metadata before creating the service."><Stack><TextField label="Name" defaultValue="edge-router" /><Button variant="primary">Create</Button></Stack></DialogContent></Dialog>
+        <Drawer><DrawerTrigger asChild><Button>Open drawer</Button></DrawerTrigger><DrawerContent title="Service inspector" description="Review deployment settings without leaving the workspace."><Stack><TextField label="Service" defaultValue="edge-router" /><Select label="Region" defaultValue="sg" options={[{ label: 'Singapore', value: 'sg' }, { label: 'Tokyo', value: 'jp' }]} /><Button variant="primary">Save changes</Button></Stack></DrawerContent></Drawer>
         <Popover><PopoverTrigger asChild><Button>Open popover</Button></PopoverTrigger><PopoverContent><StatusMark tone="warning" label="Pending review" /></PopoverContent></Popover>
       </Inline>
     </Stack>
