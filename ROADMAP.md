@@ -20,6 +20,7 @@ only when all of its exit criteria pass.
 - [x] Generate cross-platform web and native tokens from one editable source.
 - [x] Build the first accessible React UI vertical slice.
 - [x] Complete the web and desktop UI foundation with visual and Tauri gates.
+- [x] Add the first UI breadth checkpoint for application-level composition.
 
 ## Milestone 1 — Theme 0.2.0
 
@@ -128,7 +129,22 @@ Exit criteria:
 - Compact and touch densities are usable without component-specific overrides.
 - Accessibility and visual checks run in CI.
 
-## Milestone 6 — Native mobile vertical slice
+## Milestone 6 — UI breadth checkpoint
+
+- [x] Feedback: `Alert`, `Toast`, `Progress`, and `Skeleton`.
+- [x] Disclosure: `Accordion`.
+- [x] Navigation: `Breadcrumb` and `Pagination`.
+- [x] Data display: semantic `Table` parts.
+- [x] Forms: native single-value `Combobox` suggestions.
+- [x] Add workbench examples and interaction coverage.
+
+Exit criteria:
+
+- Public APIs preserve native semantics and refs where applicable.
+- Product data, routing, copy, and remote-search behavior stay outside Ink.
+- Workbench and package-content gates cover every new component family.
+
+## Milestone 7 — Native mobile vertical slice
 
 Begin only after the React component contracts have stabilized through real
 consumer use.

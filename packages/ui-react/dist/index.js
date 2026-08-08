@@ -1,11 +1,14 @@
 export { ButtonGroup, IconButton } from './actions.js';
 export { Button } from './button.js';
 export { Checkbox } from './checkbox.js';
+export { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from './data-display.js';
 export { Panel, Sidebar, StatusBar, Tabs, TabsContent, TabsList, TabsTrigger, Toolbar } from './desktop.js';
-export { Badge, EmptyState, Spinner, StatusMark } from './feedback.js';
-export { RadioGroup, Select, Switch, TextArea } from './forms.js';
+export { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from './disclosure.js';
+export { Alert, Badge, EmptyState, Progress, Skeleton, Spinner, StatusMark, Toast, ToastAction, ToastClose, ToastDescription, ToastProvider, ToastTitle, ToastViewport } from './feedback.js';
+export { Combobox, RadioGroup, Select, Switch, TextArea } from './forms.js';
 export { InkProvider, useInkDensity } from './ink-provider.js';
 export { Inline, Separator, Stack, VisuallyHidden } from './layout.js';
+export { Breadcrumb, BreadcrumbLink, Pagination, PaginationLink } from './navigation.js';
 export { Dialog, DialogClose, DialogContent, DialogTrigger, Menu, MenuContent, MenuItem, MenuSeparator, MenuTrigger, Popover, PopoverContent, PopoverTrigger, Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from './overlays.js';
 export { Surface } from './surface.js';
 export { TextField } from './text-field.js';
