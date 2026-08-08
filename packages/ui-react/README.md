@@ -49,6 +49,7 @@ The desktop foundation also exports:
 - Actions: `IconButton` and `ButtonGroup`.
 - Forms: `TextArea`, `RadioGroup`, `Switch`, custom accessible `Select`, and datalist-backed `Combobox`.
 - Feedback: `Badge`, `StatusMark`, `Spinner`, `EmptyState`, `Alert`, `Progress`, `Skeleton`, and `Toast`.
+- Error recovery: `ErrorMessage`, `FormErrorSummary`, scoped `ErrorState`, persistent `Banner`, and render-failure `ErrorBoundary`.
 - Disclosure: `Accordion` compound parts.
 - Navigation: `Breadcrumb` and `Pagination` compound parts.
 - Data display: semantic `Table` parts plus controlled `DataTable`, `DataTableToolbar`, custom `DataTableFilter`, and `FilterChip` composition.
@@ -78,6 +79,22 @@ the current rows and controlled state callbacks from the application so the
 same UI works with local collections and server-side queries. `FileList`
 follows the same boundary: it renders queue state and reports retry/remove
 intent while the application owns transport, cancellation, and persistence.
+
+Error feedback follows the affected scope. Field errors sit directly below
+their control; `FormErrorSummary` links to invalid controls after submit;
+`ErrorState` replaces a failed section; `Banner` persists at the application
+shell boundary; and toast errors are reserved for non-blocking background
+operations. Visual `tone` does not imply announcement priority. Set `live` to
+`polite` or `assertive` only when feedback is newly introduced.
+
+`DataTable` uses `errorMode="replace"` by default. Use `errorMode="stale"` to
+keep the last successful rows visible while presenting refresh failure and
+recovery actions above the table.
+
+`ErrorBoundary` catches React render/lifecycle failures within its subtree and
+reports them through `onError`. It does not catch event-handler, timer, network,
+or server errors; applications route those failures through the appropriate
+field, form, section, banner, or toast pattern.
 
 `Combobox` intentionally covers native single-value suggestions. Async search,
 remote filtering, multi-select, and virtualization belong to a future advanced

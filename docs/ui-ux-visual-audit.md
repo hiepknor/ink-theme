@@ -37,6 +37,16 @@ forced-colors support, and visual regression coverage.
 - Upload queues, user imagery, and image collections lacked reusable visual
   contracts. File progress/retry/remove, avatar fallbacks, galleries, and an
   accessible dialog-backed lightbox now share the Ink interaction language.
+- Error feedback had no hierarchy beyond field copy, alerts, and toasts. The
+  public contract now distinguishes field, form, section, stale-data, dialog,
+  background, and application-wide failures, with recovery actions placed next
+  to the affected scope.
+- Visual severity previously implied live-region priority. `Alert` now keeps
+  tone and announcement behavior independent so static danger content does not
+  interrupt assistive technology users.
+- React render failures had no recovery boundary. `ErrorBoundary` now contains
+  crashes at the nearest useful subtree, supports reset keys and custom
+  fallbacks, and forwards diagnostics to application-owned logging.
 
 ## Deliberately deferred
 

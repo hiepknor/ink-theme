@@ -44,6 +44,10 @@ State meaning must not be conveyed through screentone, color, or motion alone.
 - All interactive behavior is operable by keyboard on web.
 - Labels and descriptions are programmatically associated with form controls.
 - Error messages are connected to their controls.
+- Validation after submit places a focusable summary before the form fields and
+  links each summary item to its invalid control.
+- Visual severity and live-region priority are independent. Static danger
+  content is not announced as a newly occurring failure.
 - Disabled and loading states remain understandable to assistive technology.
 - Focus is visible and is not removed without an equivalent replacement.
 - Touch targets use touch-density metrics on mobile interfaces.
@@ -103,6 +107,26 @@ pagination, semantic tables, controlled data-table workflows, and native
 single-value suggestions. Products own message copy, routing, query state,
 table data, upload transport, and remote search.
 Ink owns visual states, semantic markup, keyboard behavior, and density.
+
+## Error hierarchy
+
+- Field validation uses `ErrorMessage` directly below the related control.
+- Form submission uses `FormErrorSummary` before the first field and moves
+  focus to it when validation fails.
+- A failed component or content region uses `ErrorState` in that region.
+- A React render/lifecycle crash uses `ErrorBoundary` at the narrowest useful
+  recovery boundary and reports technical diagnostics through `onError`.
+- Refresh failures may preserve stale data and place an `Alert` before it.
+- Dialog submission failures stay inside the open dialog so entered data and
+  recovery actions remain available.
+- Persistent connection, session, or service incidents use `Banner` at the
+  application-shell boundary.
+- Toast errors are limited to non-blocking background operations and must not
+  replace field, form, section, or page errors.
+
+Applications own error classification, logging, retry logic, and technical
+details. Ink owns placement primitives, accessible relationships, optional live
+announcement behavior, and recovery-action layout.
 
 `Select` is a custom accessible popup rather than a browser-rendered select. It
 uses option data plus controlled or uncontrolled value props, supports typeahead

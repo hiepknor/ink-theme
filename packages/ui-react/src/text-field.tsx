@@ -1,11 +1,13 @@
 import { forwardRef, useId, type InputHTMLAttributes, type ReactNode } from 'react';
 import { classes, describedBy, type InkDensity } from './shared.js';
 import { useInkDensity } from './ink-provider.js';
+import { ErrorMessage, type FeedbackLive } from './feedback.js';
 
 export interface TextFieldProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'size'> {
   density?: InkDensity;
   description?: ReactNode;
   error?: ReactNode;
+  errorLive?: FeedbackLive;
   hideLabel?: boolean;
   label: ReactNode;
 }
@@ -18,6 +20,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(function T
     density: densityOverride,
     description,
     error,
+    errorLive = 'off',
     hideLabel = false,
     id: idProp,
     label,
@@ -34,7 +37,6 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(function T
   return (
     <div className="ink-ui-field" data-density={density}>
       <label className={classes('ink-ui-label', hideLabel && 'ink-ui-sr-only')} htmlFor={id}>{label}</label>
-      {description && <div className="ink-ui-description" id={descriptionId}>{description}</div>}
       <input
         {...props}
         ref={ref}
@@ -43,7 +45,8 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(function T
         aria-describedby={describedBy(ariaDescribedBy, descriptionId, errorId)}
         aria-invalid={ariaInvalid ?? (error ? true : undefined)}
       />
-      {error && <div className="ink-ui-error" id={errorId}>{error}</div>}
+      {description && <div className="ink-ui-description" id={descriptionId}>{description}</div>}
+      {error && <ErrorMessage id={errorId} live={errorLive}>{error}</ErrorMessage>}
     </div>
   );
 });

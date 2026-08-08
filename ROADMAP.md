@@ -25,6 +25,7 @@ only when all of its exit criteria pass.
 - [x] Add accessible upload and image-surface workflows.
 - [x] Add a controlled data-table and filter foundation.
 - [x] Complete upload queues, avatars, galleries, and lightbox workflows.
+- [x] Establish field, form, section, table, dialog, toast, and application error patterns.
 
 ## Milestone 1 — Theme 0.2.0
 
@@ -136,6 +137,7 @@ Exit criteria:
 ## Milestone 6 — UI breadth checkpoint
 
 - [x] Feedback: `Alert`, `Toast`, `Progress`, and `Skeleton`.
+- [x] Error recovery: `ErrorMessage`, `FormErrorSummary`, `ErrorState`, and persistent `Banner`.
 - [x] Disclosure: `Accordion`.
 - [x] Navigation: `Breadcrumb` and `Pagination`.
 - [x] Data display: semantic `Table` parts.

@@ -1,17 +1,19 @@
 import { forwardRef, useEffect, useId, useImperativeHandle, useRef, useState, type DragEvent, type HTMLAttributes, type ImgHTMLAttributes, type InputHTMLAttributes, type ReactNode } from 'react';
 import { classes, describedBy } from './shared.js';
 import { Dialog, DialogContent } from './overlays.js';
+import { ErrorMessage, type FeedbackLive } from './feedback.js';
 
 export interface FileUploadProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type'> {
   description?: ReactNode;
   error?: ReactNode;
+  errorLive?: FeedbackLive;
   label: ReactNode;
   onFilesChange?: (files: File[]) => void;
   prompt?: ReactNode;
 }
 
 export const FileUpload = forwardRef<HTMLInputElement, FileUploadProps>(function FileUpload(
-  { 'aria-describedby': ariaDescribedBy, className, description, disabled, error, id: idProp, label, onChange, onFilesChange, prompt = 'Choose files or drop them here', ...props }, forwardedRef,
+  { 'aria-describedby': ariaDescribedBy, className, description, disabled, error, errorLive = 'off', id: idProp, label, onChange, onFilesChange, prompt = 'Choose files or drop them here', ...props }, forwardedRef,
 ) {
   const id = idProp ?? `ink-upload-${useId()}`;
   const inputRef = useRef<HTMLInputElement>(null);
@@ -33,7 +35,7 @@ export const FileUpload = forwardRef<HTMLInputElement, FileUploadProps>(function
     receive(files);
   }
 
-  return <div className="ink-ui-upload-field"><span className="ink-ui-label" id={`${id}-label`}>{label}</span><input {...props} ref={inputRef} id={id} type="file" disabled={disabled} className={classes('ink-ui-upload-input', className)} aria-labelledby={`${id}-label`} aria-invalid={error ? true : undefined} aria-describedby={describedBy(ariaDescribedBy, descriptionId, errorId)} onChange={(event) => { onChange?.(event); receive(event.currentTarget.files); }} /><label className="ink-ui-upload-dropzone" data-dragging={dragging || undefined} data-disabled={disabled || undefined} htmlFor={id} onDragEnter={(event) => { event.preventDefault(); if (!disabled) setDragging(true); }} onDragOver={(event) => event.preventDefault()} onDragLeave={() => setDragging(false)} onDrop={handleDrop}><span className="ink-ui-upload-mark" aria-hidden="true">↑</span><strong>{prompt}</strong><span className="ink-ui-description">{props.accept ? `Accepted: ${props.accept}` : 'Any file type'}</span></label>{description && <div className="ink-ui-description" id={descriptionId}>{description}</div>}{error && <div className="ink-ui-error" id={errorId}>{error}</div>}</div>;
+  return <div className="ink-ui-upload-field"><span className="ink-ui-label" id={`${id}-label`}>{label}</span><input {...props} ref={inputRef} id={id} type="file" disabled={disabled} className={classes('ink-ui-upload-input', className)} aria-labelledby={`${id}-label`} aria-invalid={error ? true : undefined} aria-describedby={describedBy(ariaDescribedBy, descriptionId, errorId)} onChange={(event) => { onChange?.(event); receive(event.currentTarget.files); }} /><label className="ink-ui-upload-dropzone" data-dragging={dragging || undefined} data-disabled={disabled || undefined} htmlFor={id} onDragEnter={(event) => { event.preventDefault(); if (!disabled) setDragging(true); }} onDragOver={(event) => event.preventDefault()} onDragLeave={() => setDragging(false)} onDrop={handleDrop}><span className="ink-ui-upload-mark" aria-hidden="true">↑</span><strong>{prompt}</strong><span className="ink-ui-description">{props.accept ? `Accepted: ${props.accept}` : 'Any file type'}</span></label>{description && <div className="ink-ui-description" id={descriptionId}>{description}</div>}{error && <ErrorMessage id={errorId} live={errorLive}>{error}</ErrorMessage>}</div>;
 });
 
 export type ImageAspectRatio = 'auto' | 'square' | 'video' | 'portrait';

@@ -1,9 +1,11 @@
 import { type ButtonHTMLAttributes, type InputHTMLAttributes, type ReactNode, type TextareaHTMLAttributes } from 'react';
 import { type InkDensity } from './shared.js';
+import { type FeedbackLive } from './feedback.js';
 export interface TextAreaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
     density?: InkDensity;
     description?: ReactNode;
     error?: ReactNode;
+    errorLive?: FeedbackLive;
     label: ReactNode;
 }
 export declare const TextArea: import("react").ForwardRefExoticComponent<TextAreaProps & import("react").RefAttributes<HTMLTextAreaElement>>;
@@ -38,6 +40,7 @@ export interface SelectProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement
     density?: InkDensity;
     description?: ReactNode;
     error?: ReactNode;
+    errorLive?: FeedbackLive;
     label: ReactNode;
     name?: string;
     onOpenChange?: (open: boolean) => void;
@@ -57,6 +60,7 @@ export interface ComboboxProps extends Omit<InputHTMLAttributes<HTMLInputElement
     density?: InkDensity;
     description?: ReactNode;
     error?: ReactNode;
+    errorLive?: FeedbackLive;
     label: ReactNode;
     options: ComboboxOption[];
 }
