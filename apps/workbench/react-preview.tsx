@@ -155,6 +155,7 @@ function ReactPreview() {
               <TextField label="Read-only region" defaultValue="ap-southeast" readOnly />
               <TextField label="Invalid service" defaultValue="duplicate" error="Service already exists" />
               <TextField label="Disabled field" defaultValue="Unavailable" disabled />
+              <Select label="Custom deployment region" defaultValue="sg" options={[{ label: 'Singapore', value: 'sg' }, { label: 'Tokyo', value: 'jp' }, { label: 'Frankfurt', value: 'de' }]} />
             </div>
             <div className="grid gap-2">
               <Checkbox

@@ -26,7 +26,7 @@ test('extended component library', async ({ page }) => {
 });
 
 test('custom select dropdown', async ({ page }) => {
-  await page.getByRole('combobox', { name: 'Region' }).click();
+  await page.getByTestId('desktop-foundation').getByRole('combobox', { name: 'Region', exact: true }).click();
   await expect(page.getByRole('option', { name: 'Singapore' })).toBeVisible();
   await expect(page).toHaveScreenshot('select-dropdown.png');
 });
