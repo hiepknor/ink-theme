@@ -51,9 +51,9 @@ The desktop foundation also exports:
 - Feedback: `Badge`, `StatusMark`, `Spinner`, `EmptyState`, `Alert`, `Progress`, `Skeleton`, and `Toast`.
 - Disclosure: `Accordion` compound parts.
 - Navigation: `Breadcrumb` and `Pagination` compound parts.
-- Data display: semantic `Table` compound parts.
+- Data display: semantic `Table` parts plus controlled `DataTable`, `DataTableToolbar`, custom `DataTableFilter`, and `FilterChip` composition.
 - Composition: `Card`, `CardHeader`, `CardTitle`, `CardDescription`, `CardContent`, and `CardFooter`.
-- Media: native-input-backed `FileUpload` and responsive `ImageSurface` with aspect, fit, loading, error, and caption states.
+- Media: native-input-backed `FileUpload`, controlled `FileList`, resilient `ImageSurface`, fallback-aware `Avatar`, and accessible `ImageGallery` lightbox.
 - Desktop shell: `Toolbar`, `Sidebar`, `Panel`, `Tabs`, and `StatusBar`.
 - Overlays: `Dialog`, `Drawer`, `Popover`, `Tooltip`, and `Menu` compound parts.
 
@@ -72,6 +72,12 @@ Native DOM attributes and refs are forwarded to the primary element. Form
 labels, descriptions, and errors are associated programmatically. Product
 applications remain responsible for form submission, validation rules, data,
 routing, and domain language.
+
+`DataTable` deliberately does not fetch, filter, sort, or paginate data. Pass
+the current rows and controlled state callbacks from the application so the
+same UI works with local collections and server-side queries. `FileList`
+follows the same boundary: it renders queue state and reports retry/remove
+intent while the application owns transport, cancellation, and persistence.
 
 `Combobox` intentionally covers native single-value suggestions. Async search,
 remote filtering, multi-select, and virtualization belong to a future advanced

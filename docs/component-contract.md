@@ -99,8 +99,9 @@ adapter boundary.
 
 The web renderer also provides application-level building blocks for alerts,
 toasts, progress, skeleton loading, accordion disclosure, breadcrumbs,
-pagination, semantic tables, and native single-value suggestions. Products own
-message copy, routing, pagination state, table sorting/data, and remote search.
+pagination, semantic tables, controlled data-table workflows, and native
+single-value suggestions. Products own message copy, routing, query state,
+table data, upload transport, and remote search.
 Ink owns visual states, semantic markup, keyboard behavior, and density.
 
 `Select` is a custom accessible popup rather than a browser-rendered select. It

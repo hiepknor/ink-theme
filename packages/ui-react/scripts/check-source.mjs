@@ -6,8 +6,8 @@ const index = await read('src/index.ts');
 const styles = await read('src/styles.css');
 
 for (const component of [
-  'Badge', 'Button', 'ButtonGroup', 'Checkbox', 'Dialog', 'EmptyState',
-  'FileUpload', 'IconButton', 'ImageSurface', 'InkProvider', 'Inline', 'Menu', 'Panel', 'Popover',
+  'Avatar', 'Badge', 'Button', 'ButtonGroup', 'Checkbox', 'DataTable', 'DataTableFilter', 'DataTableToolbar', 'Dialog', 'EmptyState', 'FilterChip',
+  'FileList', 'FileUpload', 'IconButton', 'ImageGallery', 'ImageSurface', 'InkProvider', 'Inline', 'Menu', 'Panel', 'Popover',
   'RadioGroup', 'Select', 'Separator', 'Sidebar', 'Spinner', 'Stack',
   'StatusBar', 'StatusMark', 'Surface', 'Switch', 'Tabs', 'TextArea',
   'TextField', 'Toolbar', 'Tooltip', 'VisuallyHidden',
