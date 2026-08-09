@@ -1,8 +1,11 @@
-import { fireEvent, render, screen } from '@testing-library/react-native';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react-native';
+import { AccessibilityInfo } from 'react-native';
 import { Alert, Button, Checkbox, IconButton, InkProvider, Progress, RadioGroup, Select, Spinner, Switch, TextArea, TextField } from '@hiepknor/ink-react-native';
 import { App } from '../src/App';
 
 describe('public native interactions', () => {
+  afterEach(() => jest.restoreAllMocks());
+
   it('delivers the inverse value from a controlled checkbox', async () => {
     const onCheckedChange = jest.fn();
     await render(<Checkbox checked={false} label="Enable tracing" onCheckedChange={onCheckedChange} />);
@@ -58,6 +61,17 @@ describe('public native interactions', () => {
     await fireEvent.press(screen.getByRole('button', { name: 'Region' }));
     await fireEvent.press(screen.getByRole('menuitem', { name: 'Tokyo' }));
     expect(onValueChange).toHaveBeenCalledWith('tyo');
+  });
+
+  it('adapts Select modal motion to the system preference', async () => {
+    const motionPreference = jest.spyOn(AccessibilityInfo, 'isReduceMotionEnabled').mockResolvedValue(false);
+    const view = await render(<Select label="Region" open options={[{ label: 'Singapore', value: 'sg' }]} value="sg" />);
+    await waitFor(() => expect(view.container.queryAll((node) => node.props.animationType === 'fade')).toHaveLength(1));
+
+    await view.unmount();
+    motionPreference.mockResolvedValue(true);
+    const reducedView = await render(<Select label="Region" open options={[{ label: 'Singapore', value: 'sg' }]} value="sg" />);
+    await waitFor(() => expect(reducedView.container.queryAll((node) => node.props.animationType === 'none')).toHaveLength(1));
   });
 
   it('announces alerts and exposes bounded progress values', async () => {
