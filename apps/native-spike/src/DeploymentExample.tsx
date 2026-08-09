@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { nativeTokens } from '@hiepknor/ink-tokens/react-native';
-import { Alert, Button, Progress, RadioGroup, Select, Surface, Switch, TextArea, TextField } from '@hiepknor/ink-ui-native';
+import { Alert, Button, Progress, RadioGroup, Select, Surface, Switch, TextArea, TextField } from '@hiepknor/ink-react-native';
 
 const regions = [
   { label: 'Singapore', value: 'singapore' },

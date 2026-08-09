@@ -9,7 +9,7 @@ The package remains private until the multi-package release gate is available.
 ## Usage
 
 ```tsx
-import { Button, InkProvider, TextField } from '@hiepknor/ink-ui-react';
+import { Button, InkProvider, TextField } from '@hiepknor/ink-react';
 
 export function Form() {
   return (
@@ -22,7 +22,7 @@ export function Form() {
 ```
 
 The default entrypoint includes the component stylesheet. The
-`@hiepknor/ink-ui-react/styles.css` export is available for tooling that needs
+`@hiepknor/ink-react/styles.css` export is available for tooling that needs
 an explicit CSS entrypoint. JavaScript exports can be tree-shaken, while CSS is
 currently delivered as one aggregate visual contract rather than per-component
 stylesheets.

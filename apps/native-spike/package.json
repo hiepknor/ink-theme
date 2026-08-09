@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@hiepknor/ink-tokens": "workspace:*",
-    "@hiepknor/ink-ui-native": "workspace:*",
+    "@hiepknor/ink-react-native": "workspace:*",
     "expo": "~57.0.1",
     "expo-status-bar": "~57.0.0",
     "react": "19.2.3",

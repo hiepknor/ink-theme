@@ -1,6 +1,6 @@
-# Ink Theme API
+# Ink Tailwind API
 
-This document defines the public CSS contract for `@hiepknor/ink-theme` 0.2.x.
+This document defines the public CSS contract for `@hiepknor/ink-tailwind` 0.3.x.
 Token removal, renaming, or a changed visual meaning requires a breaking
 release. Applications retain ownership of components and product semantics.
 
@@ -8,18 +8,18 @@ release. Applications retain ownership of components and product semantics.
 
 | Import | Contents |
 | --- | --- |
-| `@hiepknor/ink-theme` | Tokens, safe document defaults, and patterns |
-| `@hiepknor/ink-theme/tokens.css` | Tailwind CSS v4 theme tokens only |
-| `@hiepknor/ink-theme/base.css` | Document and interaction defaults only |
-| `@hiepknor/ink-theme/patterns.css` | Presentation utilities only |
-| `@hiepknor/ink-theme/strict.css` | Global square-geometry lock |
-| `@hiepknor/ink-theme/scoped-strict.css` | `.ink-strict` subtree geometry lock |
+| `@hiepknor/ink-tailwind` | Tokens, safe document defaults, and patterns |
+| `@hiepknor/ink-tailwind/tokens.css` | Tailwind CSS v4 theme tokens only |
+| `@hiepknor/ink-tailwind/base.css` | Document and interaction defaults only |
+| `@hiepknor/ink-tailwind/patterns.css` | Presentation utilities only |
+| `@hiepknor/ink-tailwind/strict.css` | Global square-geometry lock |
+| `@hiepknor/ink-tailwind/scoped-strict.css` | `.ink-strict` subtree geometry lock |
 
-Import Tailwind before Ink Theme:
+Import Tailwind before Ink Tailwind:
 
 ```css
 @import 'tailwindcss';
-@import '@hiepknor/ink-theme';
+@import '@hiepknor/ink-tailwind';
 ```
 
 Import either geometry lock after the default entrypoint. The scoped lock is
@@ -136,7 +136,7 @@ styles; applications or component packages supply those decisions.
 Global strict mode:
 
 ```css
-@import '@hiepknor/ink-theme/strict.css';
+@import '@hiepknor/ink-tailwind/strict.css';
 ```
 
 This applies `border-radius: 0 !important` to all elements and pseudo-elements.
@@ -144,7 +144,7 @@ This applies `border-radius: 0 !important` to all elements and pseudo-elements.
 Scoped strict mode:
 
 ```css
-@import '@hiepknor/ink-theme/scoped-strict.css';
+@import '@hiepknor/ink-tailwind/scoped-strict.css';
 ```
 
 ```html

@@ -74,8 +74,8 @@ test('file list exposes upload progress and controlled retry and remove actions'
 
 test('avatar falls back to initials and gallery opens an accessible lightbox', async () => {
   const user = userEvent.setup();
-  render(<><Avatar name="Ink Theme" /><ImageGallery items={[{ src: 'one.png', alt: 'First diagram' }, { src: 'two.png', alt: 'Second diagram' }]} /></>);
-  expect(screen.getByRole('img', { name: 'Ink Theme' })).toHaveTextContent('IT');
+  render(<><Avatar name="Ink Tailwind" /><ImageGallery items={[{ src: 'one.png', alt: 'First diagram' }, { src: 'two.png', alt: 'Second diagram' }]} /></>);
+  expect(screen.getByRole('img', { name: 'Ink Tailwind' })).toHaveTextContent('IT');
   await user.click(screen.getByRole('button', { name: 'Open First diagram' }));
   expect(screen.getByRole('dialog', { name: 'Image preview' })).toBeInTheDocument();
   expect(screen.getByRole('img', { name: 'First diagram' })).toBeInTheDocument();

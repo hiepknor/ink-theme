@@ -1,5 +1,5 @@
 import { fireEvent, render, screen } from '@testing-library/react-native';
-import { Alert, Button, Checkbox, IconButton, InkProvider, Progress, RadioGroup, Select, Spinner, Switch, TextArea, TextField } from '@hiepknor/ink-ui-native';
+import { Alert, Button, Checkbox, IconButton, InkProvider, Progress, RadioGroup, Select, Spinner, Switch, TextArea, TextField } from '@hiepknor/ink-react-native';
 import { App } from '../src/App';
 
 describe('public native interactions', () => {

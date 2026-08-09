@@ -1,4 +1,29 @@
-# Migrating Ink Theme
+# Migrating Ink Tailwind
+
+## From `@hiepknor/ink-theme` 0.2.0 to `@hiepknor/ink-tailwind` 0.3.0
+
+Version 0.3.0 moves the existing CSS contract to a package name that identifies
+its Tailwind CSS v4 integration explicitly. Replace the dependency:
+
+```sh
+pnpm remove @hiepknor/ink-theme
+pnpm add @hiepknor/ink-tailwind
+```
+
+Then replace imports without changing their subpaths:
+
+```css
+/* Before */
+@import '@hiepknor/ink-theme';
+@import '@hiepknor/ink-theme/scoped-strict.css';
+
+/* After */
+@import '@hiepknor/ink-tailwind';
+@import '@hiepknor/ink-tailwind/scoped-strict.css';
+```
+
+The tokens, base rules, presentation utilities, and strict-mode behavior are
+unchanged by the rename. The old package receives no releases after 0.2.0.
 
 ## From 0.1.0 to 0.2.0
 
@@ -46,13 +71,13 @@ without first composing those styles deliberately.
 Global strict mode remains available and unchanged:
 
 ```css
-@import '@hiepknor/ink-theme/strict.css';
+@import '@hiepknor/ink-tailwind/strict.css';
 ```
 
 Applications embedding third-party UI can switch to the new scoped entrypoint:
 
 ```css
-@import '@hiepknor/ink-theme/scoped-strict.css';
+@import '@hiepknor/ink-tailwind/scoped-strict.css';
 ```
 
 ```html

@@ -1,9 +1,21 @@
 # Changelog
 
-All notable changes to Ink Theme are documented here. The project follows
+All notable changes to Ink Tailwind are documented here. The project follows
 [Semantic Versioning](https://semver.org/).
 
 ## Unreleased
+
+## 0.3.0 - 2026-08-09
+
+### Changed
+
+- Rename the public package from `@hiepknor/ink-theme` to
+  `@hiepknor/ink-tailwind` so its Tailwind CSS v4 dependency and adapter role
+  are explicit.
+- Move the workspace from `packages/theme` to `packages/tailwind` and update
+  package metadata, imports, documentation, tests, CI, and release automation.
+- Rename the related component packages to `@hiepknor/ink-react` and
+  `@hiepknor/ink-react-native` for a consistent package family.
 
 ### Added
 
@@ -17,9 +29,9 @@ All notable changes to Ink Theme are documented here. The project follows
 
 ### Infrastructure
 
-- Convert the repository to a pnpm workspace, moving the published theme to
-  `packages/theme` and the preview workbench to `apps/workbench` while
-  preserving every public package import.
+- Convert the repository to a pnpm workspace, moving the published Tailwind
+  foundation to `packages/tailwind` and the preview workbench to
+  `apps/workbench`.
 - Add aggregate CI, dependency-review, protected-branch, and provenance release
   gates.
 - Configure npm trusted publishing and repository metadata for token-free OIDC

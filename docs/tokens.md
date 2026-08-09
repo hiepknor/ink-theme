@@ -51,7 +51,7 @@ The token package generates:
 
 The editable source is `packages/tokens/src/tokens.json`. Generated artifacts
 live in `packages/tokens/generated`; the generator also writes the compatible
-Tailwind output to `packages/theme/src/tokens.css` so existing theme consumers
+Tailwind output to `packages/tailwind/src/tokens.css` so existing Tailwind consumers
 do not need to change imports.
 
 Swift, Kotlin, and Dart output are added only with maintained consumers.

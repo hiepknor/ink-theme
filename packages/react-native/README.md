@@ -1,10 +1,10 @@
-# `@hiepknor/ink-ui-native`
+# `@hiepknor/ink-react-native`
 
 React Native renderer for Ink. It provides native primitives with shared Ink
 tokens, density names, variants, state intent, and accessibility outcomes.
 
 ```tsx
-import { Alert, Button, InkProvider, Progress, Select, Surface, Switch, TextArea } from '@hiepknor/ink-ui-native';
+import { Alert, Button, InkProvider, Progress, Select, Surface, Switch, TextArea } from '@hiepknor/ink-react-native';
 
 <InkProvider density="touch">
   <Surface>

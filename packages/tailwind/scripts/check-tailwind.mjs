@@ -10,8 +10,8 @@ const index = await read('src/index.css');
 const strict = await read('src/strict.css');
 const scopedStrict = await read('src/scoped-strict.css');
 
-assert.equal(packageJson.name, '@hiepknor/ink-theme');
-assert.equal(packageJson.version, '0.2.0');
+assert.equal(packageJson.name, '@hiepknor/ink-tailwind');
+assert.equal(packageJson.version, '0.3.0');
 assert.equal(packageJson.repository.url, 'https://github.com/hiepknor/ink-ui.git');
 assert.equal(packageJson.peerDependencies.tailwindcss, '^4.0.0');
 
@@ -86,4 +86,4 @@ for (const match of tokens.matchAll(/#[\da-fA-F]{6}\b/g)) {
   assert.ok(allowedColors.has(match[0].toLowerCase()), `Unexpected color: ${match[0]}`);
 }
 
-process.stdout.write('Ink Theme contract passed.\n');
+process.stdout.write('Ink Tailwind contract passed.\n');

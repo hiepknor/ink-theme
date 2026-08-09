@@ -1,7 +1,7 @@
 # Ink Tauri Example
 
 A representative Tauri 2 desktop shell consuming only public
-`@hiepknor/ink-ui-react` exports. The pnpm workspace verifies its TypeScript and
+`@hiepknor/ink-react` exports. The pnpm workspace verifies its TypeScript and
 Vite frontend; the dedicated CI job runs `cargo check` against the native shell.
 
 The Linux dependency graph temporarily uses the reviewed downstream glib patch

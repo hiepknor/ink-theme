@@ -1,12 +1,12 @@
 {
-  "name": "@hiepknor/ink-ui-native",
+  "name": "@hiepknor/ink-react-native",
   "version": "0.1.0",
   "description": "Accessible React Native components for the Ink design system.",
   "private": true,
   "repository": {
     "type": "git",
     "url": "https://github.com/hiepknor/ink-ui.git",
-    "directory": "packages/ui-native"
+    "directory": "packages/react-native"
   },
   "type": "module",
   "main": "src/index.ts",

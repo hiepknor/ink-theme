@@ -4,8 +4,8 @@ const sourceRoot = new URL('../src/', import.meta.url);
 const files = (await readdir(sourceRoot)).filter((file) => file.endsWith('.ts') || file.endsWith('.tsx'));
 const forbidden = [
   ['DOM renderer', /from ['"]react-dom/],
-  ['web theme', /@hiepknor\/ink-theme/],
-  ['web component package', /@hiepknor\/ink-ui-react/],
+  ['web Tailwind adapter', /@hiepknor\/ink-tailwind/],
+  ['web component package', /@hiepknor\/ink-react(?!-native)/],
   ['browser global', /\b(?:document|window)\b/],
   ['CSS import', /import\s+['"][^'"]+\.css['"]/],
   ['Radix primitive', /@radix-ui/],

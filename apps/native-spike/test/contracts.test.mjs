@@ -16,8 +16,8 @@ test('native density names and targets come from generated tokens', () => {
 });
 
 test('Expo workbench consumes the public native package', () => {
-  assert.match(app, /from '@hiepknor\/ink-ui-native'/);
-  assert.match(manifest, /"@hiepknor\/ink-ui-native": "workspace:\*"/);
+  assert.match(app, /from '@hiepknor\/ink-react-native'/);
+  assert.match(manifest, /"@hiepknor\/ink-react-native": "workspace:\*"/);
 });
 
 test('Expo consumer exercises the native component catalog', () => {

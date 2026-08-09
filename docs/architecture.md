@@ -11,13 +11,13 @@ contracts while allowing each platform to use its native rendering model.
 ```text
 Token source
   -> generated platform tokens
-  -> platform theme
+  -> platform adapter
   -> UI component implementation
   -> product application
 ```
 
-Dependencies flow in one direction. A token package must not depend on a theme,
-a theme must not depend on components, and a component package must not own
+Dependencies flow in one direction. A token package must not depend on a platform adapter,
+an adapter must not depend on components, and a component package must not own
 product behavior.
 
 ## Intended packages
@@ -28,20 +28,20 @@ The only editable source of visual values. It generates CSS, resolved JSON,
 TypeScript, and React Native output. Native platform formats may be added when
 there is a maintained consumer.
 
-### `@hiepknor/ink-theme`
+### `@hiepknor/ink-tailwind`
 
-The framework-independent web adapter. It exposes Tailwind CSS v4 tokens,
+The Tailwind CSS v4 web adapter. It exposes generated theme tokens,
 document defaults, presentation patterns, and opt-in geometry locks. Browser,
 PWA, Electron, Tauri, and other webview applications can consume it directly.
 
-### `@hiepknor/ink-ui-react`
+### `@hiepknor/ink-react`
 
 The React implementation for web and desktop webviews. It consumes Ink tokens
 and theme styles but does not require consumer applications to configure
 Tailwind CSS. Product applications remain responsible for routing, data, and
 domain semantics.
 
-### `@hiepknor/ink-ui-native`
+### `@hiepknor/ink-react-native`
 
 The React Native implementation. It shares tokens, density names, variants,
 and accessibility expectations with the React web package. It does not share
@@ -57,7 +57,7 @@ React renderer.
 
 The Expo native workbench validates the public native form and feedback catalog
 plus a product-shaped deployment workflow against Android and iOS Metro
-bundles. `@hiepknor/ink-ui-native` derives density names from generated native
+bundles. `@hiepknor/ink-react-native` derives density names from generated native
 tokens and keeps React Native views, events, accessibility props, and styles
 platform-specific. The current overlap is still too small to justify a shared
 component-contract package; extract one only when both renderers would
@@ -75,7 +75,7 @@ otherwise duplicate substantial typed contracts.
 ## Repository rules
 
 - Keep the root private after the workspace migration.
-- Preserve `@hiepknor/ink-theme` import paths during migration.
+- Keep package names aligned with the platform or toolchain they target.
 - Publish only files required by consumers.
 - Do not introduce a task orchestrator until recursive pnpm scripts are insufficient.
 - Prefer platform primitives over custom implementations of complex behavior.

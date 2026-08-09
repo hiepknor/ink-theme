@@ -32,7 +32,7 @@ const outputs = new Map([
   [path.join(packageRoot, 'generated/tokens.ts'), `// Generated. Do not edit.\nexport const tokens = ${jsObject} as const;\nexport type InkTokens = typeof tokens;\n`],
   [path.join(packageRoot, 'generated/react-native.js'), `// Generated. Do not edit. Values with px/ms units are numbers.\nexport const nativeTokens = ${nativeObject};\n`],
   [path.join(packageRoot, 'generated/react-native.ts'), `// Generated. Do not edit. Values with px/ms units are numbers.\nexport const nativeTokens = ${nativeObject} as const;\nexport type InkNativeTokens = typeof nativeTokens;\n`],
-  [path.join(repoRoot, 'packages/theme/src/tokens.css'), `${banner}\n@theme {\n${themeVariables}\n}\n`],
+  [path.join(repoRoot, 'packages/tailwind/src/tokens.css'), `${banner}\n@theme {\n${themeVariables}\n}\n`],
 ]);
 
 const checking = process.argv.includes('--check');

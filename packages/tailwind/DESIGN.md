@@ -1,6 +1,6 @@
-# Ink Theme visual contract
+# Ink Tailwind visual contract
 
-Ink Theme is a monochrome, square, flat, and high-density visual foundation.
+Ink Tailwind is a monochrome, square, flat, and high-density visual foundation.
 It provides Tailwind CSS v4 tokens and presentation recipes without owning UI
 components or application semantics.
 

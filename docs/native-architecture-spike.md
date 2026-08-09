@@ -5,7 +5,7 @@
 Ink supports a React Native renderer without sharing DOM implementation or
 CSS. The original private Expo spike proved the boundary with `InkProvider`,
 `Button`, and `TextField`. Milestone 7 promoted that implementation into the
-versioned `@hiepknor/ink-ui-native` package and retained Expo as its consumer
+versioned `@hiepknor/ink-react-native` package and retained Expo as its consumer
 workbench.
 
 ## Shared contract
