@@ -177,7 +177,7 @@ shared contract package.
 
 - [x] Validate token structure, value types, units, aliases, and platform mappings before generation.
 - [x] Replace string-based package gates with semantic module and CSS checks.
-- [ ] Consolidate the workbench on one React application architecture.
+- [x] Consolidate the workbench on one React application architecture.
 - [x] Document aggregate CSS loading and JavaScript tree-shaking separately.
 - [ ] Build a three-component native architecture spike before extracting shared component types.
 

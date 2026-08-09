@@ -67,9 +67,8 @@ test('catalog exposes one main landmark and removes legacy content from interact
   await page.goto('/#/component/button');
   await expect(page.locator('main')).toHaveCount(1);
   await expect(page.getByRole('heading', { level: 1, name: 'Button' })).toBeVisible();
-  await expect(page.locator('#theme-preview > [hidden]')).not.toHaveCount(0);
-  const hiddenInteractive = await page.locator('#theme-preview > [hidden]').locator('a,button,input,select,textarea').evaluateAll((elements) => elements.filter((element) => !(element.closest('[inert]'))).length);
-  expect(hiddenInteractive).toBe(0);
+  await expect(page.locator('#theme-preview')).toHaveCount(0);
+  await expect(page.locator('#react-preview')).toHaveCount(0);
 });
 
 test('mobile catalog families do not overflow the viewport', async ({ page }) => {

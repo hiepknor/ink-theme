@@ -15,10 +15,11 @@ an interactive example, required states, key props, accessibility guidance,
 and related components. Use the **Find component** control or `Ctrl/Command+K`
 to search the registry by name, family, or purpose.
 
-Catalog routes keep one main landmark and remove the legacy compatibility
-gallery from interaction. Coarse pointers use the shared touch target token;
-browser gates also cover focus restoration, forced colors, reduced motion, and
-registry drift.
+The workbench has one React root and one rendering pipeline. Catalog routes
+render only the selected documentation surface; `/#/all` renders the native
+compatibility gallery and React examples as one React tree. Coarse pointers use
+the shared touch target token; browser gates also cover focus restoration,
+forced colors, reduced motion, and registry drift.
 
 From the repository root:
 

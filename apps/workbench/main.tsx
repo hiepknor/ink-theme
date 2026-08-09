@@ -1,6 +1,7 @@
 import { StrictMode, useEffect, useMemo, useRef, useState, type RefObject } from 'react';
 import { createRoot } from 'react-dom/client';
 import { componentRegistry, findComponent, type ComponentDoc } from './component-registry';
+import { LegacyGallery } from './legacy-gallery';
 import {
   Accordion,
   AccordionContent,
@@ -414,10 +415,11 @@ function ReactPreview() {
     : null;
 
   if (activePage === 'all') {
-    return <TooltipProvider delayDuration={200}><Surface aria-label="React component examples" className="grid gap-5">
+    const componentPreview = <TooltipProvider delayDuration={200}><Surface aria-label="React component examples" className="grid gap-5">
       <div><p className="text-sm font-semibold">Tailwind-free package output</p><p className="mt-1 text-xs text-fg-3">Tab through native controls. Each row inherits density from InkProvider.</p></div>
       <FormWorkbench catalog={false} /><Separator /><DesktopFoundation /><Separator /><ComponentBreadth /><Separator /><ErrorExperienceWorkbench /><Separator /><DataTableWorkbench /><Separator /><MediaWorkbench />
     </Surface></TooltipProvider>;
+    return <LegacyGallery componentPreview={componentPreview} />;
   }
 
   return (
@@ -431,17 +433,17 @@ function ReactPreview() {
           </nav>
           <p className="ink-catalog-version">@hiepknor/ink-ui-react</p>
         </aside>
-        <div className="ink-catalog-main" id="catalog-content">
+        <main className="ink-catalog-main" id="catalog-content">
           {activeDoc ? <header className="ink-catalog-intro"><div><p className="gallery-label">{activeDoc.category} component</p><h1 className="ink-catalog-title" tabIndex={-1} data-catalog-heading>{activeDoc.name}</h1><p className="ink-catalog-summary">{activeDoc.description}</p></div><div className="ink-catalog-tags"><Badge>Stable</Badge><Badge>{activeDoc.states.length} states</Badge></div></header> : <CatalogHeader page={currentPage} />}
           <Surface aria-label="React component examples" className="ink-catalog-content">{content}</Surface>
-        </div>
+        </main>
         <ComponentSearch open={searchOpen} onOpenChange={setSearchOpen} triggerRef={searchTriggerRef} />
       </div>
     </TooltipProvider>
   );
 }
 
-const root = document.querySelector('#react-preview');
-if (!root) throw new Error('React preview root is missing');
+const root = document.querySelector('#root');
+if (!root) throw new Error('Workbench root is missing');
 document.body.dataset.catalogPage = readCatalogPage();
 createRoot(root).render(<StrictMode><ReactPreview /></StrictMode>);
