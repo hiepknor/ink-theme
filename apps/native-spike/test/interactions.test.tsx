@@ -1,5 +1,5 @@
 import { fireEvent, render, screen } from '@testing-library/react-native';
-import { Button, Checkbox, IconButton, InkProvider, RadioGroup, Select, Switch, TextArea, TextField } from '@hiepknor/ink-ui-native';
+import { Alert, Button, Checkbox, IconButton, InkProvider, Progress, RadioGroup, Select, Spinner, Switch, TextArea, TextField } from '@hiepknor/ink-ui-native';
 import { App } from '../src/App';
 
 describe('public native interactions', () => {
@@ -59,6 +59,13 @@ describe('public native interactions', () => {
     await fireEvent.press(screen.getByRole('menuitem', { name: 'Tokyo' }));
     expect(onValueChange).toHaveBeenCalledWith('tyo');
   });
+
+  it('announces alerts and exposes bounded progress values', async () => {
+    await render(<><Alert live="assertive" title="Blocked" tone="danger">Health check failed.</Alert><Spinner label="Validating" /><Progress label="Upload" max={80} value={100} /></>);
+    expect(screen.getByRole('alert')).toHaveTextContent(/Blocked/);
+    expect(screen.getByRole('progressbar', { name: 'Validating' })).toHaveAccessibilityValue({ text: 'Validating' });
+    expect(screen.getByRole('progressbar', { name: 'Upload' })).toHaveAccessibilityValue({ min: 0, max: 80, now: 80, text: '100%' });
+  });
 });
 
 describe('native workbench', () => {
@@ -74,5 +81,8 @@ describe('native workbench', () => {
     await fireEvent.press(screen.getByRole('button', { name: 'Deployment region' }));
     await fireEvent.press(screen.getByRole('menuitem', { name: 'Tokyo' }));
     expect(screen.getByText('Deploying to tokyo as primary.')).toBeOnTheScreen();
+
+    await fireEvent.press(screen.getByRole('button', { name: 'Advance deployment' }));
+    expect(screen.getByRole('progressbar', { name: 'Deployment' })).toHaveAccessibilityValue({ min: 0, max: 100, now: 67, text: '67%' });
   });
 });

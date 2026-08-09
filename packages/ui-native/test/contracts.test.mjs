@@ -3,7 +3,7 @@ import { readFile } from 'node:fs/promises';
 import test from 'node:test';
 import { nativeTokens } from '../../tokens/generated/react-native.js';
 
-const [contracts, button, checkbox, field, surface, iconButton, textArea, radioGroup, switchControl, select, index] = await Promise.all([
+const [contracts, button, checkbox, field, surface, iconButton, textArea, radioGroup, switchControl, select, alert, spinner, progress, index] = await Promise.all([
   readFile(new URL('../src/contracts.ts', import.meta.url), 'utf8'),
   readFile(new URL('../src/Button.tsx', import.meta.url), 'utf8'),
   readFile(new URL('../src/Checkbox.tsx', import.meta.url), 'utf8'),
@@ -14,6 +14,9 @@ const [contracts, button, checkbox, field, surface, iconButton, textArea, radioG
   readFile(new URL('../src/RadioGroup.tsx', import.meta.url), 'utf8'),
   readFile(new URL('../src/Switch.tsx', import.meta.url), 'utf8'),
   readFile(new URL('../src/Select.tsx', import.meta.url), 'utf8'),
+  readFile(new URL('../src/Alert.tsx', import.meta.url), 'utf8'),
+  readFile(new URL('../src/Spinner.tsx', import.meta.url), 'utf8'),
+  readFile(new URL('../src/Progress.tsx', import.meta.url), 'utf8'),
   readFile(new URL('../src/index.ts', import.meta.url), 'utf8'),
 ]);
 
@@ -51,6 +54,14 @@ test('extended controls own native roles, state, and platform rendering', () => 
 });
 
 test('public surface exports the native catalog', () => {
-  for (const component of ['Button', 'Checkbox', 'IconButton', 'InkProvider', 'RadioGroup', 'Select', 'Surface', 'Switch', 'TextArea', 'TextField']) assert.match(index, new RegExp(`export \\{ ${component}`));
+  for (const component of ['Alert', 'Button', 'Checkbox', 'IconButton', 'InkProvider', 'Progress', 'RadioGroup', 'Select', 'Spinner', 'Surface', 'Switch', 'TextArea', 'TextField']) assert.match(index, new RegExp(`export \\{ ${component}`));
   assert.match(surface, /tone\?: SurfaceTone/);
+});
+
+test('feedback exposes live-region and bounded progress contracts', () => {
+  assert.match(alert, /accessibilityLiveRegion=\{liveRegion\}/);
+  assert.match(alert, /live === 'assertive' \? 'alert'/);
+  assert.match(spinner, /accessibilityRole="progressbar"/);
+  assert.match(progress, /Math\.min\(safeMax, Math\.max\(0, value\)\)/);
+  assert.match(progress, /accessibilityValue=\{\{ min: 0, max: safeMax, now: bounded, text: valueText \}\}/);
 });

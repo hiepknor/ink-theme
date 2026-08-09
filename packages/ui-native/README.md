@@ -4,13 +4,15 @@ React Native renderer for Ink. It provides native primitives with shared Ink
 tokens, density names, variants, state intent, and accessibility outcomes.
 
 ```tsx
-import { Button, InkProvider, Select, Surface, Switch, TextArea } from '@hiepknor/ink-ui-native';
+import { Alert, Button, InkProvider, Progress, Select, Surface, Switch, TextArea } from '@hiepknor/ink-ui-native';
 
 <InkProvider density="touch">
   <Surface>
     <TextArea label="Description" />
     <Select label="Region" options={regions} value={region} onValueChange={setRegion} />
     <Switch checked={enabled} label="Enable tracing" onCheckedChange={setEnabled} />
+    <Alert live="polite" title="Deployment queued">Waiting for validation.</Alert>
+    <Progress label="Deployment" value={42} />
     <Button variant="primary">Deploy</Button>
   </Surface>
 </InkProvider>
