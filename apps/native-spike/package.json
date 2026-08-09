@@ -1,0 +1,28 @@
+{
+  "name": "@hiepknor/ink-native-spike",
+  "version": "0.0.0",
+  "private": true,
+  "main": "index.ts",
+  "scripts": {
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "build": "tsc --noEmit",
+    "build:expo": "expo export --platform android --output-dir dist/android && expo export --platform ios --output-dir dist/ios",
+    "check": "tsc --noEmit && node scripts/check-boundary.mjs",
+    "test": "node --test test/*.test.mjs"
+  },
+  "dependencies": {
+    "@hiepknor/ink-tokens": "workspace:*",
+    "expo": "~57.0.1",
+    "expo-status-bar": "~57.0.0",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
+    "react-native": "0.86.2",
+    "react-native-web": "^0.21.2"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.18",
+    "typescript": "~6.0.3"
+  }
+}

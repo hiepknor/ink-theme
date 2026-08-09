@@ -116,10 +116,27 @@ jobs:
           command: check
           command-arguments: advisories bans sources
 
+  native-architecture:
+    name: Native Architecture
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22.13
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm --filter @hiepknor/ink-native-spike check
+      - run: pnpm --filter @hiepknor/ink-native-spike test
+      - run: pnpm --filter @hiepknor/ink-native-spike build:expo
+
   gate:
     name: CI Gate
     if: always()
-    needs: [verify, dependency-review, visual-regression, tauri-integration, rust-security]
+    needs: [verify, dependency-review, visual-regression, tauri-integration, rust-security, native-architecture]
     runs-on: ubuntu-latest
     timeout-minutes: 2
 
@@ -131,9 +148,11 @@ jobs:
           VISUAL_RESULT: ${{ needs.visual-regression.result }}
           TAURI_RESULT: ${{ needs.tauri-integration.result }}
           RUST_SECURITY_RESULT: ${{ needs.rust-security.result }}
+          NATIVE_RESULT: ${{ needs.native-architecture.result }}
         run: |
           test "$VERIFY_RESULT" = "success"
           test "$DEPENDENCY_REVIEW_RESULT" = "success" || test "$DEPENDENCY_REVIEW_RESULT" = "skipped"
           test "$VISUAL_RESULT" = "success"
           test "$TAURI_RESULT" = "success"
           test "$RUST_SECURITY_RESULT" = "success"
+          test "$NATIVE_RESULT" = "success"
