@@ -45,6 +45,13 @@ one incompatible tool cannot obscure the result of unrelated updates.
 Dependency updates go through the same compatibility, build, package, security,
 and dependency-review gates as application changes.
 
+Expo-managed native dependencies do not move independently through Dependabot.
+CI runs `expo install --check`, and the workbench contract requires
+`react-test-renderer` to exactly match its React version. These dependencies
+move together during an explicit Expo SDK compatibility upgrade. Likewise,
+jsdom major updates remain blocked while their Node engine excludes the
+repository's supported Node 20 runtime.
+
 The package manager version must remain compatible with the minimum Node engine
 declared by the root workspace. A package-manager major upgrade must therefore
 be tested in the minimum Node matrix job before merge.

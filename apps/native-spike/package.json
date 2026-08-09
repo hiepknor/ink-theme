@@ -9,7 +9,7 @@
     "ios": "expo start --ios",
     "build": "tsc --noEmit",
     "build:expo": "expo export --platform android --output-dir dist/android && expo export --platform ios --output-dir dist/ios",
-    "check": "tsc --noEmit && node scripts/check-boundary.mjs",
+    "check": "tsc --noEmit && node scripts/check-boundary.mjs && node scripts/check-compatibility.mjs",
     "test": "node --test test/*.test.mjs && jest --runInBand"
   },
   "dependencies": {

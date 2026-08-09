@@ -126,6 +126,7 @@ jobs:
           node-version: 22.13
           cache: pnpm
       - run: pnpm install --frozen-lockfile
+      - run: pnpm --filter @hiepknor/ink-native-workbench exec expo install --check
       - run: pnpm --filter @hiepknor/ink-ui-native check
       - run: pnpm --filter @hiepknor/ink-ui-native test
       - run: pnpm --filter @hiepknor/ink-ui-native pack:check
