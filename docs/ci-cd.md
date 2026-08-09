@@ -40,12 +40,14 @@ pull request and automated gate remain mandatory for administrators.
 
 Dependabot opens grouped weekly minor/patch updates for npm development
 dependencies and GitHub Actions, plus a monthly grouped update for the
-Tauri/WebKitGTK Rust runtime. Major npm and Actions upgrades are isolated so
-one incompatible tool cannot obscure the result of unrelated updates.
+Tauri/WebKitGTK Rust runtime. It does not open npm or Actions major upgrades:
+those are explicit compatibility projects that update runtime contracts,
+documentation, and CI together.
 Dependency updates go through the same compatibility, build, package, security,
 and dependency-review gates as application changes.
 
-Expo-managed native dependencies do not move independently through Dependabot.
+Expo-managed React, React DOM, safe-area, and test-renderer dependencies do not
+move independently through Dependabot.
 CI runs `expo install --check`, and the workbench contract requires
 `react-test-renderer` to exactly match its React version. These dependencies
 move together during an explicit Expo SDK compatibility upgrade. Likewise,
