@@ -18,5 +18,5 @@ export function RadioGroup({ density: densityOverride, disabled = false, label, 
 const styles = StyleSheet.create({
   group: { gap: nativeTokens.spacing.xs }, label: { color: nativeTokens.colors.foreground, fontSize: nativeTokens.fontSize.sm, fontWeight: nativeTokens.fontWeight.medium }, option: { alignItems: 'center', alignSelf: 'flex-start', flexDirection: 'row', gap: nativeTokens.spacing.sm, paddingHorizontal: nativeTokens.spacing.xs },
   control: { alignItems: 'center', backgroundColor: nativeTokens.colors.surface, borderColor: nativeTokens.colors.borderStrong, borderRadius: 9, borderWidth: nativeTokens.borderWidth.default, height: 18, justifyContent: 'center', width: 18 }, selected: { borderWidth: nativeTokens.borderWidth.strong }, dot: { backgroundColor: nativeTokens.colors.action, borderRadius: 4, height: 8, width: 8 },
-  optionLabel: { color: nativeTokens.colors.foreground, fontSize: nativeTokens.fontSize.sm, fontWeight: nativeTokens.fontWeight.medium }, pressed: { opacity: 0.72 }, disabled: { opacity: 0.45 },
+  optionLabel: { color: nativeTokens.colors.foreground, fontSize: nativeTokens.fontSize.sm, fontWeight: nativeTokens.fontWeight.medium }, pressed: { opacity: 0.72 }, disabled: { opacity: 0.72 },
 });

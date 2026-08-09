@@ -48,6 +48,18 @@ test('field exposes label, invalid state, and live error semantics', () => {
   assert.match(textArea, /forwardRef<TextInput, TextAreaProps>/);
 });
 
+test('native visual metrics track the shared web design language', () => {
+  assert.match(surface, /borderColor: nativeTokens\.colors\.border,/);
+  assert.doesNotMatch(surface, /borderColor: nativeTokens\.colors\.borderStrong/);
+  assert.match(field, /fontSize: nativeTokens\.fontSize\.sm, paddingHorizontal: nativeTokens\.spacing\.sm/);
+  assert.match(textArea, /minHeight: Math\.max\(96, nativeTokens\.controlHeight\[density\]\)/);
+  assert.match(textArea, /fontSize: nativeTokens\.fontSize\.sm, paddingHorizontal: nativeTokens\.spacing\.sm/);
+  assert.match(select, /value: \{[^}]*fontSize: nativeTokens\.fontSize\.sm/u);
+  assert.match(alert, /title: \{[^}]*fontSize: nativeTokens\.fontSize\.sm/u);
+  assert.match(progress, /height: 12/);
+  assert.match(progress, /width: '35%'/);
+});
+
 test('extended controls own native roles, state, and platform rendering', () => {
   assert.match(iconButton, /accessibilityLabel=\{label\}/);
   assert.match(iconButton, /height: size, width: size/);

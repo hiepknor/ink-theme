@@ -38,7 +38,7 @@ export const TextField = forwardRef<TextInput, TextFieldProps>(function TextFiel
 const styles = StyleSheet.create({
   field: { gap: nativeTokens.spacing.xs },
   label: { color: nativeTokens.colors.foreground, fontSize: nativeTokens.fontSize.sm, fontWeight: nativeTokens.fontWeight.medium },
-  input: { backgroundColor: nativeTokens.colors.surface, borderColor: nativeTokens.colors.borderStrong, borderWidth: nativeTokens.borderWidth.default, color: nativeTokens.colors.foreground, fontSize: nativeTokens.fontSize.md, fontWeight: nativeTokens.fontWeight.medium, paddingHorizontal: nativeTokens.spacing.md, paddingVertical: nativeTokens.spacing.sm },
+  input: { backgroundColor: nativeTokens.colors.surface, borderColor: nativeTokens.colors.borderStrong, borderWidth: nativeTokens.borderWidth.default, color: nativeTokens.colors.foreground, fontSize: nativeTokens.fontSize.sm, paddingHorizontal: nativeTokens.spacing.sm, paddingVertical: nativeTokens.spacing.sm },
   invalid: { borderWidth: nativeTokens.borderWidth.strong },
   disabled: { backgroundColor: nativeTokens.colors.recessed, opacity: 0.55 },
   description: { color: nativeTokens.colors.foregroundMuted, fontSize: nativeTokens.fontSize.sm },

@@ -38,5 +38,5 @@ const styles = StyleSheet.create({
   markLong: { backgroundColor: nativeTokens.colors.actionInk, height: 2, left: 3, position: 'absolute', top: 3, transform: [{ rotate: '-45deg' }], width: 10 },
   label: { color: nativeTokens.colors.foreground, flexShrink: 1, fontSize: nativeTokens.fontSize.sm, fontWeight: nativeTokens.fontWeight.medium },
   pressed: { opacity: 0.72 },
-  disabled: { opacity: 0.45 },
+  disabled: { opacity: 0.72 },
 });

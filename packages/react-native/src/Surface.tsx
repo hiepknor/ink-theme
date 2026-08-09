@@ -13,7 +13,7 @@ export function Surface({ padding = true, style, tone = 'default', ...props }: S
 }
 
 const styles = StyleSheet.create({
-  base: { borderColor: nativeTokens.colors.borderStrong, borderWidth: nativeTokens.borderWidth.default },
+  base: { borderColor: nativeTokens.colors.border, borderWidth: nativeTokens.borderWidth.default },
   padding: { padding: nativeTokens.spacing.lg },
 });
 

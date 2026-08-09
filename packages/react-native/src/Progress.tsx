@@ -14,6 +14,6 @@ export function Progress({ label, max = 100, style, value }: ProgressProps) {
   </View>;
 }
 const styles = StyleSheet.create({
-  wrap: { gap: nativeTokens.spacing.sm }, copy: { alignItems: 'baseline', flexDirection: 'row', gap: nativeTokens.spacing.sm, justifyContent: 'space-between' }, label: { color: nativeTokens.colors.foreground, flex: 1, fontSize: nativeTokens.fontSize.sm, fontWeight: nativeTokens.fontWeight.medium }, value: { color: nativeTokens.colors.foregroundMuted, flexShrink: 0, fontSize: nativeTokens.fontSize.sm },
-  track: { backgroundColor: nativeTokens.colors.recessed, borderColor: nativeTokens.colors.borderStrong, borderWidth: nativeTokens.borderWidth.default, height: 14, overflow: 'hidden' }, fill: { backgroundColor: nativeTokens.colors.action, height: '100%' }, indeterminate: { alignSelf: 'center', backgroundColor: nativeTokens.colors.action, height: '100%', width: '36%' },
+  wrap: { gap: nativeTokens.spacing.xs }, copy: { alignItems: 'baseline', flexDirection: 'row', gap: nativeTokens.spacing.md, justifyContent: 'space-between' }, label: { color: nativeTokens.colors.foreground, flex: 1, fontSize: nativeTokens.fontSize.sm, fontWeight: nativeTokens.fontWeight.medium }, value: { color: nativeTokens.colors.foregroundMuted, flexShrink: 0, fontSize: nativeTokens.fontSize.sm },
+  track: { backgroundColor: nativeTokens.colors.recessed, borderColor: nativeTokens.colors.borderStrong, borderWidth: nativeTokens.borderWidth.default, height: 12, overflow: 'hidden' }, fill: { backgroundColor: nativeTokens.colors.action, height: '100%' }, indeterminate: { alignSelf: 'center', backgroundColor: nativeTokens.colors.action, height: '100%', width: '35%' },
 });
