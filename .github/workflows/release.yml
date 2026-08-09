@@ -4,6 +4,7 @@ on:
   push:
     tags:
       - 'v*.*.*'
+      - 'tokens-v*.*.*'
 
 concurrency:
   group: release-${{ github.ref }}
@@ -33,9 +34,14 @@ jobs:
       - run: pnpm verify
       - name: Require a releasable tag
         run: |
-          PACKAGE_VERSION=$(node -p "require('./packages/tailwind/package.json').version")
-          test "v$PACKAGE_VERSION" = "$GITHUB_REF_NAME"
-          grep -F "## $PACKAGE_VERSION" packages/tailwind/CHANGELOG.md
+          case "$GITHUB_REF_NAME" in
+            tokens-v*) PACKAGE_DIR=packages/tokens; TAG_VERSION=${GITHUB_REF_NAME#tokens-v} ;;
+            v*) PACKAGE_DIR=packages/tailwind; TAG_VERSION=${GITHUB_REF_NAME#v} ;;
+            *) exit 1 ;;
+          esac
+          PACKAGE_VERSION=$(node -p "require('./$PACKAGE_DIR/package.json').version")
+          test "$TAG_VERSION" = "$PACKAGE_VERSION"
+          grep -F "## $PACKAGE_VERSION" "$PACKAGE_DIR/CHANGELOG.md"
           git fetch origin main --depth=1
           git merge-base --is-ancestor "$GITHUB_SHA" origin/main
 
@@ -56,19 +62,30 @@ jobs:
           node-version: 24
           registry-url: https://registry.npmjs.org
       - run: pnpm install --frozen-lockfile
+      - name: Resolve package
+        id: package
+        run: |
+          case "$GITHUB_REF_NAME" in
+            tokens-v*) PACKAGE_DIR=packages/tokens ;;
+            v*) PACKAGE_DIR=packages/tailwind ;;
+            *) exit 1 ;;
+          esac
+          PACKAGE_NAME=$(node -p "require('./$PACKAGE_DIR/package.json').name")
+          PACKAGE_VERSION=$(node -p "require('./$PACKAGE_DIR/package.json').version")
+          echo "dir=$PACKAGE_DIR" >> "$GITHUB_OUTPUT"
+          echo "name=$PACKAGE_NAME" >> "$GITHUB_OUTPUT"
+          echo "version=$PACKAGE_VERSION" >> "$GITHUB_OUTPUT"
       - name: Check registry
         id: registry
         run: |
-          PACKAGE_NAME=$(node -p "require('./packages/tailwind/package.json').name")
-          PACKAGE_VERSION=$(node -p "require('./packages/tailwind/package.json').version")
-          if npm view "$PACKAGE_NAME@$PACKAGE_VERSION" version >/dev/null 2>&1; then
+          if npm view "${{ steps.package.outputs.name }}@${{ steps.package.outputs.version }}" version >/dev/null 2>&1; then
             echo "exists=true" >> "$GITHUB_OUTPUT"
           else
             echo "exists=false" >> "$GITHUB_OUTPUT"
           fi
       - name: Publish with provenance
         if: steps.registry.outputs.exists != 'true'
-        run: npm publish ./packages/tailwind --access public --provenance
+        run: npm publish "./${{ steps.package.outputs.dir }}" --access public --provenance
 
   github-release:
     name: GitHub Release
@@ -83,4 +100,10 @@ jobs:
       - name: Create release if missing
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh release view "$GITHUB_REF_NAME" || gh release create "$GITHUB_REF_NAME" --verify-tag --generate-notes --title "Ink Tailwind ${GITHUB_REF_NAME#v}"
+        run: |
+          case "$GITHUB_REF_NAME" in
+            tokens-v*) RELEASE_TITLE="Ink Tokens ${GITHUB_REF_NAME#tokens-v}" ;;
+            v*) RELEASE_TITLE="Ink Tailwind ${GITHUB_REF_NAME#v}" ;;
+            *) exit 1 ;;
+          esac
+          gh release view "$GITHUB_REF_NAME" || gh release create "$GITHUB_REF_NAME" --verify-tag --generate-notes --title "$RELEASE_TITLE"

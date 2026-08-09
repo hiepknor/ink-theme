@@ -10,6 +10,7 @@ const result = JSON.parse(execFileSync('npm', ['pack', '--dry-run', '--json'], {
 const actual = result.files.map(({ path }) => path).sort();
 const expected = [
   'LICENSE',
+  'CHANGELOG.md',
   'README.md',
   'generated/react-native.js',
   'generated/react-native.ts',
