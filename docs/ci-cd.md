@@ -11,7 +11,8 @@ verification. It contains:
 - High-severity dependency review on pull requests.
 - Chromium visual regression against reviewed Linux baselines.
 - Tauri frontend build and locked Rust compilation on Linux.
-- RustSec audit, cargo-deny policy, and downstream patch integrity/expiry checks.
+- A single cargo-deny RustSec/policy audit plus downstream patch
+  integrity/expiry checks.
 - Native package type, boundary, accessibility/touch-contract and pack checks,
   renderer-level interaction tests, then Expo Android and iOS consumer bundle
   exports.
@@ -37,10 +38,12 @@ pull request and automated gate remain mandatory for administrators.
 
 ## Dependency maintenance
 
-Dependabot opens grouped weekly updates for npm development dependencies and
-GitHub Actions, plus a monthly grouped update for the Tauri/WebKitGTK Rust
-runtime. Dependency updates go through the same compatibility, build, package,
-security, and dependency-review gates as application changes.
+Dependabot opens grouped weekly minor/patch updates for npm development
+dependencies and GitHub Actions, plus a monthly grouped update for the
+Tauri/WebKitGTK Rust runtime. Major npm and Actions upgrades are isolated so
+one incompatible tool cannot obscure the result of unrelated updates.
+Dependency updates go through the same compatibility, build, package, security,
+and dependency-review gates as application changes.
 
 The package manager version must remain compatible with the minimum Node engine
 declared by the root workspace. A package-manager major upgrade must therefore
@@ -56,7 +59,15 @@ Expo's Metro graph currently resolves `image-size 1.2.1`. Two version-based
 parser advisories are allowed only after CI verifies the checked-in pnpm patch,
 its hash, a malicious ICNS regression test, and an expiring advisory record.
 The npm audit step still fails for every other high-severity production
-advisory.
+advisory. Dependabot must not upgrade this dependency across a major boundary:
+the `2.0.2` parser still fails the malicious ICNS regression and can exhaust
+runner memory. Removing the ignore, patch, test, and advisory exception is one
+reviewed security transition, never an automated version bump.
+
+The Rust security job intentionally uses cargo-deny as its only advisory
+engine. The former RustSec action duplicated the same database scan and tried
+to create an additional GitHub Check Run during `push` events without the
+required permission, making healthy `main` builds appear failed.
 
 ## Release gate
 
