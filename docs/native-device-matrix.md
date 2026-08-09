@@ -1,15 +1,26 @@
 # Native device accessibility matrix
 
-This matrix records manual evidence required before `@hiepknor/ink-react-native`
-can be published. Expo export and renderer tests are necessary but do not count
-as device validation.
+This matrix records manual evidence for `@hiepknor/ink-react-native`. Device
+validation was removed from the release gate by project decision on 2026-08-09.
+Expo export and renderer tests are necessary but do not count as device
+validation, and the waived rows below must not be interpreted as passes.
 
 ## Required matrix
 
 | Platform | Representative target | Font scaling | Reduced motion | Screen reader | Software/hardware keyboard | Status |
 | --- | --- | --- | --- | --- | --- | --- |
-| Android | Current stable emulator and one physical phone | Pending | Pending | TalkBack pending | Pending | Not validated |
-| iOS | Current stable simulator and one physical iPhone | Pending | Pending | VoiceOver pending | Pending | Not validated |
+| Android | Current stable emulator and one physical phone | Waived | Waived | TalkBack waived | Waived | Waived — not validated |
+| iOS | Current stable simulator and one physical iPhone | Waived | Waived | VoiceOver waived | Waived | Waived — not validated |
+
+## Waiver record
+
+| Date | Commit | Scope | Automated preflight | Decision |
+| --- | --- | --- | --- | --- |
+| 2026-08-09 | `869d610` | Android and iOS simulator/device accessibility | Native type, boundary, package, and contract checks passed; 10 interaction tests passed; production Expo bundles exported for Android and iOS | Manual device validation skipped by project decision |
+
+Residual risk remains for platform-specific behavior that automated renderer
+tests cannot establish: large accessibility text, reduced motion, TalkBack and
+VoiceOver announcement order/focus, and software or hardware keyboard behavior.
 
 ## Pass criteria
 
