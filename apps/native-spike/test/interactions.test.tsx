@@ -78,7 +78,7 @@ describe('native workbench', () => {
     await fireEvent.press(screen.getByRole('checkbox', { checked: true }));
     expect(screen.getByText('Tracing is disabled.')).toBeOnTheScreen();
 
-    await fireEvent.press(screen.getByRole('button', { name: 'Deployment region' }));
+    await fireEvent.press(screen.getByRole('button', { name: 'Catalog deployment region' }));
     await fireEvent.press(screen.getByRole('menuitem', { name: 'Tokyo' }));
     expect(screen.getByText('Deploying to tokyo as primary.')).toBeOnTheScreen();
 

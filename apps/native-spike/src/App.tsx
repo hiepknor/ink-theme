@@ -4,6 +4,7 @@ import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
 import { nativeTokens } from '@hiepknor/ink-tokens/react-native';
 import { Alert, Button, Checkbox, IconButton, InkProvider, Progress, RadioGroup, Select, Spinner, Surface, Switch, TextArea, TextField, inkDensities, type InkDensity } from '@hiepknor/ink-ui-native';
+import { DeploymentExample } from './DeploymentExample';
 
 export function App() {
   const [density, setDensity] = useState<InkDensity>('touch');
@@ -21,6 +22,8 @@ export function App() {
           <Text style={styles.title}>Component catalog</Text>
           <Text style={styles.summary}>Public React Native contracts rendered with platform-owned interaction and accessibility.</Text>
         </View>
+
+        <DeploymentExample />
 
         <Surface accessibilityLabel="Workbench controls" style={styles.surface}>
           <SpecimenHeader title="Density" detail={`${density} · ${nativeTokens.controlHeight[density]}px`} />
@@ -65,7 +68,7 @@ export function App() {
           <TextArea label="Description" defaultValue="Routes regional traffic." description="Native multiline input." />
           <RadioGroup label="Replica role" options={[{ label: 'Primary', value: 'primary' }, { label: 'Replica', value: 'replica' }]} value={replica} onValueChange={setReplica} />
           <Switch checked={tracing} label="Continuous tracing" onCheckedChange={setTracing} />
-          <Select label="Deployment region" description="Single-value native modal sheet." options={regions} value={region} onValueChange={setRegion} />
+          <Select label="Catalog deployment region" description="Single-value native modal sheet." options={regions} value={region} onValueChange={setRegion} />
           <Text accessibilityLiveRegion="polite" style={styles.stateCopy}>Deploying to {region} as {replica}.</Text>
         </Surface>
 
