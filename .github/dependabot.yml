@@ -22,6 +22,11 @@ updates:
       # jsdom 30 drops the repository's supported Node 20 runtime.
       - dependency-name: jsdom
         update-types: ['version-update:semver-major']
+      # Tooling majors are runtime-contract changes, not routine maintenance.
+      - dependency-name: '@testing-library/jest-dom'
+        update-types: ['version-update:semver-major']
+      - dependency-name: typescript
+        update-types: ['version-update:semver-major']
     open-pull-requests-limit: 5
 
   - package-ecosystem: github-actions
