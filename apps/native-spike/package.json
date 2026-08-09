@@ -10,7 +10,7 @@
     "build": "tsc --noEmit",
     "build:expo": "expo export --platform android --output-dir dist/android && expo export --platform ios --output-dir dist/ios",
     "check": "tsc --noEmit && node scripts/check-boundary.mjs",
-    "test": "node --test test/*.test.mjs"
+    "test": "node --test test/*.test.mjs && jest --runInBand"
   },
   "dependencies": {
     "@hiepknor/ink-tokens": "workspace:*",
@@ -20,11 +20,21 @@
     "react": "19.2.3",
     "react-dom": "19.2.3",
     "react-native": "0.86.2",
+    "react-native-safe-area-context": "~5.7.0",
     "react-native-web": "^0.21.2"
   },
   "devDependencies": {
+    "@testing-library/react-native": "14.0.1",
     "@types/react": "^19.2.18",
     "image-size": "1.2.1",
+    "jest-expo": "57.0.3",
+    "react-test-renderer": "19.2.3",
     "typescript": "~6.0.3"
+  },
+  "jest": {
+    "preset": "jest-expo",
+    "testMatch": [
+      "<rootDir>/test/**/*.test.tsx"
+    ]
   }
 }
