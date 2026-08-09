@@ -13,7 +13,14 @@ webviews, mobile web, and native mobile applications.
 - [`apps/native-spike`](apps/native-spike) — Expo catalog and product-shaped native validation app.
 - [`packages/tokens`](packages/tokens) — cross-platform token source and generated adapters.
 
-The published Tailwind adapter is `@hiepknor/ink-tailwind`.
+Published package names are:
+
+- `@hiepknor/ink-tailwind`
+- `@hiepknor/ink-tokens`
+- `@hiepknor/ink-react`
+
+The React Native renderer remains private until the manual device accessibility
+matrix is complete.
 
 ## Development
 

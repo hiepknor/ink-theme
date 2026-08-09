@@ -5,6 +5,7 @@ on:
     tags:
       - 'v*.*.*'
       - 'tokens-v*.*.*'
+      - 'react-v*.*.*'
 
 concurrency:
   group: release-${{ github.ref }}
@@ -36,6 +37,7 @@ jobs:
         run: |
           case "$GITHUB_REF_NAME" in
             tokens-v*) PACKAGE_DIR=packages/tokens; TAG_VERSION=${GITHUB_REF_NAME#tokens-v} ;;
+            react-v*) PACKAGE_DIR=packages/react; TAG_VERSION=${GITHUB_REF_NAME#react-v} ;;
             v*) PACKAGE_DIR=packages/tailwind; TAG_VERSION=${GITHUB_REF_NAME#v} ;;
             *) exit 1 ;;
           esac
@@ -67,14 +69,19 @@ jobs:
         run: |
           case "$GITHUB_REF_NAME" in
             tokens-v*) PACKAGE_DIR=packages/tokens ;;
+            react-v*) PACKAGE_DIR=packages/react ;;
             v*) PACKAGE_DIR=packages/tailwind ;;
             *) exit 1 ;;
           esac
           PACKAGE_NAME=$(node -p "require('./$PACKAGE_DIR/package.json').name")
           PACKAGE_VERSION=$(node -p "require('./$PACKAGE_DIR/package.json').version")
-          echo "dir=$PACKAGE_DIR" >> "$GITHUB_OUTPUT"
+          PACKAGE_BASENAME=${PACKAGE_NAME#@}
+          PACKAGE_BASENAME=${PACKAGE_BASENAME//\//-}
+          PACKAGE_TARBALL="$RUNNER_TEMP/${PACKAGE_BASENAME}-${PACKAGE_VERSION}.tgz"
+          pnpm --filter "$PACKAGE_NAME" pack --out "$PACKAGE_TARBALL"
           echo "name=$PACKAGE_NAME" >> "$GITHUB_OUTPUT"
           echo "version=$PACKAGE_VERSION" >> "$GITHUB_OUTPUT"
+          echo "tarball=$PACKAGE_TARBALL" >> "$GITHUB_OUTPUT"
       - name: Check registry
         id: registry
         run: |
@@ -85,7 +92,7 @@ jobs:
           fi
       - name: Publish with provenance
         if: steps.registry.outputs.exists != 'true'
-        run: npm publish "./${{ steps.package.outputs.dir }}" --access public --provenance
+        run: npm publish "${{ steps.package.outputs.tarball }}" --access public --provenance
 
   github-release:
     name: GitHub Release
@@ -103,6 +110,7 @@ jobs:
         run: |
           case "$GITHUB_REF_NAME" in
             tokens-v*) RELEASE_TITLE="Ink Tokens ${GITHUB_REF_NAME#tokens-v}" ;;
+            react-v*) RELEASE_TITLE="Ink React ${GITHUB_REF_NAME#react-v}" ;;
             v*) RELEASE_TITLE="Ink Tailwind ${GITHUB_REF_NAME#v}" ;;
             *) exit 1 ;;
           esac
