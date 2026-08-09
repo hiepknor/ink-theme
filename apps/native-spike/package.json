@@ -1,5 +1,5 @@
 {
-  "name": "@hiepknor/ink-native-spike",
+  "name": "@hiepknor/ink-native-workbench",
   "version": "0.0.0",
   "private": true,
   "main": "index.ts",
@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "@hiepknor/ink-tokens": "workspace:*",
+    "@hiepknor/ink-ui-native": "workspace:*",
     "expo": "~57.0.1",
     "expo-status-bar": "~57.0.0",
     "react": "19.2.3",

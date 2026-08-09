@@ -120,7 +120,7 @@ jobs:
           command-arguments: advisories bans sources
 
   native-architecture:
-    name: Native Architecture
+    name: Native Mobile
     runs-on: ubuntu-latest
     timeout-minutes: 15
 
@@ -132,11 +132,14 @@ jobs:
           node-version: 22.13
           cache: pnpm
       - run: pnpm install --frozen-lockfile
-      - run: pnpm --filter @hiepknor/ink-native-spike check
-      - run: pnpm --filter @hiepknor/ink-native-spike test
+      - run: pnpm --filter @hiepknor/ink-ui-native check
+      - run: pnpm --filter @hiepknor/ink-ui-native test
+      - run: pnpm --filter @hiepknor/ink-ui-native pack:check
+      - run: pnpm --filter @hiepknor/ink-native-workbench check
+      - run: pnpm --filter @hiepknor/ink-native-workbench test
       - name: Audit production npm dependencies
         run: pnpm audit --prod --audit-level high --ignore GHSA-w3rx-r6r6-pgpr --ignore GHSA-5p2g-fcmc-qvqq
-      - run: pnpm --filter @hiepknor/ink-native-spike build:expo
+      - run: pnpm --filter @hiepknor/ink-native-workbench build:expo
 
   gate:
     name: CI Gate

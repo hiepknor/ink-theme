@@ -1,19 +1,18 @@
-# Ink native architecture spike
+# Ink native workbench
 
-This private Expo application proves the platform boundary before Ink creates a
-published native component package. It implements only `InkProvider`, `Button`,
-and `TextField`.
+This private Expo application exercises `@hiepknor/ink-ui-native` as a real
+consumer. It covers `InkProvider`, `Surface`, `Button`, `TextField`, and
+`Checkbox` without importing DOM or CSS implementation.
 
-The spike shares generated native tokens, density names, button variants, and
-state intent with the web implementation. It deliberately uses React Native
-`Pressable`, `TextInput`, accessibility props, and `StyleSheet`; it does not
-import DOM elements, CSS, Radix, the web theme, or `@hiepknor/ink-ui-react`.
+The package and workbench share generated native tokens, density names, button
+variants, and state intent with the web renderer. Native views, events,
+accessibility props, styles, and future overlays remain platform-specific.
 
 Run with Node 22.13 or newer:
 
 ```sh
-pnpm --filter @hiepknor/ink-native-spike start
+pnpm --filter @hiepknor/ink-native-workbench start
 ```
 
-CI type-checks and exports the Android and iOS bundles. This is an architecture
-experiment, not a published package or a stable API.
+CI type-checks the public package, verifies package contents and boundaries,
+tests accessibility/touch contracts, and exports Android and iOS bundles.
