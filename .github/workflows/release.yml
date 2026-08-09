@@ -85,7 +85,12 @@ jobs:
       - name: Check registry
         id: registry
         run: |
-          if npm view "${{ steps.package.outputs.name }}@${{ steps.package.outputs.version }}" version >/dev/null 2>&1; then
+          PACKAGE_NAME="${{ steps.package.outputs.name }}"
+          PACKAGE_VERSION="${{ steps.package.outputs.version }}"
+          PACKAGE_BASENAME=${PACKAGE_NAME##*/}
+          REGISTRY_TARBALL="https://registry.npmjs.org/${PACKAGE_NAME}/-/${PACKAGE_BASENAME}-${PACKAGE_VERSION}.tgz"
+          if npm view "$PACKAGE_NAME@$PACKAGE_VERSION" version >/dev/null 2>&1 \
+            || curl --fail --silent --head "$REGISTRY_TARBALL" >/dev/null; then
             echo "exists=true" >> "$GITHUB_OUTPUT"
           else
             echo "exists=false" >> "$GITHUB_OUTPUT"
