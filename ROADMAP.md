@@ -213,7 +213,7 @@ platform APIs, navigation, and domain workflows in applications.
 - [x] Add renderer-level interaction tests for press, disabled/loading, text input, validation, controlled state, and touch density.
 - [ ] Validate font scaling, reduced motion, screen readers, and device keyboard behavior on representative Android and iOS devices.
 - [x] Add native `IconButton`, `TextArea`, `RadioGroup`, `Switch`, and `Select` after documenting their interaction contracts.
-- [ ] Add native `Alert`, `Spinner`, and `Progress` feedback primitives.
+- [x] Add native `Alert`, `Spinner`, and `Progress` feedback primitives.
 - [ ] Prove the package in a product-shaped example before enabling publication.
 
 Exit criteria:

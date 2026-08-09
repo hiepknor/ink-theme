@@ -21,7 +21,7 @@ test('Expo workbench consumes the public native package', () => {
 });
 
 test('Expo consumer exercises the native component catalog', () => {
-  for (const component of ['InkProvider', 'Surface', 'Button', 'TextField', 'Checkbox', 'IconButton', 'TextArea', 'RadioGroup', 'Switch', 'Select']) {
+  for (const component of ['InkProvider', 'Surface', 'Button', 'TextField', 'Checkbox', 'IconButton', 'TextArea', 'RadioGroup', 'Switch', 'Select', 'Alert', 'Spinner', 'Progress']) {
     assert.match(app, new RegExp(`<${component}`));
   }
 });

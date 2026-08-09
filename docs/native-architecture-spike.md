@@ -54,3 +54,8 @@ only for package and renderer boundaries, not as a substitute for behavior.
 - `Select` is a controlled single-value choice surface rendered as a native
   modal sheet. It does not reuse the web Radix implementation or own remote
   search, navigation, or platform picker policy.
+- `Alert` maps explicit `off`, `polite`, and `assertive` intent to native live
+  regions; tone never carries meaning without visible copy.
+- `Spinner` and `Progress` expose labelled native progressbar semantics.
+  Determinate progress clamps values to its declared range; an omitted value
+  represents indeterminate work without inventing a percentage.

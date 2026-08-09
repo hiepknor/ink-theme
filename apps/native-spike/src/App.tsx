@@ -3,13 +3,14 @@ import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
 import { nativeTokens } from '@hiepknor/ink-tokens/react-native';
-import { Button, Checkbox, IconButton, InkProvider, RadioGroup, Select, Surface, Switch, TextArea, TextField, inkDensities, type InkDensity } from '@hiepknor/ink-ui-native';
+import { Alert, Button, Checkbox, IconButton, InkProvider, Progress, RadioGroup, Select, Spinner, Surface, Switch, TextArea, TextField, inkDensities, type InkDensity } from '@hiepknor/ink-ui-native';
 
 export function App() {
   const [density, setDensity] = useState<InkDensity>('touch');
   const [tracing, setTracing] = useState(true);
   const [region, setRegion] = useState('singapore');
   const [replica, setReplica] = useState('primary');
+  const [deploymentProgress, setDeploymentProgress] = useState(42);
 
   return <SafeAreaProvider initialMetrics={initialWindowMetrics}><InkProvider density={density}>
     <SafeAreaView edges={['top', 'right', 'bottom', 'left']} style={styles.safeArea}>
@@ -66,6 +67,17 @@ export function App() {
           <Switch checked={tracing} label="Continuous tracing" onCheckedChange={setTracing} />
           <Select label="Deployment region" description="Single-value native modal sheet." options={regions} value={region} onValueChange={setRegion} />
           <Text accessibilityLiveRegion="polite" style={styles.stateCopy}>Deploying to {region} as {replica}.</Text>
+        </Surface>
+
+        <Surface tone="recessed" style={styles.surface}>
+          <SpecimenHeader title="Feedback" detail="Live regions and progress" />
+          <Alert title="Deployment queued">The service will deploy after validation.</Alert>
+          <Alert live="polite" title="Configuration saved" tone="ok">All settings are synchronized.</Alert>
+          <Alert live="assertive" title="Deployment blocked" tone="danger">Resolve the failed health check before retrying.</Alert>
+          <Spinner label="Validating deployment" />
+          <Progress label="Deployment" value={deploymentProgress} />
+          <Progress label="Preparing artifacts" />
+          <Button onPress={() => setDeploymentProgress((current) => Math.min(100, current + 25))}>Advance deployment</Button>
         </Surface>
 
         <Surface padding={false} tone="elevated">
