@@ -3,12 +3,17 @@ import { readFile } from 'node:fs/promises';
 import test from 'node:test';
 import { nativeTokens } from '../../tokens/generated/react-native.js';
 
-const [contracts, button, checkbox, field, surface, index] = await Promise.all([
+const [contracts, button, checkbox, field, surface, iconButton, textArea, radioGroup, switchControl, select, index] = await Promise.all([
   readFile(new URL('../src/contracts.ts', import.meta.url), 'utf8'),
   readFile(new URL('../src/Button.tsx', import.meta.url), 'utf8'),
   readFile(new URL('../src/Checkbox.tsx', import.meta.url), 'utf8'),
   readFile(new URL('../src/TextField.tsx', import.meta.url), 'utf8'),
   readFile(new URL('../src/Surface.tsx', import.meta.url), 'utf8'),
+  readFile(new URL('../src/IconButton.tsx', import.meta.url), 'utf8'),
+  readFile(new URL('../src/TextArea.tsx', import.meta.url), 'utf8'),
+  readFile(new URL('../src/RadioGroup.tsx', import.meta.url), 'utf8'),
+  readFile(new URL('../src/Switch.tsx', import.meta.url), 'utf8'),
+  readFile(new URL('../src/Select.tsx', import.meta.url), 'utf8'),
   readFile(new URL('../src/index.ts', import.meta.url), 'utf8'),
 ]);
 
@@ -33,7 +38,19 @@ test('field exposes label, invalid state, and live error semantics', () => {
   assert.match(field, /accessibilityLiveRegion="polite"/);
 });
 
-test('public surface exports the five-component vertical slice', () => {
-  for (const component of ['Button', 'Checkbox', 'InkProvider', 'Surface', 'TextField']) assert.match(index, new RegExp(`export \\{ ${component}`));
+test('extended controls own native roles, state, and platform rendering', () => {
+  assert.match(iconButton, /accessibilityLabel=\{label\}/);
+  assert.match(iconButton, /height: size, width: size/);
+  assert.match(textArea, /multiline/);
+  assert.match(radioGroup, /accessibilityRole="radiogroup"/);
+  assert.match(radioGroup, /accessibilityRole="radio"/);
+  assert.match(switchControl, /accessibilityRole="switch"/);
+  assert.match(select, /<Modal/);
+  assert.match(select, /expanded: open/);
+  assert.doesNotMatch(select, /Radix|document|window/u);
+});
+
+test('public surface exports the native catalog', () => {
+  for (const component of ['Button', 'Checkbox', 'IconButton', 'InkProvider', 'RadioGroup', 'Select', 'Surface', 'Switch', 'TextArea', 'TextField']) assert.match(index, new RegExp(`export \\{ ${component}`));
   assert.match(surface, /tone\?: SurfaceTone/);
 });

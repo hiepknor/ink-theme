@@ -212,7 +212,7 @@ platform APIs, navigation, and domain workflows in applications.
 - [x] Turn the Expo consumer into an interactive component catalog with live density and state controls.
 - [x] Add renderer-level interaction tests for press, disabled/loading, text input, validation, controlled state, and touch density.
 - [ ] Validate font scaling, reduced motion, screen readers, and device keyboard behavior on representative Android and iOS devices.
-- [ ] Add native `IconButton`, `TextArea`, `RadioGroup`, `Switch`, and `Select` only after interaction contracts are documented.
+- [x] Add native `IconButton`, `TextArea`, `RadioGroup`, `Switch`, and `Select` after documenting their interaction contracts.
 - [ ] Add native `Alert`, `Spinner`, and `Progress` feedback primitives.
 - [ ] Prove the package in a product-shaped example before enabling publication.
 
