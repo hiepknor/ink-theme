@@ -51,6 +51,9 @@ DOM elements, CSS, browser event handling, or overlay implementations.
 
 Workbench applications document and exercise public APIs but are not published
 packages. Examples prove integration with representative consumer toolchains.
+The web workbench uses a single React root for both catalog routes and the full
+native-compatibility matrix; imperative DOM ownership must not run beside the
+React renderer.
 
 ## Platform mapping
 

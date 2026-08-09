@@ -3,26 +3,16 @@
 @import '@hiepknor/ink-theme/scoped-strict.css';
 
 @source './index.html';
-@source './gallery.js';
-@source './react-preview.tsx';
+@source './main.tsx';
+@source './legacy-gallery.tsx';
 
 @layer components {
-  body:not([data-catalog-page='all']) #theme-preview {
-    max-width: 1280px;
-    padding-top: 20px;
-  }
-
-  body:not([data-catalog-page='all']) #theme-preview > :not(:has(#react-preview)) {
-    display: none !important;
-  }
-
-  body:not([data-catalog-page='all']) #react-ui-title {
-    display: none !important;
-  }
-
   .ink-catalog-shell {
     display: grid;
+    width: calc(100% - 32px);
+    max-width: 1080px;
     min-height: calc(100dvh - 40px);
+    margin: 20px auto;
     overflow: hidden;
     border: 1px solid var(--color-line-strong);
     background: var(--color-surface);
