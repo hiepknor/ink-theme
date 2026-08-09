@@ -104,11 +104,13 @@ example `tokens-v0.1.0`), and React uses `react-v<version>` (for example
 8. Creates a GitHub Release if one does not already exist.
 
 The registry check makes workflow retries safe after a successful npm publish.
+It checks both package metadata and the immutable version tarball because npm
+may expose a newly published tarball before its metadata document propagates.
 
 ## npm trusted publishing
 
-Before its first release tag is pushed, each public npm package must be
-configured with GitHub Actions as its trusted publisher:
+Each existing public npm package is configured with GitHub Actions as its
+trusted publisher:
 
 ```text
 Repository: hiepknor/ink-ui
@@ -121,13 +123,25 @@ The workflow uses the short-lived GitHub OIDC identity through
 The package metadata carries the matching public repository URL required for
 OIDC provenance. Release jobs intentionally do not restore dependency caches.
 
+Npm requires a package to exist before its trusted publisher can be configured.
+For a brand-new package name, merge and verify the release preparation first,
+pack that exact `main` commit with pnpm, publish the initial version
+interactively, and immediately configure `release.yml` as its trusted publisher.
+Only then create the annotated release tag. Later versions publish entirely
+through OIDC. The initial interactive version cannot carry CI provenance; do
+not create an unrelated bootstrap version solely to work around this registry
+constraint.
+
 ## Release procedure
 
 1. Update version, changelog, API, and migration documentation in a pull request.
 2. Merge only after `CI Gate` succeeds.
 3. Pull the protected `main` branch locally.
-4. Create and push the package's annotated release tag on the merge commit.
-5. Monitor the `Release` workflow through npm publish and GitHub Release creation.
+4. For a new npm package name only, perform the one-time interactive bootstrap
+   and trusted-publisher setup described above.
+5. Create and push the package's annotated release tag on the merge commit.
+6. Monitor the `Release` workflow through npm publish and GitHub Release creation.
+7. Confirm the npm `latest` dist-tag only when the release is intended as latest.
 
 After `@hiepknor/ink-tailwind@0.3.0` is available, deprecate the superseded
 package explicitly:
@@ -135,6 +149,5 @@ package explicitly:
 ```sh
 npm deprecate @hiepknor/ink-theme "Renamed to @hiepknor/ink-tailwind"
 ```
-6. Confirm the npm `latest` dist-tag only when the release is intended as latest.
 
 Do not reuse, move, or overwrite a published release tag.
