@@ -7,5 +7,6 @@ dist/
 playwright-report/
 test-results/
 .expo/
+.patch-work/
 target/
 **/gen/schemas/

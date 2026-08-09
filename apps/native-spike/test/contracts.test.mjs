@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import test from 'node:test';
+import { imageSize } from 'image-size';
 import { nativeTokens } from '../../../packages/tokens/generated/react-native.js';
 
 const [contracts, button, field, provider, app] = await Promise.all([
@@ -30,4 +31,13 @@ test('Expo consumer exercises all three spike components', () => {
   for (const component of ['InkProvider', 'Button', 'TextField']) {
     assert.match(app, new RegExp(`<${component}`));
   }
+});
+
+test('patched Metro image parser rejects a zero-length ICNS entry', () => {
+  const malicious = Buffer.alloc(16);
+  malicious.write('icns', 0, 'ascii');
+  malicious.writeUInt32BE(16, 4);
+  malicious.write('ic07', 8, 'ascii');
+  malicious.writeUInt32BE(0, 12);
+  assert.throws(() => imageSize(malicious), /Invalid ICNS entry length/);
 });

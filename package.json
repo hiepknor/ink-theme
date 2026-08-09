@@ -6,11 +6,12 @@
     "dev": "pnpm --filter @hiepknor/ink-workbench dev",
     "test:visual": "pnpm --filter @hiepknor/ink-workbench test:visual",
     "check:rust-patch": "node scripts/check-rust-security-patch.mjs",
+    "check:npm-patches": "node scripts/check-npm-security-patches.mjs",
     "check": "pnpm -r --if-present run check",
     "test": "pnpm -r --if-present run test",
     "build": "pnpm -r --if-present run build",
     "pack:check": "pnpm -r --if-present run pack:check",
-    "verify": "pnpm run check:rust-patch && pnpm run check && pnpm test && pnpm build && pnpm pack:check"
+    "verify": "pnpm run check:rust-patch && pnpm run check:npm-patches && pnpm run check && pnpm test && pnpm build && pnpm pack:check"
   },
   "engines": {
     "node": ">=20.19"
