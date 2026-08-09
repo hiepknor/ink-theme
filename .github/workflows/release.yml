@@ -6,6 +6,7 @@ on:
       - 'v*.*.*'
       - 'tokens-v*.*.*'
       - 'react-v*.*.*'
+      - 'react-native-v*.*.*'
 
 concurrency:
   group: release-${{ github.ref }}
@@ -37,6 +38,7 @@ jobs:
         run: |
           case "$GITHUB_REF_NAME" in
             tokens-v*) PACKAGE_DIR=packages/tokens; TAG_VERSION=${GITHUB_REF_NAME#tokens-v} ;;
+            react-native-v*) PACKAGE_DIR=packages/react-native; TAG_VERSION=${GITHUB_REF_NAME#react-native-v} ;;
             react-v*) PACKAGE_DIR=packages/react; TAG_VERSION=${GITHUB_REF_NAME#react-v} ;;
             v*) PACKAGE_DIR=packages/tailwind; TAG_VERSION=${GITHUB_REF_NAME#v} ;;
             *) exit 1 ;;
@@ -69,6 +71,7 @@ jobs:
         run: |
           case "$GITHUB_REF_NAME" in
             tokens-v*) PACKAGE_DIR=packages/tokens ;;
+            react-native-v*) PACKAGE_DIR=packages/react-native ;;
             react-v*) PACKAGE_DIR=packages/react ;;
             v*) PACKAGE_DIR=packages/tailwind ;;
             *) exit 1 ;;
@@ -115,6 +118,7 @@ jobs:
         run: |
           case "$GITHUB_REF_NAME" in
             tokens-v*) RELEASE_TITLE="Ink Tokens ${GITHUB_REF_NAME#tokens-v}" ;;
+            react-native-v*) RELEASE_TITLE="Ink React Native ${GITHUB_REF_NAME#react-native-v}" ;;
             react-v*) RELEASE_TITLE="Ink React ${GITHUB_REF_NAME#react-v}" ;;
             v*) RELEASE_TITLE="Ink Tailwind ${GITHUB_REF_NAME#v}" ;;
             *) exit 1 ;;
