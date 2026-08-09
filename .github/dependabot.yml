@@ -10,23 +10,15 @@ updates:
         dependency-type: development
         update-types: [minor, patch]
     ignore:
-      # This exact version carries a checked-in parser patch and regression
-      # test. Major releases remain blocked until the advisory exception and
-      # downstream patch are retired together.
-      - dependency-name: image-size
+      # Major upgrades are compatibility projects, not routine maintenance.
+      - dependency-name: '*'
         update-types: ['version-update:semver-major']
       # Expo owns these versions as a compatibility set. The renderer must
       # also remain exactly aligned with the React version used by Expo.
+      - dependency-name: react
+      - dependency-name: react-dom
       - dependency-name: react-native-safe-area-context
       - dependency-name: react-test-renderer
-      # jsdom 30 drops the repository's supported Node 20 runtime.
-      - dependency-name: jsdom
-        update-types: ['version-update:semver-major']
-      # Tooling majors are runtime-contract changes, not routine maintenance.
-      - dependency-name: '@testing-library/jest-dom'
-        update-types: ['version-update:semver-major']
-      - dependency-name: typescript
-        update-types: ['version-update:semver-major']
     open-pull-requests-limit: 5
 
   - package-ecosystem: github-actions
@@ -37,6 +29,9 @@ updates:
       github-actions:
         patterns: ['*']
         update-types: [minor, patch]
+    ignore:
+      - dependency-name: '*'
+        update-types: ['version-update:semver-major']
     open-pull-requests-limit: 3
 
   - package-ecosystem: cargo
