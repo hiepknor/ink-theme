@@ -1,6 +1,6 @@
 # Ink native workbench
 
-This private Expo application exercises `@hiepknor/ink-ui-native` as a real,
+This private Expo application exercises `@hiepknor/ink-react-native` as a real,
 interactive consumer. Its component catalog covers the public native forms and
 feedback surface, plus live density and controlled-state changes, without
 importing DOM or CSS implementation.

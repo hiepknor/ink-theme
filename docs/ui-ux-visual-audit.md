@@ -73,7 +73,7 @@ These need a validated consumer use case before their behavior is made public:
 - Product command frameworks with nested actions, recents, and remote search.
   The private workbench finder remains a local documentation navigation tool.
 - Rich-text editing.
-- Mobile-native components; these belong to `@hiepknor/ink-ui-native` rather
+- Mobile-native components; these belong to `@hiepknor/ink-react-native` rather
   than sharing DOM/CSS implementations.
 
 ## Review rules

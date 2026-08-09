@@ -37,7 +37,7 @@ Stabilize the framework-agnostic web foundation before adding packages.
 - [x] Finalize focus, selection, form accent, hard-shadow, and press behavior.
 - [x] Verify reduced-motion and forced-colors behavior.
 - [x] Document every public token and utility.
-- [x] Review the npm tarball and publish `@hiepknor/ink-theme@0.2.0`.
+- [x] Review the npm tarball and publish the Tailwind foundation.
 
 Exit criteria:
 
@@ -60,9 +60,9 @@ apps/
 ```
 
 - [x] Make the repository root a private workspace.
-- [x] Move the current package to `packages/theme`.
+- [x] Move the current package to `packages/tailwind`.
 - [x] Move the gallery to `apps/workbench`.
-- [x] Preserve all `@hiepknor/ink-theme` exports.
+- [x] Preserve all Tailwind foundation exports.
 - [x] Add recursive root scripts for checks, tests, builds, and package checks.
 - [x] Keep pnpm as the only task runner until orchestration is demonstrably needed.
 
@@ -93,7 +93,7 @@ Exit criteria:
 
 ## Milestone 4 — React UI vertical slice
 
-Create `@hiepknor/ink-ui-react` for browser, PWA, Electron, and Tauri
+Create `@hiepknor/ink-react` for browser, PWA, Electron, and Tauri
 applications. It must work without requiring Tailwind in the consuming app.
 
 - [x] Add `InkProvider` with `compact`, `default`, and `touch` density.
@@ -193,7 +193,7 @@ Exit criteria:
 Begin only after the React component contracts have stabilized through real
 consumer use.
 
-- [x] Create `@hiepknor/ink-ui-native` and an Expo workbench.
+- [x] Create `@hiepknor/ink-react-native` and an Expo workbench.
 - [x] Implement native `InkProvider`, `Surface`, `Button`, `TextField`, and `Checkbox`.
 - [x] Share token values, density names, variants, and state contracts with web.
 - [x] Keep native focus, event, overlay, and pattern rendering platform-specific.
@@ -238,10 +238,10 @@ native packages.
 
 | Package | First checkpoint | Stable contract |
 | --- | --- | --- |
-| `@hiepknor/ink-theme` | `0.2.0` interaction foundation | `1.0.0` CSS API |
+| `@hiepknor/ink-tailwind` | `0.3.0` package rename | `1.0.0` CSS API |
 | `@hiepknor/ink-tokens` | `0.1.0` CSS/TS/native output | `1.0.0` naming and alias API |
-| `@hiepknor/ink-ui-react` | `0.1.0` vertical slice | `1.0.0` component API |
-| `@hiepknor/ink-ui-native` | `0.1.0` mobile vertical slice | after production validation |
+| `@hiepknor/ink-react` | `0.1.0` vertical slice | `1.0.0` component API |
+| `@hiepknor/ink-react-native` | `0.1.0` mobile vertical slice | after production validation |
 
 ## Non-goals
 

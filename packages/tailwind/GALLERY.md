@@ -1,4 +1,4 @@
-# Ink Theme gallery
+# Ink Tailwind gallery
 
 The standalone gallery covers tokens, typography, screentone recipes, hard
 lift, form controls, interaction states, strict-mode scope, dense tables, and

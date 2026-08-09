@@ -1,5 +1,5 @@
 {
-  "name": "@hiepknor/ink-ui-react",
+  "name": "@hiepknor/ink-react",
   "version": "0.1.0",
   "description": "Accessible React components for the Ink design system.",
   "private": true,
@@ -8,7 +8,7 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/hiepknor/ink-ui.git",
-    "directory": "packages/ui-react"
+    "directory": "packages/react"
   },
   "exports": {
     ".": {

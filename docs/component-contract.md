@@ -89,7 +89,7 @@ The first release validates this contract with:
 More complex components should not be added until these primitives work in a
 real browser application and a representative Electron or Tauri shell.
 
-The browser vertical slice is implemented in `packages/ui-react` and exercised
+The browser vertical slice is implemented in `packages/react` and exercised
 by `apps/workbench`. Its Vite consumer fixture intentionally has no Tailwind
 plugin or configuration and verifies that unused JavaScript exports are removed.
 

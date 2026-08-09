@@ -1,4 +1,4 @@
 @import './default.css';
-@import '@hiepknor/ink-theme/scoped-strict.css';
+@import '@hiepknor/ink-tailwind/scoped-strict.css';
 
 @source './scoped-strict.html';

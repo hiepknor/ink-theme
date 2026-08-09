@@ -92,8 +92,8 @@ Pushing an annotated semantic tag such as `v0.3.0` starts the `Release`
 workflow. It:
 
 1. Verifies the package on Node 20 and 24.
-2. Requires the tag to match `packages/theme/package.json`.
-3. Requires a matching section in `packages/theme/CHANGELOG.md`.
+2. Requires the tag to match `packages/tailwind/package.json`.
+3. Requires a matching section in `packages/tailwind/CHANGELOG.md`.
 4. Requires the tagged commit to be contained in `main`.
 5. Checks whether the immutable npm version already exists.
 6. Publishes a missing version with npm provenance.
@@ -123,6 +123,13 @@ OIDC provenance. Release jobs intentionally do not restore dependency caches.
 3. Pull the protected `main` branch locally.
 4. Create and push an annotated `v<version>` tag on the merge commit.
 5. Monitor the `Release` workflow through npm publish and GitHub Release creation.
+
+After `@hiepknor/ink-tailwind@0.3.0` is available, deprecate the superseded
+package explicitly:
+
+```sh
+npm deprecate @hiepknor/ink-theme "Renamed to @hiepknor/ink-tailwind"
+```
 6. Confirm the npm `latest` dist-tag only when the release is intended as latest.
 
 Do not reuse, move, or overwrite a published release tag.

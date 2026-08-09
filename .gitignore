@@ -1,7 +1,7 @@
 node_modules/
 dist/
-!packages/ui-react/dist/
-!packages/ui-react/dist/**
+!packages/react/dist/
+!packages/react/dist/**
 *.tgz
 .DS_Store
 playwright-report/

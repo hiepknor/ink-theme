@@ -1,4 +1,4 @@
 @import 'tailwindcss';
-@import '@hiepknor/ink-theme';
+@import '@hiepknor/ink-tailwind';
 
 @source './default.html';

@@ -1,31 +1,31 @@
-# @hiepknor/ink-theme
+# @hiepknor/ink-tailwind
 
-A square, monochrome, high-density theme for Tailwind CSS v4. It packages the
+A square, monochrome, high-density foundation for Tailwind CSS v4. It packages the
 visual foundation extracted from OmniWA Console without React components,
 product branding, or domain behavior.
 
 ## Install
 
 ```sh
-pnpm add @hiepknor/ink-theme
+pnpm add @hiepknor/ink-tailwind
 ```
 
 Tailwind CSS v4 is a peer dependency.
 
 ## Use
 
-Import Tailwind first, then the default Ink Theme entrypoint:
+Import Tailwind first, then the default Ink Tailwind entrypoint:
 
 ```css
 @import 'tailwindcss';
-@import '@hiepknor/ink-theme';
+@import '@hiepknor/ink-tailwind';
 ```
 
 The default entrypoint provides tokens, safe document defaults, and visual
 patterns. To enforce square geometry across the application, also import:
 
 ```css
-@import '@hiepknor/ink-theme/strict.css';
+@import '@hiepknor/ink-tailwind/strict.css';
 ```
 
 The global strict entrypoint uses `!important` and can affect third-party
@@ -33,7 +33,7 @@ widgets. To limit the geometry lock to a controlled subtree, import the scoped
 entrypoint and add `ink-strict` to its root:
 
 ```css
-@import '@hiepknor/ink-theme/scoped-strict.css';
+@import '@hiepknor/ink-tailwind/scoped-strict.css';
 ```
 
 ```html
@@ -49,14 +49,14 @@ baseline; text inputs, textareas, and native selects use a compact inset mark.
 
 Native selects deliberately retain the operating-system popup. Applications
 that require deterministic option rendering should use the custom `Select`
-from `@hiepknor/ink-ui-react`.
+from `@hiepknor/ink-react`.
 
 For more control, import individual layers:
 
 ```css
 @import 'tailwindcss';
-@import '@hiepknor/ink-theme/tokens.css';
-@import '@hiepknor/ink-theme/patterns.css';
+@import '@hiepknor/ink-tailwind/tokens.css';
+@import '@hiepknor/ink-tailwind/patterns.css';
 ```
 
 ## Tokens
@@ -81,7 +81,7 @@ The stable token families are:
 The `ok`, `warn`, and `danger` colors are monochrome compatibility aliases;
 they do not assign status meaning. Prefer application-owned status vocabulary.
 
-Ink Theme provides font stacks, not font files. Load Inter and Geist Mono in
+Ink Tailwind provides font stacks, not font files. Load Inter and Geist Mono in
 the application when those faces are required; otherwise the declared system
 fallbacks are used.
 

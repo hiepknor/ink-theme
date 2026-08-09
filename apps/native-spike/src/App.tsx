@@ -3,7 +3,7 @@ import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
 import { nativeTokens } from '@hiepknor/ink-tokens/react-native';
-import { Alert, Button, Checkbox, IconButton, InkProvider, Progress, RadioGroup, Select, Spinner, Surface, Switch, TextArea, TextField, inkDensities, type InkDensity } from '@hiepknor/ink-ui-native';
+import { Alert, Button, Checkbox, IconButton, InkProvider, Progress, RadioGroup, Select, Spinner, Surface, Switch, TextArea, TextField, inkDensities, type InkDensity } from '@hiepknor/ink-react-native';
 import { DeploymentExample } from './DeploymentExample';
 
 export function App() {

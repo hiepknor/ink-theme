@@ -21,9 +21,9 @@ importers:
       '@hiepknor/ink-tokens':
         specifier: workspace:*
         version: link:../../packages/tokens
-      '@hiepknor/ink-ui-native':
+      '@hiepknor/ink-react-native':
         specifier: workspace:*
-        version: link:../../packages/ui-native
+        version: link:../../packages/react-native
       expo:
         specifier: ~57.0.1
         version: 57.0.11(@babel/core@7.29.7)(@expo/dom-webview@57.0.1)(react-dom@19.2.3(react@19.2.3))(react-native-web@0.21.2(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react-native@0.86.2(@babel/core@7.29.7)(@react-native/jest-preset@0.86.2(@babel/core@7.29.7)(react@19.2.3))(@types/react@19.2.18)(react@19.2.3))(react@19.2.3)(typescript@6.0.3)
@@ -67,9 +67,9 @@ importers:
 
   apps/tauri-example:
     dependencies:
-      '@hiepknor/ink-ui-react':
+      '@hiepknor/ink-react':
         specifier: workspace:*
-        version: link:../../packages/ui-react
+        version: link:../../packages/react
       react:
         specifier: ^19.2.8
         version: 19.2.8
@@ -98,12 +98,12 @@ importers:
 
   apps/workbench:
     dependencies:
-      '@hiepknor/ink-theme':
+      '@hiepknor/ink-tailwind':
         specifier: workspace:*
-        version: link:../../packages/theme
-      '@hiepknor/ink-ui-react':
+        version: link:../../packages/tailwind
+      '@hiepknor/ink-react':
         specifier: workspace:*
-        version: link:../../packages/ui-react
+        version: link:../../packages/react
       react:
         specifier: ^19.2.8
         version: 19.2.8
@@ -136,7 +136,7 @@ importers:
         specifier: ^8.2.0
         version: 8.2.0(@types/node@24.13.3)(jiti@2.7.0)(terser@5.49.2)(yaml@2.9.0)
 
-  packages/theme:
+  packages/tailwind:
     devDependencies:
       '@tailwindcss/vite':
         specifier: ^4.0.0
@@ -150,7 +150,7 @@ importers:
 
   packages/tokens: {}
 
-  packages/ui-native:
+  packages/react-native:
     dependencies:
       '@hiepknor/ink-tokens':
         specifier: workspace:*
@@ -169,7 +169,7 @@ importers:
         specifier: ~6.0.3
         version: 6.0.3
 
-  packages/ui-react:
+  packages/react:
     dependencies:
       '@hiepknor/ink-tokens':
         specifier: workspace:*

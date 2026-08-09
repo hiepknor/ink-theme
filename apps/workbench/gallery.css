@@ -1,6 +1,6 @@
 @import 'tailwindcss';
-@import '@hiepknor/ink-theme';
-@import '@hiepknor/ink-theme/scoped-strict.css';
+@import '@hiepknor/ink-tailwind';
+@import '@hiepknor/ink-tailwind/scoped-strict.css';
 
 @source './index.html';
 @source './main.tsx';

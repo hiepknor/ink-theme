@@ -92,7 +92,7 @@ import {
   type InkDensity,
   type DataTableSort,
   type UploadFileItem,
-} from '@hiepknor/ink-ui-react';
+} from '@hiepknor/ink-react';
 
 const densities: InkDensity[] = ['compact', 'default', 'touch'];
 
@@ -182,7 +182,7 @@ function MediaWorkbench() {
       <ImageSurface src={preview} alt="Abstract service architecture preview" aspectRatio="video" caption={fileName} />
     </div>
     <FileList items={files} onRemove={(item) => setFiles((current) => current.filter((candidate) => candidate.id !== item.id))} onRetry={(item) => setFiles((current) => current.map((candidate) => candidate.id === item.id ? { ...candidate, status: 'uploading', progress: 0, error: undefined } : candidate))} />
-    <Inline align="center"><Avatar name="Hiep Knor" src="/sample-avatar.svg" size="lg" /><Avatar name="Ink Theme" /><Avatar name="Unavailable User" src="/missing-avatar.png" /></Inline>
+    <Inline align="center"><Avatar name="Hiep Knor" src="/sample-avatar.svg" size="lg" /><Avatar name="Ink Tailwind" /><Avatar name="Unavailable User" src="/missing-avatar.png" /></Inline>
     <ImageGallery items={[{ src: '/sample-media.svg', alt: 'Contained architecture artwork', caption: 'Architecture' }, { src: '/sample-media.svg', alt: 'Service topology artwork', caption: 'Topology' }, { src: '/sample-media.svg', alt: 'Deployment artwork', caption: 'Deployment' }]} />
     <div className="max-w-xl"><ImageSurface src={fallbackPreview} alt="Unavailable service artwork" aspectRatio="video" fallback="Preview unavailable" fallbackDescription="The source could not be loaded. Retry or verify the file location." onRetry={() => setFallbackPreview('/sample-media.svg?recovered')} caption="Error fallback" /></div>
   </Stack>;
@@ -351,7 +351,7 @@ function ComponentDocumentation({ doc }: { doc: ComponentDoc }) {
     <Breadcrumb><BreadcrumbLink href="#/overview">Catalog</BreadcrumbLink><BreadcrumbLink href={`#/${categoryRoute(doc.category)}`}>{doc.category}</BreadcrumbLink><span aria-current="page">{doc.name}</span></Breadcrumb>
     <section className="ink-doc-section" aria-labelledby="example-title"><div className="ink-doc-section-heading"><div><p className="gallery-label">Interactive example</p><h3 id="example-title">{doc.name} example</h3></div><Badge>Stable</Badge></div><div className="ink-doc-example"><ComponentExample doc={doc} /></div></section>
     <section className="ink-doc-section" aria-labelledby="states-title"><div className="ink-doc-section-heading"><div><p className="gallery-label">Visual contract</p><h3 id="states-title">Required states</h3></div><span className="text-xs text-fg-3">{doc.states.length} states</span></div><div className="ink-doc-state-grid">{doc.states.map((state) => <div key={state}><span className="ink-tone-outline" aria-hidden="true" /><span>{state}</span></div>)}</div></section>
-    <section className="ink-doc-section" aria-labelledby="api-title"><div className="ink-doc-section-heading"><div><p className="gallery-label">Public API</p><h3 id="api-title">Key props</h3></div><code className="font-mono text-xs">@hiepknor/ink-ui-react</code></div><div className="overflow-x-auto"><table className="ink-doc-prop-table"><thead><tr><th>Prop</th><th>Type</th><th>Default</th><th>Purpose</th></tr></thead><tbody>{doc.props.map((prop) => <tr key={prop.name}><td><code>{prop.name}</code></td><td><code>{prop.type}</code></td><td><code>{prop.defaultValue}</code></td><td>{prop.description}</td></tr>)}</tbody></table></div></section>
+    <section className="ink-doc-section" aria-labelledby="api-title"><div className="ink-doc-section-heading"><div><p className="gallery-label">Public API</p><h3 id="api-title">Key props</h3></div><code className="font-mono text-xs">@hiepknor/ink-react</code></div><div className="overflow-x-auto"><table className="ink-doc-prop-table"><thead><tr><th>Prop</th><th>Type</th><th>Default</th><th>Purpose</th></tr></thead><tbody>{doc.props.map((prop) => <tr key={prop.name}><td><code>{prop.name}</code></td><td><code>{prop.type}</code></td><td><code>{prop.defaultValue}</code></td><td>{prop.description}</td></tr>)}</tbody></table></div></section>
     <section className="ink-doc-section" aria-labelledby="a11y-title"><div className="ink-doc-section-heading"><div><p className="gallery-label">Accessibility</p><h3 id="a11y-title">Usage requirement</h3></div></div><Alert title="Contract">{doc.accessibility}</Alert></section>
     {related.length > 0 && <section className="ink-doc-section" aria-labelledby="related-title"><div className="ink-doc-section-heading"><div><p className="gallery-label">Continue exploring</p><h3 id="related-title">Related components</h3></div></div><div className="ink-doc-related">{related.map((component) => <a href={`#/component/${component.slug}`} key={component.slug}>{component.name}<span aria-hidden="true">→</span></a>)}</div></section>}
   </Stack>;
@@ -431,7 +431,7 @@ function ReactPreview() {
           <nav className="ink-catalog-nav" aria-label="Component catalog">
             {catalogPages.map((page) => <a href={`#/${page.id}`} aria-current={activePage === page.id ? 'page' : undefined} key={page.id}>{page.label}</a>)}
           </nav>
-          <p className="ink-catalog-version">@hiepknor/ink-ui-react</p>
+          <p className="ink-catalog-version">@hiepknor/ink-react</p>
         </aside>
         <main className="ink-catalog-main" id="catalog-content">
           {activeDoc ? <header className="ink-catalog-intro"><div><p className="gallery-label">{activeDoc.category} component</p><h1 className="ink-catalog-title" tabIndex={-1} data-catalog-heading>{activeDoc.name}</h1><p className="ink-catalog-summary">{activeDoc.description}</p></div><div className="ink-catalog-tags"><Badge>Stable</Badge><Badge>{activeDoc.states.length} states</Badge></div></header> : <CatalogHeader page={currentPage} />}

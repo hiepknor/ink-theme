@@ -48,8 +48,8 @@ describe('TextField', () => {
     const user = userEvent.setup();
     render(<TextField label="Name" defaultValue="ink" />);
     const input = screen.getByRole('textbox', { name: 'Name' });
-    await user.type(input, '-theme');
-    expect(input).toHaveValue('ink-theme');
+    await user.type(input, '-tailwind');
+    expect(input).toHaveValue('ink-tailwind');
   });
 });
 

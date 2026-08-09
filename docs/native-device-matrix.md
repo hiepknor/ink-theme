@@ -1,6 +1,6 @@
 # Native device accessibility matrix
 
-This matrix records manual evidence required before `@hiepknor/ink-ui-native`
+This matrix records manual evidence required before `@hiepknor/ink-react-native`
 can be published. Expo export and renderer tests are necessary but do not count
 as device validation.
 

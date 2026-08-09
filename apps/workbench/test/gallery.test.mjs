@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import test from 'node:test';
-import { analyzeComponentRegistry, analyzeModuleExports } from '../../../packages/ui-react/scripts/analyze-contracts.mjs';
+import { analyzeComponentRegistry, analyzeModuleExports } from '../../../packages/react/scripts/analyze-contracts.mjs';
 
 const [gallery, galleryCss, legacyGallery, reactPreview, componentRegistry, reactIndex, feedbackSource, layoutSource, surfaceSource] = await Promise.all([
   readFile(new URL('../index.html', import.meta.url), 'utf8'),
@@ -9,18 +9,18 @@ const [gallery, galleryCss, legacyGallery, reactPreview, componentRegistry, reac
   readFile(new URL('../legacy-gallery.tsx', import.meta.url), 'utf8'),
   readFile(new URL('../main.tsx', import.meta.url), 'utf8'),
   readFile(new URL('../component-registry.ts', import.meta.url), 'utf8'),
-  readFile(new URL('../../../packages/ui-react/src/index.ts', import.meta.url), 'utf8'),
-  readFile(new URL('../../../packages/ui-react/src/feedback.tsx', import.meta.url), 'utf8'),
-  readFile(new URL('../../../packages/ui-react/src/layout.tsx', import.meta.url), 'utf8'),
-  readFile(new URL('../../../packages/ui-react/src/surface.tsx', import.meta.url), 'utf8'),
+  readFile(new URL('../../../packages/react/src/index.ts', import.meta.url), 'utf8'),
+  readFile(new URL('../../../packages/react/src/feedback.tsx', import.meta.url), 'utf8'),
+  readFile(new URL('../../../packages/react/src/layout.tsx', import.meta.url), 'utf8'),
+  readFile(new URL('../../../packages/react/src/surface.tsx', import.meta.url), 'utf8'),
 ]);
 
 const packageJson = JSON.parse(
-  await readFile(new URL('../../../packages/theme/package.json', import.meta.url), 'utf8'),
+  await readFile(new URL('../../../packages/tailwind/package.json', import.meta.url), 'utf8'),
 );
 
 test('gallery displays the package version', () => {
-  assert.ok(legacyGallery.includes(`@hiepknor/ink-theme · ${packageJson.version}`));
+  assert.ok(legacyGallery.includes(`@hiepknor/ink-tailwind · ${packageJson.version}`));
 });
 
 test('workbench exercises the React vertical slice and every density', () => {
@@ -126,8 +126,8 @@ test('gallery previews controls and interactive states', () => {
 });
 
 test('gallery toggles scoped strict mode without importing the global lock', () => {
-  assert.ok(galleryCss.includes("@import '@hiepknor/ink-theme/scoped-strict.css';"));
-  assert.ok(!galleryCss.includes("@import '@hiepknor/ink-theme/strict.css';"));
+  assert.ok(galleryCss.includes("@import '@hiepknor/ink-tailwind/scoped-strict.css';"));
+  assert.ok(!galleryCss.includes("@import '@hiepknor/ink-tailwind/strict.css';"));
   assert.ok(legacyGallery.includes('id="strict-toggle"'));
   assert.ok(legacyGallery.includes('gallery-radius-sample'));
   assert.ok(legacyGallery.includes('useState(true)'));
