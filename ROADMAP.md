@@ -193,11 +193,11 @@ Exit criteria:
 Begin only after the React component contracts have stabilized through real
 consumer use.
 
-- [ ] Create `@hiepknor/ink-ui-native` and an Expo workbench.
-- [ ] Implement native `InkProvider`, `Surface`, `Button`, `TextField`, and `Checkbox`.
-- [ ] Share token values, density names, variants, and state contracts with web.
-- [ ] Keep native focus, event, overlay, and pattern rendering platform-specific.
-- [ ] Test representative iOS and Android configurations.
+- [x] Create `@hiepknor/ink-ui-native` and an Expo workbench.
+- [x] Implement native `InkProvider`, `Surface`, `Button`, `TextField`, and `Checkbox`.
+- [x] Share token values, density names, variants, and state contracts with web.
+- [x] Keep native focus, event, overlay, and pattern rendering platform-specific.
+- [x] Test representative iOS and Android configurations.
 
 Exit criteria:
 

@@ -55,13 +55,13 @@ The web workbench uses a single React root for both catalog routes and the full
 native-compatibility matrix; imperative DOM ownership must not run beside the
 React renderer.
 
-The private Expo native spike validates `InkProvider`, `Button`, and
-`TextField` against Android and iOS Metro bundles before a public native package
-exists. The spike derives density names from generated native tokens and keeps
-React Native views, events, accessibility props, and styles platform-specific.
-The current overlap is too small to justify a shared component-contract
-package; extract one only when both renderers would otherwise duplicate
-substantial typed contracts.
+The Expo native workbench validates the public `InkProvider`, `Surface`,
+`Button`, `TextField`, and `Checkbox` slice against Android and iOS Metro
+bundles. `@hiepknor/ink-ui-native` derives density names from generated native
+tokens and keeps React Native views, events, accessibility props, and styles
+platform-specific. The current overlap is still too small to justify a shared
+component-contract package; extract one only when both renderers would
+otherwise duplicate substantial typed contracts.
 
 ## Platform mapping
 

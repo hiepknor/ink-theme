@@ -2,9 +2,11 @@
 
 ## Decision
 
-Ink can support a React Native renderer without sharing DOM implementation or
-CSS. The private Expo spike proves the boundary with `InkProvider`, `Button`,
-and `TextField`; it is not a published package and carries no stability promise.
+Ink supports a React Native renderer without sharing DOM implementation or
+CSS. The original private Expo spike proved the boundary with `InkProvider`,
+`Button`, and `TextField`. Milestone 7 promoted that implementation into the
+versioned `@hiepknor/ink-ui-native` package and retained Expo as its consumer
+workbench.
 
 ## Shared contract
 
@@ -22,14 +24,15 @@ and `TextField`; it is not a published package and carries no stability promise.
 
 ## Extraction result
 
-Do not create a shared component-contract package yet. The shared surface is
-small, and density already derives from `@hiepknor/ink-tokens/react-native`.
-Duplicating two short variant unions is less costly than coupling both
-renderers prematurely. Revisit extraction when the first five native
-components reveal repeated, non-platform prop contracts.
+The native renderer is now its own package. Do not create a renderer-neutral
+component-contract package yet: shared values already come from
+`@hiepknor/ink-tokens/react-native`, while refs, events, focus, style props, and
+accessibility props remain platform-owned. Revisit contract extraction only
+when maintained web and native APIs duplicate substantial non-platform types.
 
 ## Gate
 
-CI runs with Node 22.13, type-checks the spike, enforces that native source does
-not import DOM/CSS/Radix/web packages, and exports production Metro bundles for
-both Android and iOS.
+CI runs with Node 22.13, type-checks and pack-checks the native package, enforces
+that native source does not import DOM/CSS/Radix/web packages, tests touch and
+accessibility contracts, and exports production Metro bundles for Android and
+iOS from the Expo workbench.

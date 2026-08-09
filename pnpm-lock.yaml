@@ -18,6 +18,9 @@ importers:
       '@hiepknor/ink-tokens':
         specifier: workspace:*
         version: link:../../packages/tokens
+      '@hiepknor/ink-ui-native':
+        specifier: workspace:*
+        version: link:../../packages/ui-native
       expo:
         specifier: ~57.0.1
         version: 57.0.11(@babel/core@7.29.7)(@expo/dom-webview@57.0.1)(react-dom@19.2.3(react@19.2.3))(react-native-web@0.21.2(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react-native@0.86.2(@babel/core@7.29.7)(@types/react@19.2.18)(react@19.2.3))(react@19.2.3)(typescript@6.0.3)
@@ -131,6 +134,25 @@ importers:
         version: 8.2.0(@types/node@24.13.3)(jiti@2.7.0)(terser@5.49.2)(yaml@2.9.0)
 
   packages/tokens: {}
+
+  packages/ui-native:
+    dependencies:
+      '@hiepknor/ink-tokens':
+        specifier: workspace:*
+        version: link:../tokens
+    devDependencies:
+      '@types/react':
+        specifier: ^19.2.18
+        version: 19.2.18
+      react:
+        specifier: 19.2.3
+        version: 19.2.3
+      react-native:
+        specifier: 0.86.2
+        version: 0.86.2(@babel/core@7.29.7)(@types/react@19.2.18)(react@19.2.3)
+      typescript:
+        specifier: ~6.0.3
+        version: 6.0.3
 
   packages/ui-react:
     dependencies:

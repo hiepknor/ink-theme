@@ -12,7 +12,8 @@ verification. It contains:
 - Chromium visual regression against reviewed Linux baselines.
 - Tauri frontend build and locked Rust compilation on Linux.
 - RustSec audit, cargo-deny policy, and downstream patch integrity/expiry checks.
-- Expo Android and iOS bundle exports for the native architecture boundary.
+- Native package type, boundary, accessibility/touch-contract and pack checks,
+  followed by Expo Android and iOS consumer bundle exports.
 - One aggregate required status named `CI Gate`.
 
 Branch protection should require only `CI Gate`. Matrix jobs may evolve without
