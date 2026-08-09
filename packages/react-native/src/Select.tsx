@@ -3,6 +3,7 @@ import { AccessibilityInfo, findNodeHandle, Modal, Pressable, ScrollView, StyleS
 import { nativeTokens } from '@hiepknor/ink-tokens/react-native';
 import { useInkDensity } from './InkProvider';
 import type { InkDensity } from './contracts';
+import { useReducedMotion } from './useReducedMotion';
 
 export interface SelectOption { disabled?: boolean; label: string; value: string; }
 export interface SelectProps {
@@ -13,6 +14,7 @@ export function Select({ density: densityOverride, description, disabled = false
   const [internalOpen, setInternalOpen] = useState(false);
   const triggerRef = useRef<View>(null);
   const density = useInkDensity(densityOverride);
+  const reducedMotion = useReducedMotion();
   const open = openProp ?? internalOpen;
   const selected = options.find((option) => option.value === value);
   const setOpen = (next: boolean) => { if (openProp === undefined) setInternalOpen(next); onOpenChange?.(next); };
@@ -22,7 +24,7 @@ export function Select({ density: densityOverride, description, disabled = false
     style={({ pressed }) => [styles.trigger, { minHeight: nativeTokens.controlHeight[density] }, pressed && !disabled && styles.pressed, disabled && styles.disabled, Boolean(error) && styles.invalid]}>
     <Text style={[styles.value, !selected && styles.placeholder]}>{selected?.label ?? placeholder}</Text><View accessibilityElementsHidden importantForAccessibility="no-hide-descendants" style={[styles.chevron, open && styles.chevronOpen]} />
   </Pressable>{description && !error ? <Text style={styles.description}>{description}</Text> : null}{error ? <Text accessibilityLiveRegion="polite" style={styles.error}>{error}</Text> : null}
-  <Modal animationType="none" onDismiss={restoreTriggerFocus} onRequestClose={() => setOpen(false)} transparent visible={open}><View style={styles.backdrop}><Pressable accessibilityLabel="Close options" accessibilityRole="button" onPress={() => setOpen(false)} style={StyleSheet.absoluteFill} /><View accessibilityLabel={`${label} options`} accessibilityRole="menu" accessibilityViewIsModal style={styles.sheet}><View style={styles.sheetHeader}><Text style={styles.sheetTitle}>{label}</Text><Text style={styles.sheetHint}>Choose one option</Text></View><ScrollView>{options.map((option) => {
+  <Modal animationType={reducedMotion ? 'none' : 'fade'} onDismiss={restoreTriggerFocus} onRequestClose={() => setOpen(false)} transparent visible={open}><View style={styles.backdrop}><Pressable accessibilityLabel="Close options" accessibilityRole="button" onPress={() => setOpen(false)} style={StyleSheet.absoluteFill} /><View accessibilityLabel={`${label} options`} accessibilityRole="menu" accessibilityViewIsModal style={styles.sheet}><View style={styles.sheetHeader}><Text style={styles.sheetTitle}>{label}</Text><Text style={styles.sheetHint}>Choose one option</Text></View><ScrollView>{options.map((option) => {
     const checked = option.value === value;
     return <Pressable accessibilityLabel={option.label} accessibilityRole="menuitem" accessibilityState={{ checked, disabled: Boolean(option.disabled) }} disabled={option.disabled} key={option.value} onPress={() => choose(option.value)}
       style={({ pressed }) => [styles.option, { minHeight: nativeTokens.controlHeight[density] }, checked && styles.optionSelected, pressed && styles.pressed, option.disabled && styles.disabled]}><Text allowFontScaling={false} style={styles.optionMark}>{checked ? '✓' : ''}</Text><Text style={styles.optionLabel}>{option.label}</Text></Pressable>;

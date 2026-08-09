@@ -3,7 +3,7 @@ import { readFile } from 'node:fs/promises';
 import test from 'node:test';
 import { nativeTokens } from '../../tokens/generated/react-native.js';
 
-const [contracts, button, checkbox, field, surface, iconButton, textArea, radioGroup, switchControl, select, alert, spinner, progress, index] = await Promise.all([
+const [contracts, button, checkbox, field, surface, iconButton, textArea, radioGroup, switchControl, select, alert, spinner, progress, index, reducedMotion] = await Promise.all([
   readFile(new URL('../src/contracts.ts', import.meta.url), 'utf8'),
   readFile(new URL('../src/Button.tsx', import.meta.url), 'utf8'),
   readFile(new URL('../src/Checkbox.tsx', import.meta.url), 'utf8'),
@@ -18,6 +18,7 @@ const [contracts, button, checkbox, field, surface, iconButton, textArea, radioG
   readFile(new URL('../src/Spinner.tsx', import.meta.url), 'utf8'),
   readFile(new URL('../src/Progress.tsx', import.meta.url), 'utf8'),
   readFile(new URL('../src/index.ts', import.meta.url), 'utf8'),
+  readFile(new URL('../src/useReducedMotion.ts', import.meta.url), 'utf8'),
 ]);
 
 test('density contract comes from generated native tokens', () => {
@@ -56,15 +57,19 @@ test('extended controls own native roles, state, and platform rendering', () => 
   assert.match(switchControl, /accessibilityRole="switch"/);
   assert.match(select, /<Modal/);
   assert.match(select, /expanded: open/);
-  assert.match(select, /animationType="none"/);
+  assert.match(select, /animationType=\{reducedMotion \? 'none' : 'fade'\}/);
   assert.match(select, /accessibilityViewIsModal/);
   assert.match(select, /onDismiss=\{restoreTriggerFocus\}/);
   assert.match(select, /<View accessibilityElementsHidden importantForAccessibility="no-hide-descendants" style=\{\[styles\.chevron, open && styles\.chevronOpen\]\} \/>/);
   assert.match(select, /borderBottomWidth: 2, borderRightColor:/);
   assert.doesNotMatch(select, />⌄<|fontSize: nativeTokens\.fontSize\.lg, transform: \[\{ rotate: '0deg' \}\]/u);
   assert.match(iconButton, /allowFontScaling=\{false\}/);
-  assert.doesNotMatch(button, /translateX|translateY/u);
-  assert.doesNotMatch(iconButton, /translateX|translateY/u);
+  assert.match(button, /boxShadow: '2px 2px 0 #111111'/);
+  assert.match(button, /boxShadow: '3px 3px 0 #111111'/);
+  assert.match(button, /translateX: 2.*translateY: 2/u);
+  assert.match(button, /loading && styles\.loadingLabel/);
+  assert.match(button, /reducedMotion/);
+  assert.match(iconButton, /translateX: 1.*translateY: 1/u);
   assert.doesNotMatch(select, /Radix|document|window/u);
 });
 
@@ -77,6 +82,9 @@ test('feedback exposes live-region and bounded progress contracts', () => {
   assert.match(alert, /accessibilityLiveRegion=\{liveRegion\}/);
   assert.match(alert, /live === 'assertive' \? 'alert'/);
   assert.match(spinner, /accessibilityRole="progressbar"/);
+  assert.match(spinner, /reducedMotion/);
+  assert.match(reducedMotion, /isReduceMotionEnabled/);
+  assert.match(reducedMotion, /reduceMotionChanged/);
   assert.match(progress, /Math\.min\(safeMax, Math\.max\(0, value\)\)/);
   assert.match(progress, /accessibilityValue=\{\{ min: 0, max: safeMax, now: bounded, text: valueText \}\}/);
 });

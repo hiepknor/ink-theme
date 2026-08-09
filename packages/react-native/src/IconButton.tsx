@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
   base: { alignItems: 'center', borderColor: nativeTokens.colors.borderStrong, borderWidth: nativeTokens.borderWidth.default, justifyContent: 'center' },
   glyph: { color: nativeTokens.colors.foreground, fontSize: nativeTokens.fontSize.lg, fontWeight: nativeTokens.fontWeight.bold },
   primaryGlyph: { color: nativeTokens.colors.actionInk },
-  pressed: { opacity: 0.72 },
-  disabled: { opacity: 0.45 },
+  pressed: { boxShadow: [], transform: [{ translateX: 1 }, { translateY: 1 }] },
+  disabled: { opacity: 0.55 },
 });
-const variantStyles = StyleSheet.create({ primary: { backgroundColor: nativeTokens.colors.action }, secondary: { backgroundColor: nativeTokens.colors.surface }, quiet: { backgroundColor: 'transparent', borderColor: 'transparent' } });
+const variantStyles = StyleSheet.create({ primary: { backgroundColor: nativeTokens.colors.action, boxShadow: '2px 2px 0 #111111' }, secondary: { backgroundColor: nativeTokens.colors.surface }, quiet: { backgroundColor: 'transparent', borderColor: 'transparent' } });
