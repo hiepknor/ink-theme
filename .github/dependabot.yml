@@ -8,6 +8,13 @@ updates:
     groups:
       development-dependencies:
         dependency-type: development
+        update-types: [minor, patch]
+    ignore:
+      # This exact version carries a checked-in parser patch and regression
+      # test. Major releases remain blocked until the advisory exception and
+      # downstream patch are retired together.
+      - dependency-name: image-size
+        update-types: ['version-update:semver-major']
     open-pull-requests-limit: 5
 
   - package-ecosystem: github-actions
@@ -17,6 +24,7 @@ updates:
     groups:
       github-actions:
         patterns: ['*']
+        update-types: [minor, patch]
     open-pull-requests-limit: 3
 
   - package-ecosystem: cargo
