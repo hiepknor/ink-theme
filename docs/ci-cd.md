@@ -75,6 +75,12 @@ the `2.0.2` parser still fails the malicious ICNS regression and can exhaust
 runner memory. Removing the ignore, patch, test, and advisory exception is one
 reviewed security transition, never an automated version bump.
 
+Expo's Xcode tooling declares the obsolete `uuid ^7` range. The workspace
+resolves that transitive dependency to `uuid 11.1.1`, whose CommonJS entrypoint
+retains the API consumed by Xcode while including the buffer-bounds fix for
+GHSA-w5hq-g745-h8pq. Native checks and Expo export guard this override until
+Expo removes the legacy range.
+
 The Rust security job intentionally uses cargo-deny as its only advisory
 engine. The former RustSec action duplicated the same database scan and tried
 to create an additional GitHub Check Run during `push` events without the

@@ -8,5 +8,9 @@ auditConfig:
 
 onlyBuiltDependencies:
   - esbuild
+overrides:
+  # xcode 3 accepts uuid ^7, but that range is pinned below the security fix.
+  # uuid 11 retains the CommonJS API used by xcode and fixes GHSA-w5hq-g745-h8pq.
+  uuid: 11.1.1
 patchedDependencies:
   image-size@1.2.1: patches/image-size@1.2.1.patch
