@@ -1,4 +1,4 @@
-# Ink Design System roadmap
+# Ink UI roadmap
 
 Ink is evolving from a Tailwind CSS theme into a cross-platform design system
 for web, desktop webviews, mobile web, and native mobile applications. Design

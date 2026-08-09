@@ -106,7 +106,7 @@ The registry check makes workflow retries safe after a successful npm publish.
 The npm package is configured with GitHub Actions as its trusted publisher:
 
 ```text
-Repository: hiepknor/ink-theme
+Repository: hiepknor/ink-ui
 Workflow: release.yml
 Environment: empty
 ```
