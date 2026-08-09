@@ -13,7 +13,8 @@ verification. It contains:
 - Tauri frontend build and locked Rust compilation on Linux.
 - RustSec audit, cargo-deny policy, and downstream patch integrity/expiry checks.
 - Native package type, boundary, accessibility/touch-contract and pack checks,
-  followed by Expo Android and iOS consumer bundle exports.
+  renderer-level interaction tests, then Expo Android and iOS consumer bundle
+  exports.
 - One aggregate required status named `CI Gate`.
 
 Branch protection should require only `CI Gate`. Matrix jobs may evolve without

@@ -204,6 +204,24 @@ Exit criteria:
 - Web and native implementations share contracts without sharing DOM or CSS.
 - Touch targets, screen-reader labels, and platform interactions are verified.
 
+## Milestone 8 — Native production validation
+
+Grow the native renderer only through observable consumer behavior. Keep
+platform APIs, navigation, and domain workflows in applications.
+
+- [x] Turn the Expo consumer into an interactive component catalog with live density and state controls.
+- [x] Add renderer-level interaction tests for press, disabled/loading, text input, validation, controlled state, and touch density.
+- [ ] Validate font scaling, reduced motion, screen readers, and device keyboard behavior on representative Android and iOS devices.
+- [ ] Add native `IconButton`, `TextArea`, `RadioGroup`, `Switch`, and `Select` only after interaction contracts are documented.
+- [ ] Add native `Alert`, `Spinner`, and `Progress` feedback primitives.
+- [ ] Prove the package in a product-shaped example before enabling publication.
+
+Exit criteria:
+
+- Automated tests exercise public behavior rather than implementation text.
+- A maintained device matrix records Android and iOS accessibility results.
+- Publication remains blocked until a product-shaped consumer validates the API.
+
 ## Later, when demanded by consumers
 
 - SwiftUI token output.

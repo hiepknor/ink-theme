@@ -36,3 +36,9 @@ CI runs with Node 22.13, type-checks and pack-checks the native package, enforce
 that native source does not import DOM/CSS/Radix/web packages, tests touch and
 accessibility contracts, and exports production Metro bundles for Android and
 iOS from the Expo workbench.
+
+The workbench also runs React Native Testing Library against the public package.
+These tests activate presses and text changes, verify controlled checkbox and
+density state, ensure disabled/loading actions remain blocked, and assert the
+touch-density target through the rendered native tree. Source analysis remains
+only for package and renderer boundaries, not as a substitute for behavior.
