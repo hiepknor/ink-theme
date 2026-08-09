@@ -1,6 +1,11 @@
 export { Button, type ButtonProps } from './Button';
 export { Checkbox, type CheckboxProps } from './Checkbox';
+export { IconButton, type IconButtonProps } from './IconButton';
 export { InkProvider, type InkProviderProps, useInkDensity } from './InkProvider';
+export { RadioGroup, type RadioGroupProps, type RadioOption } from './RadioGroup';
+export { Select, type SelectProps, type SelectOption } from './Select';
 export { Surface, type SurfaceProps } from './Surface';
+export { Switch, type SwitchProps } from './Switch';
+export { TextArea, type TextAreaProps } from './TextArea';
 export { TextField, type TextFieldProps } from './TextField';
 export { buttonVariants, inkDensities, resolveDensity, surfaceTones, type ButtonVariant, type InkDensity, type SurfaceTone } from './contracts';

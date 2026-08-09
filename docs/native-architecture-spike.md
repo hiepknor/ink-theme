@@ -42,3 +42,15 @@ These tests activate presses and text changes, verify controlled checkbox and
 density state, ensure disabled/loading actions remain blocked, and assert the
 touch-density target through the rendered native tree. Source analysis remains
 only for package and renderer boundaries, not as a substitute for behavior.
+
+## Extended interaction contracts
+
+- `IconButton` requires a text accessibility label and exposes a square target
+  derived from the active density.
+- `TextArea` uses native multiline input semantics and the same description,
+  disabled, and validation outcomes as `TextField`.
+- `RadioGroup` and `Switch` are controlled and report native checked/disabled
+  state; applications retain form and persistence ownership.
+- `Select` is a controlled single-value choice surface rendered as a native
+  modal sheet. It does not reuse the web Radix implementation or own remote
+  search, navigation, or platform picker policy.

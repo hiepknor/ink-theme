@@ -3,11 +3,13 @@ import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
 import { nativeTokens } from '@hiepknor/ink-tokens/react-native';
-import { Button, Checkbox, InkProvider, Surface, TextField, inkDensities, type InkDensity } from '@hiepknor/ink-ui-native';
+import { Button, Checkbox, IconButton, InkProvider, RadioGroup, Select, Surface, Switch, TextArea, TextField, inkDensities, type InkDensity } from '@hiepknor/ink-ui-native';
 
 export function App() {
   const [density, setDensity] = useState<InkDensity>('touch');
   const [tracing, setTracing] = useState(true);
+  const [region, setRegion] = useState('singapore');
+  const [replica, setReplica] = useState('primary');
 
   return <SafeAreaProvider initialMetrics={initialWindowMetrics}><InkProvider density={density}>
     <SafeAreaView edges={['top', 'right', 'bottom', 'left']} style={styles.safeArea}>
@@ -56,6 +58,16 @@ export function App() {
           <Checkbox checked={false} disabled label="Unavailable option" />
         </Surface>
 
+        <Surface tone="recessed" style={styles.surface}>
+          <SpecimenHeader title="Extended forms" detail="Native interaction contracts" />
+          <View style={styles.actions}><IconButton label="Add service">＋</IconButton><IconButton label="Refresh services" variant="quiet">↻</IconButton></View>
+          <TextArea label="Description" defaultValue="Routes regional traffic." description="Native multiline input." />
+          <RadioGroup label="Replica role" options={[{ label: 'Primary', value: 'primary' }, { label: 'Replica', value: 'replica' }]} value={replica} onValueChange={setReplica} />
+          <Switch checked={tracing} label="Continuous tracing" onCheckedChange={setTracing} />
+          <Select label="Deployment region" description="Single-value native modal sheet." options={regions} value={region} onValueChange={setRegion} />
+          <Text accessibilityLiveRegion="polite" style={styles.stateCopy}>Deploying to {region} as {replica}.</Text>
+        </Surface>
+
         <Surface padding={false} tone="elevated">
           <View style={styles.toneRow}><Text style={styles.toneTitle}>Surface</Text><Text style={styles.stateCopy}>default · elevated · recessed</Text></View>
         </Surface>
@@ -63,6 +75,12 @@ export function App() {
     </SafeAreaView>
   </InkProvider></SafeAreaProvider>;
 }
+
+const regions = [
+  { label: 'Singapore', value: 'singapore' },
+  { label: 'Tokyo', value: 'tokyo' },
+  { disabled: true, label: 'Frankfurt — unavailable', value: 'frankfurt' },
+];
 
 const initialWindowMetrics = {
   frame: { height: 0, width: 0, x: 0, y: 0 },

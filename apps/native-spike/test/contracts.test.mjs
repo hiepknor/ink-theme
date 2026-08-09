@@ -20,8 +20,8 @@ test('Expo workbench consumes the public native package', () => {
   assert.match(manifest, /"@hiepknor\/ink-ui-native": "workspace:\*"/);
 });
 
-test('Expo consumer exercises the five-component vertical slice', () => {
-  for (const component of ['InkProvider', 'Surface', 'Button', 'TextField', 'Checkbox']) {
+test('Expo consumer exercises the native component catalog', () => {
+  for (const component of ['InkProvider', 'Surface', 'Button', 'TextField', 'Checkbox', 'IconButton', 'TextArea', 'RadioGroup', 'Switch', 'Select']) {
     assert.match(app, new RegExp(`<${component}`));
   }
 });
