@@ -21,8 +21,8 @@ export function Alert({ children, live = 'off', style, title, tone = 'neutral', 
 
 const styles = StyleSheet.create({
   base: { alignItems: 'stretch', backgroundColor: nativeTokens.colors.surface, borderColor: nativeTokens.colors.borderStrong, borderWidth: nativeTokens.borderWidth.default, flexDirection: 'row' },
-  mark: { backgroundColor: nativeTokens.colors.foreground, width: 6 }, copy: { flex: 1, gap: nativeTokens.spacing.xs, padding: nativeTokens.spacing.md },
-  title: { color: nativeTokens.colors.foreground, fontSize: nativeTokens.fontSize.md, fontWeight: nativeTokens.fontWeight.bold }, body: { color: nativeTokens.colors.foregroundMuted, fontSize: nativeTokens.fontSize.sm, lineHeight: 21 },
+  mark: { backgroundColor: nativeTokens.colors.foreground, width: 4 }, copy: { flex: 1, gap: nativeTokens.spacing.xs, padding: nativeTokens.spacing.md },
+  title: { color: nativeTokens.colors.foreground, fontSize: nativeTokens.fontSize.sm, fontWeight: nativeTokens.fontWeight.medium }, body: { color: nativeTokens.colors.foregroundMuted, fontSize: nativeTokens.fontSize.sm, lineHeight: 21 },
 });
 const toneStyles = StyleSheet.create({ neutral: {}, ok: {}, warning: { borderWidth: nativeTokens.borderWidth.strong }, danger: { borderWidth: nativeTokens.borderWidth.strong } });
-const markStyles = StyleSheet.create({ neutral: {}, ok: { width: 10 }, warning: { width: 14 }, danger: { width: 18 } });
+const markStyles = StyleSheet.create({ neutral: {}, ok: {}, warning: {}, danger: { width: 6 } });

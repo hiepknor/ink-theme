@@ -4,8 +4,9 @@ import test from 'node:test';
 import { imageSize } from 'image-size';
 import { nativeTokens } from '../../../packages/tokens/generated/react-native.js';
 
-const [app, manifest] = await Promise.all([
+const [app, deployment, manifest] = await Promise.all([
   readFile(new URL('../src/App.tsx', import.meta.url), 'utf8'),
+  readFile(new URL('../src/DeploymentExample.tsx', import.meta.url), 'utf8'),
   readFile(new URL('../package.json', import.meta.url), 'utf8'),
 ]);
 
@@ -24,6 +25,12 @@ test('Expo consumer exercises the native component catalog', () => {
   for (const component of ['InkProvider', 'Surface', 'Button', 'TextField', 'Checkbox', 'IconButton', 'TextArea', 'RadioGroup', 'Switch', 'Select', 'Alert', 'Spinner', 'Progress']) {
     assert.match(app, new RegExp(`<${component}`));
   }
+  assert.match(app, /automaticallyAdjustKeyboardInsets/);
+  assert.match(app, /keyboardDismissMode="interactive"/);
+  assert.match(app, /keyboardShouldPersistTaps="handled"/);
+  assert.match(deployment, /returnKeyType="next"/);
+  assert.match(deployment, /submitBehavior="submit"/);
+  assert.match(deployment, /descriptionRef\.current\?\.focus\(\)/);
 });
 
 test('patched Metro image parser rejects a zero-length ICNS entry', () => {

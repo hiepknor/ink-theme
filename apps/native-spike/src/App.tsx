@@ -16,7 +16,7 @@ export function App() {
   return <SafeAreaProvider initialMetrics={initialWindowMetrics}><InkProvider density={density}>
     <SafeAreaView edges={['top', 'right', 'bottom', 'left']} style={styles.safeArea}>
       <StatusBar style="dark" />
-      <ScrollView contentContainerStyle={styles.page}>
+      <ScrollView automaticallyAdjustKeyboardInsets contentContainerStyle={styles.page} keyboardDismissMode="interactive" keyboardShouldPersistTaps="handled">
         <View style={styles.header}>
           <Text style={styles.eyebrow}>INK NATIVE WORKBENCH · 0.1.0</Text>
           <Text style={styles.title}>Component catalog</Text>
@@ -115,10 +115,10 @@ const styles = StyleSheet.create({
   page: { gap: nativeTokens.spacing.lg, padding: nativeTokens.spacing.lg, paddingBottom: nativeTokens.spacing['2xl'] },
   header: { borderBottomColor: nativeTokens.colors.borderStrong, borderBottomWidth: nativeTokens.borderWidth.strong, gap: nativeTokens.spacing.sm, paddingBottom: nativeTokens.spacing.lg },
   eyebrow: { color: nativeTokens.colors.foregroundSubtle, fontSize: 11, fontWeight: nativeTokens.fontWeight.bold, letterSpacing: 1.2 },
-  title: { color: nativeTokens.colors.foreground, fontSize: 28, fontWeight: nativeTokens.fontWeight.bold },
+  title: { color: nativeTokens.colors.foreground, fontSize: nativeTokens.fontSize.lg, fontWeight: nativeTokens.fontWeight.bold },
   summary: { color: nativeTokens.colors.foregroundMuted, fontSize: nativeTokens.fontSize.sm, lineHeight: 21 },
   surface: { gap: nativeTokens.spacing.lg },
-  specimenHeader: { alignItems: 'baseline', borderBottomColor: nativeTokens.colors.border, borderBottomWidth: nativeTokens.borderWidth.default, flexDirection: 'row', justifyContent: 'space-between', paddingBottom: nativeTokens.spacing.sm },
+  specimenHeader: { alignItems: 'baseline', borderBottomColor: nativeTokens.colors.border, borderBottomWidth: nativeTokens.borderWidth.default, flexDirection: 'row', flexWrap: 'wrap', gap: nativeTokens.spacing.xs, justifyContent: 'space-between', paddingBottom: nativeTokens.spacing.sm },
   sectionTitle: { color: nativeTokens.colors.foreground, fontSize: nativeTokens.fontSize.lg, fontWeight: nativeTokens.fontWeight.bold },
   detail: { color: nativeTokens.colors.foregroundSubtle, fontSize: nativeTokens.fontSize.sm },
   actions: { flexDirection: 'row', flexWrap: 'wrap', gap: nativeTokens.spacing.sm },
