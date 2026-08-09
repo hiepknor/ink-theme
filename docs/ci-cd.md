@@ -89,22 +89,26 @@ required permission, making healthy `main` builds appear failed.
 ## Release gate
 
 Pushing an annotated package tag starts the `Release` workflow. Tailwind uses
-`v<version>` (for example `v0.3.0`); tokens uses `tokens-v<version>` (for
-example `tokens-v0.1.0`). The workflow:
+`v<version>` (for example `v0.3.0`), tokens uses `tokens-v<version>` (for
+example `tokens-v0.1.0`), and React uses `react-v<version>` (for example
+`react-v0.1.0`). The workflow:
 
 1. Verifies the package on Node 20 and 24.
 2. Resolves the package from the tag and requires its manifest version to match.
 3. Requires a matching section in that package's `CHANGELOG.md`.
 4. Requires the tagged commit to be contained in `main`.
 5. Checks whether the immutable npm version already exists.
-6. Publishes a missing version with npm provenance.
-7. Creates a GitHub Release if one does not already exist.
+6. Packs the selected workspace with pnpm so local workspace dependencies are
+   converted to registry-compatible versions.
+7. Publishes the resulting tarball with npm trusted publishing and provenance.
+8. Creates a GitHub Release if one does not already exist.
 
 The registry check makes workflow retries safe after a successful npm publish.
 
 ## npm trusted publishing
 
-Each public npm package is configured with GitHub Actions as its trusted publisher:
+Before its first release tag is pushed, each public npm package must be
+configured with GitHub Actions as its trusted publisher:
 
 ```text
 Repository: hiepknor/ink-ui

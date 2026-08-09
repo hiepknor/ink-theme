@@ -4,7 +4,9 @@ Accessible Ink components for browsers, PWAs, Electron, and Tauri webviews.
 Components ship their own CSS and do not require Tailwind configuration in the
 consumer application.
 
-The package remains private until the multi-package release gate is available.
+The package is published independently from the token and Tailwind packages.
+Release tags use the `react-v<version>` format and pass the repository's full
+verification and package-content gates before publication.
 
 ## Usage
 
