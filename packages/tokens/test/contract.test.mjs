@@ -22,6 +22,8 @@ test('generated CSS exposes namespaced variables and compatibility theme variabl
 
 test('package exports include typed web and React Native entrypoints', async () => {
   const packageJson = JSON.parse(await read('package.json'));
+  assert.equal(packageJson.private, undefined);
+  assert.equal(packageJson.publishConfig.access, 'public');
   assert.equal(packageJson.exports['.'].types, './generated/tokens.ts');
   assert.equal(packageJson.exports['./react-native'].types, './generated/react-native.ts');
   assert.equal(packageJson.exports['./tokens.css'], './generated/tokens.css');

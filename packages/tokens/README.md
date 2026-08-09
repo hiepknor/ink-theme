@@ -4,8 +4,8 @@ The single editable source of Ink's primitive and semantic visual values. The
 generator produces browser, Tailwind, JavaScript, TypeScript, JSON, and React
 Native representations from `src/tokens.json`.
 
-The workspace remains private until the multi-package release gate is ready;
-workspace consumers can use its final package exports now.
+The package is published independently from the platform adapters and component
+implementations.
 
 ## Usage
 

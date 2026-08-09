@@ -88,12 +88,13 @@ required permission, making healthy `main` builds appear failed.
 
 ## Release gate
 
-Pushing an annotated semantic tag such as `v0.3.0` starts the `Release`
-workflow. It:
+Pushing an annotated package tag starts the `Release` workflow. Tailwind uses
+`v<version>` (for example `v0.3.0`); tokens uses `tokens-v<version>` (for
+example `tokens-v0.1.0`). The workflow:
 
 1. Verifies the package on Node 20 and 24.
-2. Requires the tag to match `packages/tailwind/package.json`.
-3. Requires a matching section in `packages/tailwind/CHANGELOG.md`.
+2. Resolves the package from the tag and requires its manifest version to match.
+3. Requires a matching section in that package's `CHANGELOG.md`.
 4. Requires the tagged commit to be contained in `main`.
 5. Checks whether the immutable npm version already exists.
 6. Publishes a missing version with npm provenance.
@@ -103,7 +104,7 @@ The registry check makes workflow retries safe after a successful npm publish.
 
 ## npm trusted publishing
 
-The npm package is configured with GitHub Actions as its trusted publisher:
+Each public npm package is configured with GitHub Actions as its trusted publisher:
 
 ```text
 Repository: hiepknor/ink-ui
@@ -121,7 +122,7 @@ OIDC provenance. Release jobs intentionally do not restore dependency caches.
 1. Update version, changelog, API, and migration documentation in a pull request.
 2. Merge only after `CI Gate` succeeds.
 3. Pull the protected `main` branch locally.
-4. Create and push an annotated `v<version>` tag on the merge commit.
+4. Create and push the package's annotated release tag on the merge commit.
 5. Monitor the `Release` workflow through npm publish and GitHub Release creation.
 
 After `@hiepknor/ink-tailwind@0.3.0` is available, deprecate the superseded
