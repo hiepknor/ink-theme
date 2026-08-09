@@ -1,0 +1,20 @@
+diff --git a/dist/types/icns.js b/dist/types/icns.js
+index f2bfafef3723cb423b110304815e56e3f97f81e0..c95c9857caacf0e0229a20c57c05c93e7732ec24 100644
+--- a/dist/types/icns.js
++++ b/dist/types/icns.js
+@@ -65,9 +65,14 @@ const ICON_TYPE_SIZE = {
+ };
+ function readImageHeader(input, imageOffset) {
+     const imageLengthOffset = imageOffset + ENTRY_LENGTH_OFFSET;
++    if (imageOffset + SIZE_HEADER > input.length)
++        throw new TypeError('Invalid ICNS entry header');
++    const imageLength = (0, utils_1.readUInt32BE)(input, imageLengthOffset);
++    if (imageLength < SIZE_HEADER)
++        throw new TypeError('Invalid ICNS entry length');
+     return [
+         (0, utils_1.toUTF8String)(input, imageOffset, imageLengthOffset),
+-        (0, utils_1.readUInt32BE)(input, imageLengthOffset),
++        imageLength,
+     ];
+ }
+ function getImageSize(type) {

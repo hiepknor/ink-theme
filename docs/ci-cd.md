@@ -12,6 +12,7 @@ verification. It contains:
 - Chromium visual regression against reviewed Linux baselines.
 - Tauri frontend build and locked Rust compilation on Linux.
 - RustSec audit, cargo-deny policy, and downstream patch integrity/expiry checks.
+- Expo Android and iOS bundle exports for the native architecture boundary.
 - One aggregate required status named `CI Gate`.
 
 Branch protection should require only `CI Gate`. Matrix jobs may evolve without
@@ -48,6 +49,12 @@ RUSTSEC-2024-0429. The exception is valid only while the checked-in source hash,
 Cargo patch, lockfile shape, advisory record, and review deadline all match. CI
 fails if the graph moves away from that version without removing the exception,
 making the transition back to a patched upstream release mandatory.
+
+Expo's Metro graph currently resolves `image-size 1.2.1`. Two version-based
+parser advisories are allowed only after CI verifies the checked-in pnpm patch,
+its hash, a malicious ICNS regression test, and an expiring advisory record.
+The npm audit step still fails for every other high-severity production
+advisory.
 
 ## Release gate
 

@@ -1,0 +1,17 @@
+{
+  "expo": {
+    "name": "Ink Native Architecture Spike",
+    "slug": "ink-native-spike",
+    "version": "0.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "dev.ink.native-spike"
+    },
+    "android": {
+      "package": "dev.ink.native_spike"
+    }
+  }
+}

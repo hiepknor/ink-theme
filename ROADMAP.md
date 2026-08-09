@@ -179,7 +179,7 @@ shared contract package.
 - [x] Replace string-based package gates with semantic module and CSS checks.
 - [x] Consolidate the workbench on one React application architecture.
 - [x] Document aggregate CSS loading and JavaScript tree-shaking separately.
-- [ ] Build a three-component native architecture spike before extracting shared component types.
+- [x] Build a three-component native architecture spike before extracting shared component types.
 
 Exit criteria:
 

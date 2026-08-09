@@ -1,6 +1,12 @@
 packages:
   - packages/*
   - apps/*
+auditConfig:
+  ignoreCves:
+    - GHSA-w3rx-r6r6-pgpr
+    - GHSA-5p2g-fcmc-qvqq
 
 onlyBuiltDependencies:
   - esbuild
+patchedDependencies:
+  image-size@1.2.1: patches/image-size@1.2.1.patch
