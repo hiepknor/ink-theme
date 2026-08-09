@@ -27,10 +27,10 @@ export function Button({ children, density: densityOverride, disabled, loading =
 }
 
 const styles = StyleSheet.create({
-  base: { alignItems: 'center', borderColor: nativeTokens.colors.borderStrong, borderWidth: nativeTokens.borderWidth.default, flexDirection: 'row', justifyContent: 'center', paddingHorizontal: nativeTokens.spacing.md },
-  label: { color: nativeTokens.colors.foreground, fontSize: nativeTokens.fontSize.sm, fontWeight: nativeTokens.fontWeight.bold },
+  base: { alignItems: 'center', borderColor: nativeTokens.colors.borderStrong, borderWidth: nativeTokens.borderWidth.default, flexDirection: 'row', justifyContent: 'center', paddingHorizontal: nativeTokens.spacing.md, paddingVertical: nativeTokens.spacing.xs },
+  label: { color: nativeTokens.colors.foreground, fontSize: nativeTokens.fontSize.sm, fontWeight: nativeTokens.fontWeight.medium },
   primaryLabel: { color: nativeTokens.colors.actionInk },
-  pressed: { transform: [{ translateX: 2 }, { translateY: 2 }] },
+  pressed: { opacity: 0.72 },
   disabled: { opacity: 0.45 },
   visuallyHidden: { height: 1, opacity: 0, position: 'absolute', width: 1 },
 });

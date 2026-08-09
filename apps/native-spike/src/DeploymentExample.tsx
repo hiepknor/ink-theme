@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { useRef, useState } from 'react';
+import { StyleSheet, Text, TextInput, View } from 'react-native';
 import { nativeTokens } from '@hiepknor/ink-tokens/react-native';
 import { Alert, Button, Progress, RadioGroup, Select, Surface, Switch, TextArea, TextField } from '@hiepknor/ink-react-native';
 
@@ -10,6 +10,7 @@ const regions = [
 ];
 
 export function DeploymentExample() {
+  const descriptionRef = useRef<TextInput>(null);
   const [service, setService] = useState('');
   const [description, setDescription] = useState('Routes customer traffic.');
   const [region, setRegion] = useState('singapore');
@@ -26,8 +27,8 @@ export function DeploymentExample() {
     <View style={styles.header}><Text accessibilityRole="header" style={styles.title}>Deploy a service</Text><Text style={styles.copy}>Configure a regional service and review recoverable validation before deployment.</Text></View>
     {error ? <Alert live="assertive" title="Review service details" tone="danger">{error}</Alert> : null}
     {progress !== undefined ? <Alert live="polite" title={complete ? 'Deployment complete' : 'Deployment started'} tone="ok">{complete ? `${service} is healthy in ${region}.` : `${service} is deploying to ${region}.`}</Alert> : null}
-    <TextField autoCapitalize="none" error={error} label="Service name" onChangeText={setService} placeholder="edge-router" value={service} />
-    <TextArea label="Description" onChangeText={setDescription} value={description} />
+    <TextField autoCapitalize="none" error={error} label="Service name" onChangeText={setService} onSubmitEditing={() => descriptionRef.current?.focus()} placeholder="edge-router" returnKeyType="next" submitBehavior="submit" value={service} />
+    <TextArea label="Description" onChangeText={setDescription} ref={descriptionRef} value={description} />
     <Select label="Deployment region" onValueChange={setRegion} options={regions} value={region} />
     <RadioGroup label="Replica role" onValueChange={setRole} options={[{ label: 'Primary', value: 'primary' }, { label: 'Replica', value: 'replica' }]} value={role} />
     <Switch checked={tracing} label="Enable tracing" onCheckedChange={setTracing} />

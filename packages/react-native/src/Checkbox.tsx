@@ -23,7 +23,7 @@ export function Checkbox({ checked, density: densityOverride, disabled = false, 
     {...props}
   >
     <View accessibilityElementsHidden importantForAccessibility="no-hide-descendants" style={[styles.box, checked && styles.boxChecked]}>
-      {checked ? <Text style={styles.mark}>✓</Text> : null}
+      {checked ? <View style={styles.mark}><View style={styles.markShort} /><View style={styles.markLong} /></View> : null}
     </View>
     <Text style={styles.label}>{label}</Text>
   </Pressable>;
@@ -31,10 +31,12 @@ export function Checkbox({ checked, density: densityOverride, disabled = false, 
 
 const styles = StyleSheet.create({
   base: { alignItems: 'center', alignSelf: 'flex-start', flexDirection: 'row', gap: nativeTokens.spacing.sm, paddingHorizontal: nativeTokens.spacing.xs },
-  box: { alignItems: 'center', backgroundColor: nativeTokens.colors.surface, borderColor: nativeTokens.colors.borderStrong, borderWidth: nativeTokens.borderWidth.default, height: 20, justifyContent: 'center', width: 20 },
+  box: { alignItems: 'center', backgroundColor: nativeTokens.colors.surface, borderColor: nativeTokens.colors.borderStrong, borderWidth: nativeTokens.borderWidth.default, height: 18, justifyContent: 'center', width: 18 },
   boxChecked: { backgroundColor: nativeTokens.colors.action },
-  mark: { color: nativeTokens.colors.actionInk, fontSize: nativeTokens.fontSize.sm, fontWeight: nativeTokens.fontWeight.bold },
-  label: { color: nativeTokens.colors.foreground, fontSize: nativeTokens.fontSize.md },
+  mark: { height: 8, width: 11 },
+  markShort: { backgroundColor: nativeTokens.colors.actionInk, height: 2, left: 0, position: 'absolute', top: 4, transform: [{ rotate: '45deg' }], width: 6 },
+  markLong: { backgroundColor: nativeTokens.colors.actionInk, height: 2, left: 3, position: 'absolute', top: 3, transform: [{ rotate: '-45deg' }], width: 10 },
+  label: { color: nativeTokens.colors.foreground, flexShrink: 1, fontSize: nativeTokens.fontSize.sm, fontWeight: nativeTokens.fontWeight.medium },
   pressed: { opacity: 0.72 },
   disabled: { opacity: 0.45 },
 });

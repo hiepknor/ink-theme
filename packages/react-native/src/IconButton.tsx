@@ -17,7 +17,7 @@ export function IconButton({ children, density: densityOverride, disabled = fals
   const blocked = Boolean(disabled);
   return <Pressable accessibilityLabel={label} accessibilityRole="button" accessibilityState={{ disabled: blocked }} disabled={blocked}
     style={({ pressed }) => [styles.base, variantStyles[variant], { height: size, width: size }, pressed && !blocked && styles.pressed, blocked && styles.disabled, style]} {...props}>
-    <Text accessibilityElementsHidden importantForAccessibility="no-hide-descendants" style={[styles.glyph, variant === 'primary' && styles.primaryGlyph]}>{children}</Text>
+    <Text accessibilityElementsHidden allowFontScaling={false} importantForAccessibility="no-hide-descendants" style={[styles.glyph, variant === 'primary' && styles.primaryGlyph]}>{children}</Text>
   </Pressable>;
 }
 
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
   base: { alignItems: 'center', borderColor: nativeTokens.colors.borderStrong, borderWidth: nativeTokens.borderWidth.default, justifyContent: 'center' },
   glyph: { color: nativeTokens.colors.foreground, fontSize: nativeTokens.fontSize.lg, fontWeight: nativeTokens.fontWeight.bold },
   primaryGlyph: { color: nativeTokens.colors.actionInk },
-  pressed: { transform: [{ translateX: 2 }, { translateY: 2 }] },
+  pressed: { opacity: 0.72 },
   disabled: { opacity: 0.45 },
 });
 const variantStyles = StyleSheet.create({ primary: { backgroundColor: nativeTokens.colors.action }, secondary: { backgroundColor: nativeTokens.colors.surface }, quiet: { backgroundColor: 'transparent', borderColor: 'transparent' } });

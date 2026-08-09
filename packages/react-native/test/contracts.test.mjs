@@ -33,12 +33,18 @@ test('interactive controls own native accessibility and touch sizing', () => {
   assert.match(checkbox, /checked, disabled: blocked/);
   assert.match(checkbox, /onCheckedChange\?\.\(!checked\)/);
   assert.match(checkbox, /minHeight: nativeTokens\.controlHeight\[density\]/);
+  assert.match(checkbox, /markShort: \{ backgroundColor: nativeTokens\.colors\.actionInk/);
+  assert.match(checkbox, /markLong: \{ backgroundColor: nativeTokens\.colors\.actionInk/);
+  assert.doesNotMatch(checkbox, />✓</u);
 });
 
 test('field exposes label, invalid state, and live error semantics', () => {
+  assert.match(field, /forwardRef<TextInput, TextFieldProps>/);
+  assert.match(field, /ref=\{ref\}/);
   assert.match(field, /accessibilityLabelledBy=\{labelId\}/);
   assert.match(field, /aria-invalid=\{Boolean\(error\)\}/);
   assert.match(field, /accessibilityLiveRegion="polite"/);
+  assert.match(textArea, /forwardRef<TextInput, TextAreaProps>/);
 });
 
 test('extended controls own native roles, state, and platform rendering', () => {
@@ -50,6 +56,15 @@ test('extended controls own native roles, state, and platform rendering', () => 
   assert.match(switchControl, /accessibilityRole="switch"/);
   assert.match(select, /<Modal/);
   assert.match(select, /expanded: open/);
+  assert.match(select, /animationType="none"/);
+  assert.match(select, /accessibilityViewIsModal/);
+  assert.match(select, /onDismiss=\{restoreTriggerFocus\}/);
+  assert.match(select, /<View accessibilityElementsHidden importantForAccessibility="no-hide-descendants" style=\{\[styles\.chevron, open && styles\.chevronOpen\]\} \/>/);
+  assert.match(select, /borderBottomWidth: 2, borderRightColor:/);
+  assert.doesNotMatch(select, />⌄<|fontSize: nativeTokens\.fontSize\.lg, transform: \[\{ rotate: '0deg' \}\]/u);
+  assert.match(iconButton, /allowFontScaling=\{false\}/);
+  assert.doesNotMatch(button, /translateX|translateY/u);
+  assert.doesNotMatch(iconButton, /translateX|translateY/u);
   assert.doesNotMatch(select, /Radix|document|window/u);
 });
 
