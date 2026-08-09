@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/hiepknor/ink-theme/blob/main/packages/tokens/token-schema.json",
+  "$id": "https://github.com/hiepknor/ink-ui/blob/main/packages/tokens/token-schema.json",
   "title": "Ink token source",
   "type": "object",
   "required": ["$schema", "tokens", "tailwind", "native", "allowedColors"],

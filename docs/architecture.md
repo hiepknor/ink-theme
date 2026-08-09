@@ -55,8 +55,8 @@ The web workbench uses a single React root for both catalog routes and the full
 native-compatibility matrix; imperative DOM ownership must not run beside the
 React renderer.
 
-The Expo native workbench validates the public `InkProvider`, `Surface`,
-`Button`, `TextField`, and `Checkbox` slice against Android and iOS Metro
+The Expo native workbench validates the public native form and feedback catalog
+plus a product-shaped deployment workflow against Android and iOS Metro
 bundles. `@hiepknor/ink-ui-native` derives density names from generated native
 tokens and keeps React Native views, events, accessibility props, and styles
 platform-specific. The current overlap is still too small to justify a shared
