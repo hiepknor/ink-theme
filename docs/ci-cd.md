@@ -50,7 +50,9 @@ CI runs `expo install --check`, and the workbench contract requires
 `react-test-renderer` to exactly match its React version. These dependencies
 move together during an explicit Expo SDK compatibility upgrade. Likewise,
 jsdom major updates remain blocked while their Node engine excludes the
-repository's supported Node 20 runtime.
+repository's supported Node 20 runtime. The same policy applies to testing
+library majors that raise their Node floor, and TypeScript majors that would
+move Expo packages outside the SDK-selected compiler range.
 
 The package manager version must remain compatible with the minimum Node engine
 declared by the root workspace. A package-manager major upgrade must therefore
