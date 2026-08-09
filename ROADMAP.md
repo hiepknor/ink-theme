@@ -214,7 +214,7 @@ platform APIs, navigation, and domain workflows in applications.
 - [ ] Validate font scaling, reduced motion, screen readers, and device keyboard behavior on representative Android and iOS devices.
 - [x] Add native `IconButton`, `TextArea`, `RadioGroup`, `Switch`, and `Select` after documenting their interaction contracts.
 - [x] Add native `Alert`, `Spinner`, and `Progress` feedback primitives.
-- [ ] Prove the package in a product-shaped example before enabling publication.
+- [x] Prove the package in a product-shaped deployment example before enabling publication.
 
 Exit criteria:
 

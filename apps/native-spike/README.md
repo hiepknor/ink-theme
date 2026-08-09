@@ -1,9 +1,14 @@
 # Ink native workbench
 
 This private Expo application exercises `@hiepknor/ink-ui-native` as a real,
-interactive consumer. Its component catalog covers `InkProvider`, `Surface`,
-`Button`, `TextField`, and `Checkbox`, plus live density and controlled-state
-changes, without importing DOM or CSS implementation.
+interactive consumer. Its component catalog covers the public native forms and
+feedback surface, plus live density and controlled-state changes, without
+importing DOM or CSS implementation.
+
+The separate deployment workflow exercises validation recovery, modal
+selection, status announcements, and determinate progress using only public
+Ink package APIs. Manual release evidence is tracked in
+[`docs/native-device-matrix.md`](../../docs/native-device-matrix.md).
 
 The package and workbench share generated native tokens, density names, button
 variants, and state intent with the web renderer. Native views, events,
