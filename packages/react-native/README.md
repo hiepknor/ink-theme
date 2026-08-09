@@ -3,6 +3,10 @@
 React Native renderer for Ink. It provides native primitives with shared Ink
 tokens, density names, variants, state intent, and accessibility outcomes.
 
+```sh
+pnpm add @hiepknor/ink-react-native @hiepknor/ink-tokens
+```
+
 ```tsx
 import { Alert, Button, InkProvider, Progress, Select, Surface, Switch, TextArea } from '@hiepknor/ink-react-native';
 
@@ -24,3 +28,7 @@ and platform service ownership.
 
 `Select` renders a native modal choice sheet. Applications own remote data,
 search, navigation, persistence, and platform-specific picker substitution.
+
+The package supports React Native 0.76 through 0.x and React 19. Manual
+physical-device accessibility validation is waived for 0.1.0; applications
+should validate screen-reader and keyboard behavior on their supported devices.

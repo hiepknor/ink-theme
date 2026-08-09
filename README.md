@@ -18,9 +18,11 @@ Published package names are:
 - `@hiepknor/ink-tailwind`
 - `@hiepknor/ink-tokens`
 - `@hiepknor/ink-react`
+- `@hiepknor/ink-react-native`
 
-The React Native renderer remains private until the manual device accessibility
-matrix is complete.
+The React Native renderer's manual device accessibility gate is waived for its
+initial release. Unvalidated platform-specific risks remain explicit in
+[`docs/native-device-matrix.md`](docs/native-device-matrix.md).
 
 ## Development
 
