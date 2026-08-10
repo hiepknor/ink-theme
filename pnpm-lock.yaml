@@ -18,12 +18,12 @@ importers:
 
   apps/native-spike:
     dependencies:
-      '@hiepknor/ink-tokens':
-        specifier: workspace:*
-        version: link:../../packages/tokens
       '@hiepknor/ink-react-native':
         specifier: workspace:*
         version: link:../../packages/react-native
+      '@hiepknor/ink-tokens':
+        specifier: workspace:*
+        version: link:../../packages/tokens
       expo:
         specifier: ~57.0.11
         version: 57.0.11(@babel/core@7.29.7)(@expo/dom-webview@57.0.1)(react-dom@19.2.3(react@19.2.3))(react-native-web@0.21.2(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react-native@0.86.2(@babel/core@7.29.7)(@react-native/jest-preset@0.86.2(@babel/core@7.29.7)(react@19.2.3))(@types/react@19.2.18)(react@19.2.3))(react@19.2.3)(typescript@6.0.3)
@@ -98,12 +98,12 @@ importers:
 
   apps/workbench:
     dependencies:
-      '@hiepknor/ink-tailwind':
-        specifier: workspace:*
-        version: link:../../packages/tailwind
       '@hiepknor/ink-react':
         specifier: workspace:*
         version: link:../../packages/react
+      '@hiepknor/ink-tailwind':
+        specifier: workspace:*
+        version: link:../../packages/tailwind
       react:
         specifier: ^19.2.8
         version: 19.2.8
@@ -136,43 +136,10 @@ importers:
         specifier: ^8.2.0
         version: 8.2.0(@types/node@24.13.3)(jiti@2.7.0)(terser@5.49.2)(yaml@2.9.0)
 
-  packages/tailwind:
-    devDependencies:
-      '@tailwindcss/vite':
-        specifier: ^4.0.0
-        version: 4.3.3(vite@8.2.0(@types/node@24.13.3)(jiti@2.7.0)(terser@5.49.2)(yaml@2.9.0))
-      tailwindcss:
-        specifier: ^4.0.0
-        version: 4.3.3
-      vite:
-        specifier: ^8.2.0
-        version: 8.2.0(@types/node@24.13.3)(jiti@2.7.0)(terser@5.49.2)(yaml@2.9.0)
-
-  packages/tokens: {}
-
-  packages/react-native:
-    dependencies:
-      '@hiepknor/ink-tokens':
-        specifier: workspace:^
-        version: link:../tokens
-    devDependencies:
-      '@types/react':
-        specifier: ^19.2.18
-        version: 19.2.18
-      react:
-        specifier: 19.2.3
-        version: 19.2.3
-      react-native:
-        specifier: 0.86.2
-        version: 0.86.2(@babel/core@7.29.7)(@react-native/jest-preset@0.86.2(@babel/core@7.29.7)(react@19.2.3))(@types/react@19.2.18)(react@19.2.3)
-      typescript:
-        specifier: ~6.0.3
-        version: 6.0.3
-
   packages/react:
     dependencies:
       '@hiepknor/ink-tokens':
-        specifier: workspace:*
+        specifier: workspace:^
         version: link:../tokens
       '@radix-ui/react-accordion':
         specifier: ^1.2.12
@@ -241,6 +208,39 @@ importers:
       vitest:
         specifier: ^4.1.10
         version: 4.1.10(@types/node@24.13.3)(jsdom@29.1.1)(vite@8.2.0(@types/node@24.13.3)(jiti@2.7.0)(terser@5.49.2)(yaml@2.9.0))
+
+  packages/react-native:
+    dependencies:
+      '@hiepknor/ink-tokens':
+        specifier: workspace:^
+        version: link:../tokens
+    devDependencies:
+      '@types/react':
+        specifier: ^19.2.18
+        version: 19.2.18
+      react:
+        specifier: 19.2.3
+        version: 19.2.3
+      react-native:
+        specifier: 0.86.2
+        version: 0.86.2(@babel/core@7.29.7)(@react-native/jest-preset@0.86.2(@babel/core@7.29.7)(react@19.2.3))(@types/react@19.2.18)(react@19.2.3)
+      typescript:
+        specifier: ~6.0.3
+        version: 6.0.3
+
+  packages/tailwind:
+    devDependencies:
+      '@tailwindcss/vite':
+        specifier: ^4.0.0
+        version: 4.3.3(vite@8.2.0(@types/node@24.13.3)(jiti@2.7.0)(terser@5.49.2)(yaml@2.9.0))
+      tailwindcss:
+        specifier: ^4.0.0
+        version: 4.3.3
+      vite:
+        specifier: ^8.2.0
+        version: 8.2.0(@types/node@24.13.3)(jiti@2.7.0)(terser@5.49.2)(yaml@2.9.0)
+
+  packages/tokens: {}
 
 packages:
 

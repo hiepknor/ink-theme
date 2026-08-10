@@ -8,6 +8,11 @@ The package is published independently from the token and Tailwind packages.
 Release tags use the `react-v<version>` format and pass the repository's full
 verification and package-content gates before publication.
 
+Version 1.x is the stable component contract. Public component names, required
+props, forwarded refs, density and variant names, package exports, CSS classes,
+and custom properties follow semantic versioning. See `MIGRATION.md` when
+upgrading from 0.1.0.
+
 ## Usage
 
 ```tsx

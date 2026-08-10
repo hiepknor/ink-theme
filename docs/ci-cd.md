@@ -91,7 +91,7 @@ required permission, making healthy `main` builds appear failed.
 Pushing an annotated package tag starts the `Release` workflow. Tailwind uses
 `v<version>` (for example `v0.3.0`), tokens uses `tokens-v<version>` (for
 example `tokens-v1.0.0`), React uses `react-v<version>` (for example
-`react-v0.1.0`), and React Native uses `react-native-v<version>` (for example
+`react-v1.0.0`), and React Native uses `react-native-v<version>` (for example
 `react-native-v1.0.0`). The workflow:
 
 1. Verifies the package on Node 20 and 24.

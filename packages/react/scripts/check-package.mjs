@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
-import { mkdtemp, mkdir, rm, symlink, writeFile } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
+import { mkdtemp, mkdir, readFile, readdir, rm, symlink, writeFile } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -20,6 +21,7 @@ const modules = [
 const expected = [
   'LICENSE',
   'CHANGELOG.md',
+  'MIGRATION.md',
   'README.md',
   'dist/styles.css',
   'package.json',
@@ -27,6 +29,16 @@ const expected = [
 ].sort();
 
 assert.deepEqual(actual, expected, 'React UI package contents changed; review the public tarball allowlist');
+
+const stableContract = JSON.parse(await readFile(new URL('../test/stable-contract.json', import.meta.url), 'utf8'));
+assert.equal(stableContract.version, '1.0.0');
+const distFiles = (await readdir(new URL('../dist/', import.meta.url))).sort();
+assert.deepEqual(Object.keys(stableContract.distSha256).sort(), distFiles, 'Stable React artifact list changed; review the 1.x contract snapshot');
+for (const file of distFiles) {
+  const contents = await readFile(new URL(`../dist/${file}`, import.meta.url));
+  const actualHash = createHash('sha256').update(contents).digest('hex');
+  assert.equal(actualHash, stableContract.distSha256[file], `Stable React artifact changed: dist/${file}`);
+}
 
 const temporaryRoot = await mkdtemp(path.join(os.tmpdir(), 'ink-react-package-'));
 try {
@@ -37,10 +49,16 @@ try {
   }));
 
   assert.equal(packedPackage.private, undefined, 'React UI package must be public');
+  assert.equal(packedPackage.version, '1.0.0');
   assert.equal(packedPackage.publishConfig?.access, 'public');
+  assert.deepEqual(packedPackage.sideEffects, ['**/*.css']);
+  assert.deepEqual(packedPackage.exports, {
+    '.': { types: './dist/index.d.ts', default: './dist/index.js' },
+    './styles.css': './dist/styles.css',
+  });
   assert.equal(
     packedPackage.dependencies?.['@hiepknor/ink-tokens'],
-    '1.0.0',
+    '^1.0.0',
     'pnpm pack must replace the workspace token dependency with its registry version',
   );
 
