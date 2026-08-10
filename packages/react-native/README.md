@@ -29,6 +29,8 @@ and platform service ownership.
 `Select` renders a native modal choice sheet. Applications own remote data,
 search, navigation, persistence, and platform-specific picker substitution.
 
-The package supports React Native 0.76 through 0.x and React 19. Manual
-physical-device accessibility validation is waived for 0.1.0; applications
-should validate screen-reader and keyboard behavior on their supported devices.
+The package supports React Native 0.76 through 0.x and React 19. The `0.1.0`
+release originally waived manual physical-device accessibility validation;
+post-release maintainer validation passed on Android and iOS on 2026-08-10.
+Applications should still validate screen-reader and keyboard behavior on their
+supported device matrix.
