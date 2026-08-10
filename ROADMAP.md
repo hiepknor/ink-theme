@@ -26,6 +26,7 @@ only when all of its exit criteria pass.
 - [x] Add a controlled data-table and filter foundation.
 - [x] Complete upload queues, avatars, galleries, and lightbox workflows.
 - [x] Establish field, form, section, table, dialog, toast, and application error patterns.
+- [x] Complete native production validation and stabilize the React Native `1.0.0` contract.
 
 ## Milestone 1 — Theme 0.2.0
 
@@ -241,7 +242,7 @@ native packages.
 | `@hiepknor/ink-tailwind` | `0.3.0` package rename | `1.0.0` CSS API |
 | `@hiepknor/ink-tokens` | `0.1.0` CSS/TS/native output | `1.0.0` naming and alias API |
 | `@hiepknor/ink-react` | `0.1.0` vertical slice | `1.0.0` component API |
-| `@hiepknor/ink-react-native` | `0.1.0` mobile vertical slice | after production validation |
+| `@hiepknor/ink-react-native` | `0.1.0` mobile vertical slice | `1.0.0` component API |
 
 ## Non-goals
 

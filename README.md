@@ -20,8 +20,9 @@ Published package names are:
 - `@hiepknor/ink-react`
 - `@hiepknor/ink-react-native`
 
-The React Native renderer's manual device accessibility gate is waived for its
-initial release. Unvalidated platform-specific risks remain explicit in
+The React Native renderer completed its production and physical-device
+accessibility validation on Android and iOS. Results and the historical initial
+release waiver remain recorded in
 [`docs/native-device-matrix.md`](docs/native-device-matrix.md).
 
 ## Development

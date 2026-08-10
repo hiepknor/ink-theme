@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import test from 'node:test';
+import ts from 'typescript';
 import { nativeTokens } from '../../tokens/generated/react-native.js';
 
 const [contracts, button, checkbox, field, surface, iconButton, textArea, radioGroup, switchControl, select, alert, spinner, progress, index, reducedMotion] = await Promise.all([
@@ -86,7 +87,23 @@ test('extended controls own native roles, state, and platform rendering', () => 
 });
 
 test('public surface exports the native catalog', () => {
-  for (const component of ['Alert', 'Button', 'Checkbox', 'IconButton', 'InkProvider', 'Progress', 'RadioGroup', 'Select', 'Spinner', 'Surface', 'Switch', 'TextArea', 'TextField']) assert.match(index, new RegExp(`export \\{ ${component}`));
+  const source = ts.createSourceFile('index.ts', index, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  const actual = source.statements.flatMap((statement) => {
+    if (!ts.isExportDeclaration(statement) || !statement.exportClause || !ts.isNamedExports(statement.exportClause)) return [];
+    return statement.exportClause.elements.map((element) => element.name.text);
+  }).sort();
+  const expected = [
+    'Alert', 'AlertProps', 'Button', 'ButtonProps', 'ButtonVariant', 'Checkbox',
+    'CheckboxProps', 'FeedbackLive', 'FeedbackTone', 'IconButton',
+    'IconButtonProps', 'InkDensity', 'InkProvider', 'InkProviderProps',
+    'Progress', 'ProgressProps', 'RadioGroup', 'RadioGroupProps', 'RadioOption',
+    'Select', 'SelectOption', 'SelectProps', 'Spinner', 'SpinnerProps', 'Surface',
+    'SurfaceProps', 'SurfaceTone', 'Switch', 'SwitchProps', 'TextArea',
+    'TextAreaProps', 'TextField', 'TextFieldProps', 'buttonVariants',
+    'feedbackTones', 'inkDensities', 'resolveDensity', 'surfaceTones',
+    'useInkDensity',
+  ].sort();
+  assert.deepEqual(actual, expected);
   assert.match(surface, /tone\?: SurfaceTone/);
 });
 

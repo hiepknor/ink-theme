@@ -18,7 +18,7 @@ export function App() {
       <StatusBar style="dark" />
       <ScrollView automaticallyAdjustKeyboardInsets contentContainerStyle={styles.page} keyboardDismissMode="interactive" keyboardShouldPersistTaps="handled">
         <View style={styles.header}>
-          <Text style={styles.eyebrow}>INK NATIVE WORKBENCH · 0.1.0</Text>
+          <Text style={styles.eyebrow}>INK NATIVE WORKBENCH · 1.0.0</Text>
           <Text style={styles.title}>Component catalog</Text>
           <Text style={styles.summary}>Public React Native contracts rendered with platform-owned interaction and accessibility.</Text>
         </View>
