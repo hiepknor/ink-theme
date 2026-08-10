@@ -1,6 +1,6 @@
 # Ink Tailwind API
 
-This document defines the public CSS contract for `@hiepknor/ink-tailwind` 0.3.x.
+This document defines the public CSS contract for `@hiepknor/ink-tailwind` 1.x.
 Token removal, renaming, or a changed visual meaning requires a breaking
 release. Applications retain ownership of components and product semantics.
 

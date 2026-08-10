@@ -1,6 +1,6 @@
 {
   "name": "@hiepknor/ink-tailwind",
-  "version": "0.3.0",
+  "version": "1.0.0",
   "description": "A square, monochrome, high-density Tailwind CSS v4 foundation.",
   "homepage": "https://github.com/hiepknor/ink-ui#readme",
   "bugs": {

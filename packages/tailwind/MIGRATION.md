@@ -1,5 +1,27 @@
 # Migrating Ink Tailwind
 
+## From 0.3.0 to 1.0.0
+
+Version 1.0.0 stabilizes the existing Tailwind CSS contract. All six public CSS
+artifacts are byte-for-byte identical to 0.3.0.
+
+Upgrade the dependency without changing imports:
+
+```sh
+pnpm add @hiepknor/ink-tailwind@^1.0.0
+```
+
+The 1.x contract covers package entrypoints, Tailwind theme variables, base
+interaction selectors, public presentation utilities, global strict mode, and
+scoped `.ink-strict` behavior. Removing or renaming an entrypoint, variable,
+selector, utility, or documented behavior requires a major release when
+consumer remediation is needed. Additive APIs may ship in a minor release and
+compatible fixes in a patch release; every CSS artifact change still requires
+an explicit stable-contract snapshot review.
+
+Run the consuming application's production Tailwind build and review its
+keyboard focus, reduced-motion, forced-colors, and strict-mode presentation.
+
 ## From `@hiepknor/ink-theme` 0.2.0 to `@hiepknor/ink-tailwind` 0.3.0
 
 Version 0.3.0 moves the existing CSS contract to a package name that identifies

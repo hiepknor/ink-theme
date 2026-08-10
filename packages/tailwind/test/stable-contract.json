@@ -1,0 +1,11 @@
+{
+  "version": "1.0.0",
+  "cssSha256": {
+    "base.css": "136f602ea358038c1ef4623bed284a7105ef6fe96101bd06ce2c723856edfd86",
+    "index.css": "642beec2b895662e18e5a6c7508a6d6b1a4d7879ee36dbb0c9b72887376fe7cd",
+    "patterns.css": "71ca3198eb6313b93602e744fa47ef222e9b82c4c4b0c11cda8f828ca3a77e0d",
+    "scoped-strict.css": "305c7dd6099c8ff7809d2cc686c15b80abf5e0bc56b9d432466724c5e4ec53b6",
+    "strict.css": "4cd5bf5bf647156c833b32113d5cd71634a83e67271a50d72de73e31c4e8b4c5",
+    "tokens.css": "f47261f4824cd1fade188d59b99f07f32be4e1970552294bade1a4827b162b29"
+  }
+}
