@@ -1,5 +1,9 @@
 # @hiepknor/ink-tailwind
 
+Version 1.x is the stable CSS contract for Ink's Tailwind CSS v4 adapter.
+Public entrypoints, theme variables, interaction selectors, presentation
+utilities, and strict-mode behavior follow semantic versioning.
+
 A square, monochrome, high-density foundation for Tailwind CSS v4. It packages the
 visual foundation extracted from OmniWA Console without React components,
 product branding, or domain behavior.

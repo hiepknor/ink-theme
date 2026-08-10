@@ -29,6 +29,7 @@ only when all of its exit criteria pass.
 - [x] Complete native production validation and stabilize the React Native `1.0.0` contract.
 - [x] Stabilize the shared token naming, value, type, and platform-output contract as `1.0.0`.
 - [x] Stabilize the browser, PWA, Electron, and Tauri component contract as React `1.0.0`.
+- [x] Stabilize the Tailwind CSS entrypoints, variables, utilities, and strict-mode contract as `1.0.0`.
 
 ## Milestone 1 — Theme 0.2.0
 

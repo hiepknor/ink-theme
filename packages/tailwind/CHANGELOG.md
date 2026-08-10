@@ -5,6 +5,17 @@ All notable changes to Ink Tailwind are documented here. The project follows
 
 ## Unreleased
 
+## 1.0.0 - 2026-08-10
+
+### Stable
+
+- Stabilize the existing Tailwind CSS entrypoints, theme variables, base
+  interaction rules, presentation utilities, and strict-mode behavior without
+  changing the 0.3.0 CSS artifacts.
+- Add a reviewed SHA-256 snapshot for every public CSS artifact.
+- Document the 1.x semantic-versioning contract and the no-change migration
+  from 0.3.0.
+
 ## 0.3.0 - 2026-08-09
 
 ### Changed

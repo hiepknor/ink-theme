@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { createHash } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
 
 const read = (path) => readFile(new URL(`../${path}`, import.meta.url), 'utf8');
@@ -11,9 +12,19 @@ const strict = await read('src/strict.css');
 const scopedStrict = await read('src/scoped-strict.css');
 
 assert.equal(packageJson.name, '@hiepknor/ink-tailwind');
-assert.equal(packageJson.version, '0.3.0');
+assert.equal(packageJson.version, '1.0.0');
 assert.equal(packageJson.repository.url, 'git+https://github.com/hiepknor/ink-ui.git');
 assert.equal(packageJson.peerDependencies.tailwindcss, '^4.0.0');
+
+const stableContract = JSON.parse(await read('test/stable-contract.json'));
+assert.equal(stableContract.version, '1.0.0');
+assert.deepEqual(Object.keys(stableContract.cssSha256).sort(), [
+  'base.css', 'index.css', 'patterns.css', 'scoped-strict.css', 'strict.css', 'tokens.css',
+]);
+for (const [file, expectedHash] of Object.entries(stableContract.cssSha256)) {
+  const actualHash = createHash('sha256').update(await read(`src/${file}`)).digest('hex');
+  assert.equal(actualHash, expectedHash, `Stable Tailwind artifact changed: src/${file}`);
+}
 
 for (const marker of [
   '--color-bg: #ffffff;',
