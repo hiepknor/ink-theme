@@ -1,6 +1,6 @@
 {
   "name": "@hiepknor/ink-tokens",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Cross-platform design tokens for the Ink design system.",
   "homepage": "https://github.com/hiepknor/ink-ui#readme",
   "bugs": {
@@ -26,7 +26,7 @@
       "default": "./generated/react-native.js"
     }
   },
-  "files": ["generated", "README.md", "CHANGELOG.md", "LICENSE"],
+  "files": ["generated", "README.md", "CHANGELOG.md", "MIGRATION.md", "LICENSE"],
   "scripts": {
     "build": "node scripts/generate.mjs",
     "check": "node scripts/generate.mjs --check",

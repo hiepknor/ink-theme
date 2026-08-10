@@ -153,7 +153,7 @@ importers:
   packages/react-native:
     dependencies:
       '@hiepknor/ink-tokens':
-        specifier: workspace:*
+        specifier: workspace:^
         version: link:../tokens
     devDependencies:
       '@types/react':

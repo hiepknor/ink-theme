@@ -40,7 +40,7 @@ try {
   assert.equal(packedPackage.publishConfig?.access, 'public');
   assert.equal(
     packedPackage.dependencies?.['@hiepknor/ink-tokens'],
-    '0.1.0',
+    '1.0.0',
     'pnpm pack must replace the workspace token dependency with its registry version',
   );
 

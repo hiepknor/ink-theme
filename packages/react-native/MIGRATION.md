@@ -17,7 +17,7 @@ the compatibility guidance for the application's framework or Expo SDK.
 ## Upgrade
 
 ```sh
-pnpm add @hiepknor/ink-react-native@^1.0.0 @hiepknor/ink-tokens@^0.1.0
+pnpm add @hiepknor/ink-react-native@^1.0.1 @hiepknor/ink-tokens@^1.0.0
 ```
 
 No source import changes are required:

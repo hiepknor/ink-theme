@@ -1,0 +1,12 @@
+{
+  "version": "1.0.0",
+  "generatedSha256": {
+    "react-native.js": "305fab5b8c19e479eb993c84927b4f6e933e9f7322870846ef813f120a14b5d2",
+    "react-native.ts": "dd4df6d8e04d8c95e93f9140bf85f7afcd33b37d696c20d1ca380855cd13293d",
+    "theme.css": "f47261f4824cd1fade188d59b99f07f32be4e1970552294bade1a4827b162b29",
+    "tokens.css": "453447a38010d72d07ecd4d74a5d3c1b4b86b8bcfcab3755a1b8911c64f2323d",
+    "tokens.js": "89bf943ae17018300ae8793b2ee26b5f40fa07247b4ec40a42555d2348331aab",
+    "tokens.json": "3a34f5eed4b001afa79724a4324f070612a6ec784dd56bf5470b8a896c166c19",
+    "tokens.ts": "396a88222999e6f544777b4cf65c02cc28668ba0e6e9aaec732468d8e3886f52"
+  }
+}

@@ -1,10 +1,20 @@
 import assert from 'node:assert/strict';
+import { createHash } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
 import test from 'node:test';
 import { tokens } from '@hiepknor/ink-tokens';
 import { nativeTokens } from '@hiepknor/ink-tokens/react-native';
 
 const read = (path) => readFile(new URL(`../${path}`, import.meta.url), 'utf8');
+
+test('generated 1.x artifacts match the reviewed stable contract', async () => {
+  const contract = JSON.parse(await readFile(new URL('stable-contract.json', import.meta.url), 'utf8'));
+  assert.equal(contract.version, '1.0.0');
+  for (const [file, expected] of Object.entries(contract.generatedSha256)) {
+    const content = await readFile(new URL(`../generated/${file}`, import.meta.url));
+    assert.equal(createHash('sha256').update(content).digest('hex'), expected, `${file} changed`);
+  }
+});
 
 test('web and native outputs share resolved semantic colors', () => {
   assert.deepEqual(nativeTokens.colors, tokens.color.semantic);
@@ -24,8 +34,11 @@ test('package exports include typed web and React Native entrypoints', async () 
   const packageJson = JSON.parse(await read('package.json'));
   assert.equal(packageJson.private, undefined);
   assert.equal(packageJson.publishConfig.access, 'public');
-  assert.equal(packageJson.exports['.'].types, './generated/tokens.ts');
-  assert.equal(packageJson.exports['./react-native'].types, './generated/react-native.ts');
-  assert.equal(packageJson.exports['./tokens.css'], './generated/tokens.css');
-  assert.equal(packageJson.exports['./theme.css'], './generated/theme.css');
+  assert.deepEqual(packageJson.exports, {
+    '.': { types: './generated/tokens.ts', default: './generated/tokens.js' },
+    './tokens.css': './generated/tokens.css',
+    './theme.css': './generated/theme.css',
+    './tokens.json': './generated/tokens.json',
+    './react-native': { types: './generated/react-native.ts', default: './generated/react-native.js' },
+  });
 });
