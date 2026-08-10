@@ -10,8 +10,8 @@ below describes the state at release time and must not be interpreted as a pass.
 
 | Platform | Representative target | Font scaling | Reduced motion | Screen reader | Software/hardware keyboard | Status |
 | --- | --- | --- | --- | --- | --- | --- |
-| Android | Current stable emulator and one physical phone | Pass | Pass | TalkBack pass | Pass | Pass — maintainer validated 2026-08-10 |
-| iOS | Current stable simulator and one physical iPhone | Pass | Pass | VoiceOver pass | Pass | Pass — maintainer validated 2026-08-10 |
+| Android | Samsung S24 Ultra — Android 16 | Pass | Pass | TalkBack pass | Pass | Pass — maintainer validated 2026-08-10 |
+| iOS | iPhone 16 Plus — iOS 26.6 | Pass | Pass | VoiceOver pass | Pass | Pass — maintainer validated 2026-08-10 |
 
 ## Waiver record
 
@@ -29,7 +29,7 @@ status while preserving the release-time decision.
 
 | Date | Commit | Targets | Tester | Result | Notes |
 | --- | --- | --- | --- | --- | --- |
-| 2026-08-10 | `98c9645` | Android and iOS representative targets | Project maintainer | Pass | Font scaling, reduced motion, screen-reader behavior, and software/hardware keyboard behavior concluded PASS on both platforms. Exact device models and OS versions were not supplied and should be appended when available. |
+| 2026-08-10 | `98c9645` | Samsung S24 Ultra — Android 16; iPhone 16 Plus — iOS 26.6 | Project maintainer | Pass | Font scaling, reduced motion, screen-reader behavior, and software/hardware keyboard behavior concluded PASS on both platforms. |
 
 ## Pass criteria
 
