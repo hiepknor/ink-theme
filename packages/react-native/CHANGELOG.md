@@ -2,6 +2,32 @@
 
 All notable changes to `@hiepknor/ink-react-native` are documented in this file.
 
+## 1.0.0 - 2026-08-10
+
+### Stable contract
+
+- Stabilize the root component, prop, option, density, variant, tone, and
+  feedback exports after production-shaped consumer validation.
+- Validate font scaling, reduced motion, TalkBack, VoiceOver, and keyboard
+  behavior on a Samsung S24 Ultra with Android 16 and an iPhone 16 Plus with
+  iOS 26.6.
+- Lock the public root export list in the package contract gate so additions,
+  removals, and renames require explicit API review.
+
+### Changed
+
+- Correct the minimum supported React Native version from 0.76 to 0.78. React
+  Native 0.78 is the first supported baseline whose peer contract uses React 19.
+- Mark the native Expo workbench and roadmap as validated against the stable
+  `1.0.0` contract.
+
+### Migration
+
+- Existing 0.1.0 consumers on React Native 0.78 or newer do not need component,
+  prop, or import changes.
+- Consumers on React Native 0.76 or 0.77 must upgrade React Native and React
+  together before installing 1.0.0. See `MIGRATION.md` for the full checklist.
+
 ## 0.1.0 - 2026-08-09
 
 ### Added

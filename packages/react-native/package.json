@@ -1,6 +1,6 @@
 {
   "name": "@hiepknor/ink-react-native",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Accessible React Native components for the Ink design system.",
   "homepage": "https://github.com/hiepknor/ink-ui#readme",
   "bugs": {
@@ -22,7 +22,7 @@
       "default": "./src/index.ts"
     }
   },
-  "files": ["src", "README.md", "CHANGELOG.md", "LICENSE"],
+  "files": ["src", "README.md", "CHANGELOG.md", "MIGRATION.md", "LICENSE"],
   "scripts": {
     "build": "tsc --noEmit",
     "check": "tsc --noEmit && node scripts/check-boundary.mjs",
@@ -34,7 +34,7 @@
   },
   "peerDependencies": {
     "react": "^19.0.0",
-    "react-native": ">=0.76 <1"
+    "react-native": ">=0.78 <1"
   },
   "devDependencies": {
     "@types/react": "^19.2.18",

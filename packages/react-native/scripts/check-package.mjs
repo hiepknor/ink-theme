@@ -20,6 +20,7 @@ const modules = [
 const expected = [
   'LICENSE',
   'CHANGELOG.md',
+  'MIGRATION.md',
   'README.md',
   'package.json',
   ...modules.map((name) => `src/${name}.${name[0] === name[0].toUpperCase() ? 'tsx' : 'ts'}`),
@@ -37,9 +38,12 @@ try {
 
   assert.equal(packedPackage.private, undefined, 'React Native package must be public');
   assert.equal(packedPackage.publishConfig?.access, 'public');
+  assert.equal(packedPackage.version, '1.0.0');
   assert.equal(packedPackage.main, 'src/index.ts');
   assert.equal(packedPackage.types, 'src/index.ts');
   assert.equal(packedPackage.exports?.['.']?.['react-native'], './src/index.ts');
+  assert.equal(packedPackage.peerDependencies?.react, '^19.0.0');
+  assert.equal(packedPackage.peerDependencies?.['react-native'], '>=0.78 <1');
   assert.equal(
     packedPackage.dependencies?.['@hiepknor/ink-tokens'],
     '0.1.0',
