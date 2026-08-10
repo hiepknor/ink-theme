@@ -1,16 +1,17 @@
 # Native device accessibility matrix
 
 This matrix records manual evidence for `@hiepknor/ink-react-native`. Device
-validation was removed from the release gate by project decision on 2026-08-09.
-Expo export and renderer tests are necessary but do not count as device
-validation, and the waived rows below must not be interpreted as passes.
+validation was removed from the release gate by project decision on 2026-08-09,
+then completed by the project maintainer on 2026-08-10. Expo export and renderer
+tests are necessary but do not count as device validation. The historical waiver
+below describes the state at release time and must not be interpreted as a pass.
 
 ## Required matrix
 
 | Platform | Representative target | Font scaling | Reduced motion | Screen reader | Software/hardware keyboard | Status |
 | --- | --- | --- | --- | --- | --- | --- |
-| Android | Current stable emulator and one physical phone | Waived | Waived | TalkBack waived | Waived | Waived — not validated |
-| iOS | Current stable simulator and one physical iPhone | Waived | Waived | VoiceOver waived | Waived | Waived — not validated |
+| Android | Current stable emulator and one physical phone | Pass | Pass | TalkBack pass | Pass | Pass — maintainer validated 2026-08-10 |
+| iOS | Current stable simulator and one physical iPhone | Pass | Pass | VoiceOver pass | Pass | Pass — maintainer validated 2026-08-10 |
 
 ## Waiver record
 
@@ -18,9 +19,17 @@ validation, and the waived rows below must not be interpreted as passes.
 | --- | --- | --- | --- | --- |
 | 2026-08-09 | `869d610` | Android and iOS simulator/device accessibility | Native type, boundary, package, and contract checks passed; 10 interaction tests passed; production Expo bundles exported for Android and iOS | Manual device validation skipped by project decision |
 
-Residual risk remains for platform-specific behavior that automated renderer
-tests cannot establish: large accessibility text, reduced motion, TalkBack and
-VoiceOver announcement order/focus, and software or hardware keyboard behavior.
+The waiver accepted temporary residual risk for platform-specific behavior that
+automated renderer tests cannot establish: large accessibility text, reduced
+motion, TalkBack and VoiceOver announcement order/focus, and software or
+hardware keyboard behavior. The validation record below supersedes that risk
+status while preserving the release-time decision.
+
+## Validation record
+
+| Date | Commit | Targets | Tester | Result | Notes |
+| --- | --- | --- | --- | --- | --- |
+| 2026-08-10 | `98c9645` | Android and iOS representative targets | Project maintainer | Pass | Font scaling, reduced motion, screen-reader behavior, and software/hardware keyboard behavior concluded PASS on both platforms. Exact device models and OS versions were not supplied and should be appended when available. |
 
 ## Pass criteria
 
