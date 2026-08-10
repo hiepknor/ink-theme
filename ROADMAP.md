@@ -27,6 +27,7 @@ only when all of its exit criteria pass.
 - [x] Complete upload queues, avatars, galleries, and lightbox workflows.
 - [x] Establish field, form, section, table, dialog, toast, and application error patterns.
 - [x] Complete native production validation and stabilize the React Native `1.0.0` contract.
+- [x] Stabilize the shared token naming, value, type, and platform-output contract as `1.0.0`.
 
 ## Milestone 1 — Theme 0.2.0
 

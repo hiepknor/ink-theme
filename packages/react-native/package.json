@@ -1,6 +1,6 @@
 {
   "name": "@hiepknor/ink-react-native",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Accessible React Native components for the Ink design system.",
   "homepage": "https://github.com/hiepknor/ink-ui#readme",
   "bugs": {
@@ -30,7 +30,7 @@
     "pack:check": "node scripts/check-package.mjs"
   },
   "dependencies": {
-    "@hiepknor/ink-tokens": "workspace:*"
+    "@hiepknor/ink-tokens": "workspace:^"
   },
   "peerDependencies": {
     "react": "^19.0.0",

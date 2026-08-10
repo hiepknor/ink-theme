@@ -2,6 +2,14 @@
 
 All notable changes to `@hiepknor/ink-react-native` are documented in this file.
 
+## 1.0.1 - 2026-08-10
+
+### Changed
+
+- Align the package dependency with the stable `@hiepknor/ink-tokens` 1.x line.
+- Preserve the complete 1.0.0 runtime, component, prop, type, and accessibility
+  contract without changes.
+
 ## 1.0.0 - 2026-08-10
 
 ### Stable contract

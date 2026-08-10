@@ -7,6 +7,10 @@ Native representations from `src/tokens.json`.
 The package is published independently from the platform adapters and component
 implementations.
 
+Version 1.x treats every generated token name, value, value type, CSS custom
+property, Tailwind compatibility variable, and package subpath as a stable
+semantic-versioning contract.
+
 ## Usage
 
 ```js
@@ -43,3 +47,12 @@ or unexpected tarball contents.
 The source contract intentionally accepts `px` dimensions and `ms` durations.
 The React Native output converts those values to unitless numbers; adding a new
 unit therefore requires an explicit generator and contract-test change.
+
+## Stable entrypoints
+
+- `@hiepknor/ink-tokens` exports `tokens` and `InkTokens`.
+- `@hiepknor/ink-tokens/react-native` exports `nativeTokens` and
+  `InkNativeTokens`.
+- `tokens.css`, `theme.css`, and `tokens.json` remain public subpaths.
+
+Consumers upgrading from 0.1.0 should follow [`MIGRATION.md`](MIGRATION.md).
