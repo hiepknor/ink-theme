@@ -28,6 +28,7 @@ only when all of its exit criteria pass.
 - [x] Establish field, form, section, table, dialog, toast, and application error patterns.
 - [x] Complete native production validation and stabilize the React Native `1.0.0` contract.
 - [x] Stabilize the shared token naming, value, type, and platform-output contract as `1.0.0`.
+- [x] Stabilize the browser, PWA, Electron, and Tauri component contract as React `1.0.0`.
 
 ## Milestone 1 — Theme 0.2.0
 

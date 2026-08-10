@@ -1,6 +1,6 @@
 {
   "name": "@hiepknor/ink-react",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Accessible React components for the Ink design system.",
   "homepage": "https://github.com/hiepknor/ink-ui#readme",
   "bugs": {
@@ -20,7 +20,7 @@
     },
     "./styles.css": "./dist/styles.css"
   },
-  "files": ["dist", "README.md", "CHANGELOG.md", "LICENSE"],
+  "files": ["dist", "README.md", "CHANGELOG.md", "MIGRATION.md", "LICENSE"],
   "scripts": {
     "build": "node scripts/build.mjs",
     "check": "tsc --noEmit && node scripts/check-source.mjs",
@@ -28,7 +28,7 @@
     "pack:check": "node scripts/check-package.mjs"
   },
   "dependencies": {
-    "@hiepknor/ink-tokens": "workspace:*",
+    "@hiepknor/ink-tokens": "workspace:^",
     "@radix-ui/react-accordion": "^1.2.12",
     "@radix-ui/react-dialog": "^1.1.23",
     "@radix-ui/react-dropdown-menu": "^2.1.24",
